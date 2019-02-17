@@ -31,10 +31,13 @@ public class MouseLookPrototype1
 
     public void LookRotation(Transform character, Transform camera)
     {
+        // Debug.Log(camera.transform.eulerAngles);
+
         float yRot = LevelManager.Instance.PlayerActions.Look.X * XSensitivity;
         // float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
         float xRot = LevelManager.Instance.PlayerActions.Look.Y * YSensitivity;
 
+       // Debug.Log("YRot:" + yRot);
         m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
         m_CameraTargetRot *= Quaternion.Euler(-xRot, 0f, 0f);
 
@@ -54,8 +57,72 @@ public class MouseLookPrototype1
             camera.localRotation = m_CameraTargetRot;
         }
 
+        CheckEye(camera);
+
         UpdateCursorLock();
     }
+
+
+    private void CheckEye(Transform camera)
+    {
+        var eyes = GameObject.FindObjectsOfType<Eye>();
+
+        bool inFrame = false;
+        
+        foreach (var eye in eyes)
+        {
+            var vp =  camera.GetComponent<Camera>().WorldToViewportPoint(eye.transform.position);
+
+            
+            // Debug.Log(vp);
+            if (vp.x > 0 && vp.x < 1 && vp.y < 1 && vp.z > 0)
+            {
+                var camTop = vp;
+                camTop.y = 1;
+                var camTopPoint = camera.GetComponent<Camera>().ViewportToWorldPoint(camTop);
+
+
+                var dirCamTop = camTopPoint - camera.transform.position;
+                var dirEye = eye.transform.position - camera.transform.position;
+
+                Debug.DrawLine(camera.transform.position, camTopPoint);
+                Debug.DrawLine(camera.transform.position, eye.transform.position);
+
+                var an = Vector3.Angle(dirCamTop, dirEye);
+
+                
+                var lea = camera.transform.localEulerAngles;
+                lea.x += an;
+
+                float factor = 8.0f;
+                if (vp.y > 0.95f)
+                    factor = 30.0f;
+                var frameRot = Quaternion.Slerp(camera.localRotation, Quaternion.Euler(lea),
+                factor * Time.deltaTime);
+                camera.localRotation = frameRot;
+                m_CameraTargetRot = frameRot;
+
+
+                inFrame = true;
+            }
+        }
+
+        var step = 100.0f;
+        if (inFrame)
+        {
+
+
+            return;
+
+            // return;
+            var lea = camera.transform.localEulerAngles;
+            lea.x += step * Time.deltaTime;
+            camera.transform.localEulerAngles = lea;
+
+            m_CameraTargetRot = Quaternion.Euler(lea);
+        }
+    }
+
 
     public void SetCursorLock(bool value)
     {

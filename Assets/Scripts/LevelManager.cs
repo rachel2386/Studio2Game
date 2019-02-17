@@ -43,7 +43,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        var a = LevelManager.Instance.PlayerActions.Fire.IsPressed;
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
     void DebugButtons()
     {
-        if(playerActions.Fire.IsPressed)
+        if(playerActions.Fire.WasPressed)
         {
             Debug.Log("Fire Pressed");
         }
