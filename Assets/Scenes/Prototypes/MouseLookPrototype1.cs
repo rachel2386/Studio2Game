@@ -21,6 +21,7 @@ public class MouseLookPrototype1
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
     private bool m_cursorIsLocked = true;
+    public bool shySmooth = true;
 
     public void Init(Transform character, Transform camera)
     {
@@ -32,10 +33,20 @@ public class MouseLookPrototype1
     public void LookRotation(Transform character, Transform camera)
     {
         // Debug.Log(camera.transform.eulerAngles);
+        float sensitivityFactorX = 1;
+        float sensitivityFactorY = 1;
+        var inputClass = InControl.InputManager.ActiveDevice.DeviceClass;
+        if(inputClass == InControl.InputDeviceClass.Controller)
+        {
+            sensitivityFactorX = 0.5f;
+            sensitivityFactorY = 0.3f;
+        }
 
-        float yRot = LevelManager.Instance.PlayerActions.Look.X * XSensitivity;
+       // Debug.Log("LevelManager.Instance.PlayerActions.Look.Y  " + LevelManager.Instance.PlayerActions.Look.Y);
+
+        float yRot = LevelManager.Instance.PlayerActions.Look.X * XSensitivity * sensitivityFactorX;
         // float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
-        float xRot = LevelManager.Instance.PlayerActions.Look.Y * YSensitivity;
+        float xRot = LevelManager.Instance.PlayerActions.Look.Y * YSensitivity * sensitivityFactorY;
 
        // Debug.Log("YRot:" + yRot);
         m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
@@ -68,7 +79,7 @@ public class MouseLookPrototype1
         var eyes = GameObject.FindObjectsOfType<Eye>();
 
         bool inFrame = false;
-        
+        float vib = 0;
         foreach (var eye in eyes)
         {
             var vp =  camera.GetComponent<Camera>().WorldToViewportPoint(eye.transform.position);
@@ -90,15 +101,21 @@ public class MouseLookPrototype1
 
                 var an = Vector3.Angle(dirCamTop, dirEye);
 
+                if(vp.y < 0.98 && LevelManager.Instance.PlayerActions.Look.Y > 0.4f)
+                    vib = 0.3f;
                 
                 var lea = camera.transform.localEulerAngles;
                 lea.x += an;
 
-                float factor = 8.0f;
+                float factor = 10.0f;
                 if (vp.y > 0.95f)
                     factor = 30.0f;
+
+
                 var frameRot = Quaternion.Slerp(camera.localRotation, Quaternion.Euler(lea),
                 factor * Time.deltaTime);
+                if (!shySmooth)
+                    frameRot = Quaternion.Euler(lea);
                 camera.localRotation = frameRot;
                 m_CameraTargetRot = frameRot;
 
@@ -106,6 +123,8 @@ public class MouseLookPrototype1
                 inFrame = true;
             }
         }
+
+        InControl.InputManager.ActiveDevice.Vibrate(vib);
 
         var step = 100.0f;
         if (inFrame)
