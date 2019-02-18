@@ -20,6 +20,15 @@ public class WanderNPC : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (gameObject.CompareTag("Wall"))
+        {
+            Debug.Log("Collided");
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
