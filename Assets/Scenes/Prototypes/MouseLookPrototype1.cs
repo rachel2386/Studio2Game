@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-
+using DG.Tweening;
 
 [Serializable]
 public class MouseLookPrototype1
@@ -22,7 +21,9 @@ public class MouseLookPrototype1
 
 
     public bool eyeLimitationMode = false;
-    public float eyeLimitationAngle = 60f;
+    
+    public float curLimitationAngle = 60f;
+    
 
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
@@ -33,13 +34,16 @@ public class MouseLookPrototype1
     {
         m_CharacterTargetRot = character.localRotation;
         m_CameraTargetRot = camera.localRotation;
+      
     }
 
 
-    public void BeginLitimationMode()
+    public void BeginLitimationMode(float to = 45)
     {
         eyeLimitationMode = true;
-        MinimumX = eyeLimitationAngle;
+        
+        DOTween.To(() => curLimitationAngle, x => curLimitationAngle = x, to, 2);
+        // MinimumX = eyeLimitationAngle;
     }
 
 
@@ -219,7 +223,7 @@ public class MouseLookPrototype1
 
         float min = MinimumX;
         if (eyeLimitationMode)
-            min = eyeLimitationAngle;
+            min = curLimitationAngle;
 
         angleX = Mathf.Clamp(angleX, min, MaximumX);
 
