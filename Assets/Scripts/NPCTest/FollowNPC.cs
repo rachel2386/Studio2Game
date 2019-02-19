@@ -26,14 +26,14 @@ public class FollowNPC : MonoBehaviour
             {
                 FollowSpeed = 0.1f;
                 //play animation
-                // TheNPC.GetComponent<Animator>().Play("run");
+                //TheNPC.GetComponent<Animator>().Play("run");
                 //transform position of the attached object and move it towards where it's looking
                 transform.position = Vector3.MoveTowards(transform.position, ThePlayer.transform.position, FollowSpeed);
             }
             else
             {
                 FollowSpeed = 0;
-                // TheNPC.GetComponent<Animator>().Play("wait");
+                //TheNPC.GetComponent<Animator>().Play("wait");
             }
         }
     }
