@@ -87,6 +87,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
+        public void BeginLitimationMode()
+        {
+            m_MouseLook.BeginLitimationMode();
+        }
 
         private void PlayLandingSound()
         {

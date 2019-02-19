@@ -18,6 +18,12 @@ public class MouseLookPrototype1
     public bool lockCursor = true;
 
 
+    public bool usePrototype1Camera = true;
+
+
+    public bool eyeLimitationMode = false;
+    public float eyeLimitationAngle = 60f;
+
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
     private bool m_cursorIsLocked = true;
@@ -28,6 +34,14 @@ public class MouseLookPrototype1
         m_CharacterTargetRot = character.localRotation;
         m_CameraTargetRot = camera.localRotation;
     }
+
+
+    public void BeginLitimationMode()
+    {
+        eyeLimitationMode = true;
+        MinimumX = eyeLimitationAngle;
+    }
+
 
 
     public void LookRotation(Transform character, Transform camera)
@@ -68,7 +82,14 @@ public class MouseLookPrototype1
             camera.localRotation = m_CameraTargetRot;
         }
 
-        CheckEye(camera);
+        if(!usePrototype1Camera)
+        {
+
+        }
+        else if(usePrototype1Camera)
+        {
+            CheckEye(camera);
+        }        
 
         UpdateCursorLock();
     }
@@ -162,6 +183,7 @@ public class MouseLookPrototype1
 
     private void InternalLockUpdate()
     {
+       
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             m_cursorIsLocked = false;
@@ -171,8 +193,11 @@ public class MouseLookPrototype1
             m_cursorIsLocked = true;
         }
 
+
+        Debug.Log(m_cursorIsLocked);
         if (m_cursorIsLocked)
         {
+            // Cursor.lockState = CursorLockMode.Confined;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -192,7 +217,11 @@ public class MouseLookPrototype1
 
         float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
 
-        angleX = Mathf.Clamp(angleX, MinimumX, MaximumX);
+        float min = MinimumX;
+        if (eyeLimitationMode)
+            min = eyeLimitationAngle;
+
+        angleX = Mathf.Clamp(angleX, min, MaximumX);
 
         q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
 
