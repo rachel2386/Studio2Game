@@ -25,7 +25,12 @@ public class ReachedGoal : MonoBehaviour
         {
             _doorOpen = true;
             _doorClosed = false;
+            if (!myAudios[0].isPlaying)
+            {
+                myAudios[0].Play();
+               
 
+            }  
 
         }
         
@@ -37,37 +42,18 @@ public class ReachedGoal : MonoBehaviour
         {
             _doorClosed = true;
             _doorOpen = false;
-
-        }
-        
-    }
-
-    private void Update()
-    {
-       Debug.Log("DoorOpen = " + _doorOpen);
-       Debug.Log("DoorClose = " + _doorClosed);
-        if (_doorOpen)
-        {
-            
-            if (!myAudios[0].isPlaying)
-            {
-                myAudios[0].Play();
-               
-
-            }  
-        }
-
-        
-
-        if (_doorClosed)
-        {
-           
             if (!myAudios[1].isPlaying)
             {
                 myAudios[1].Play();
                 
             }
         }
+        
+    }
+
+    private void Update()
+    {
+       
         
         MyAnim.SetBool("DoorOpen",_doorOpen);
         MyAnim.SetBool("DoorClose", _doorClosed);
