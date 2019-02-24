@@ -143,8 +143,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guids:
   - 117f8609-747e-4d7f-af3b-2175263f871a
+  - 974a70d5-1b47-45b9-9ff8-bd622e4f776b
   objects:
   - {fileID: 614390290}
+  - {fileID: 1225197591}
 --- !u!4 &38185675
 Transform:
   m_ObjectHideFlags: 0
@@ -2535,19 +2537,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1575361869, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.034201737
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1575361869, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.999415
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1575361869, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 3.92
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1575361869, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575361869, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575361869, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
@@ -7466,6 +7476,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 343c4a53a0dd29e49983792358709e7d, type: 3}
+--- !u!1 &1225197591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 664731986, guid: 3504e0c51f6992947b8e4df478f3eec0,
+    type: 3}
+  m_PrefabInstance: {fileID: 595799995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1244771519 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2812957276196093709, guid: 343c4a53a0dd29e49983792358709e7d,
@@ -9385,6 +9401,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 357466687, guid: 343c4a53a0dd29e49983792358709e7d, type: 3}
+      propertyPath: m_Name
+      value: Eye1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 343c4a53a0dd29e49983792358709e7d, type: 3}

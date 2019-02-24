@@ -31,8 +31,6 @@ public class MouseLookShy
     #endregion
 
     #region Var: Shy MouseLook 
-    
-
     [FoldoutGroup("Shy"), EnumToggleButtons]
     public ShyMode shyMode = ShyMode.DYNAMIC;
 
@@ -46,6 +44,8 @@ public class MouseLookShy
     }
     [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck")]
     public bool smoothShyDown = true;
+
+
 
     public bool UseForcedAngle
     {
@@ -125,10 +125,87 @@ public class MouseLookShy
 
     private void CheckEye(Transform camera)
     {
-        var eyes = GameObject.FindObjectsOfType<Eye>();
+        var eyes = GameObject.FindObjectsOfType<Eye>();      
+        float vibIntensity = 0;
+
+        // Debug.Log(camera.rotation.x / camera.rotation.w);
+        Quaternion lowestQuaternion = camera.localRotation;
+        bool foundOne = false;
+
+        float xWhiskerDistance = 3;
+        
+        // for eyes in the view port
+        foreach (var eye in eyes)
+        {
+            var eyeInVp = camera.GetComponent<Camera>().WorldToViewportPoint(eye.transform.position);
+
+            var vpTopInVp = eyeInVp;
+            vpTopInVp.y = 1;
+            var vpTopInWorld = camera.GetComponent<Camera>().ViewportToWorldPoint(vpTopInVp);
+
+            var dirCamToTop = vpTopInWorld - camera.transform.position;
+            var dirCamToEye = eye.transform.position - camera.transform.position;
+
+            var thisAngleX = Vector3.Angle(dirCamToTop, dirCamToEye);
+
+            if (eyeInVp.y < 1 && eyeInVp.z > 0
+                && (eyeInVp.x > 1 || eyeInVp.x < 0))
+            {
+                float offSetX = 0;
+                if (eyeInVp.x > 1)
+                {
+                    offSetX = eyeInVp.x - 1;
+                    eyeInVp.x = 1;
+                }
+                else if (eyeInVp.x < 0)
+                {
+                    offSetX = 0 - eyeInVp.x;
+                    eyeInVp.x = 0;
+                }
+
+                if (eye.gameObject.name == "Eye1")
+                {
+                    Debug.Log(offSetX);
+                }
+                if (offSetX > xWhiskerDistance)
+                    continue;
+                
+                // 0
+                var rot0 = camera.transform.localRotation * Quaternion.Euler(thisAngleX, 0, 0);
+                // xWhiskerDistance
+                var lea = camera.transform.localEulerAngles;
+                lea.x = -89;
+                var rot1 = Quaternion.Euler(lea);
+
+                var thisRot = Quaternion.Slerp(rot0, rot1, offSetX / xWhiskerDistance);
+
+                var rot0X = rot0.eulerAngles.x;
+                var thisRotX = thisRot.eulerAngles.x;
+
+                lowestQuaternion = GetLowerQuaternion(thisRot, lowestQuaternion);
+                if (thisRot == lowestQuaternion)
+                {
+                    int a = 1;
+                    a++;
+                }
+                foundOne = true;
+            }
+            else if (eyeInVp.y > 0 && eyeInVp.y < 1 && eyeInVp.z > 0 && eyeInVp.x >=0 && eyeInVp.x <= 1)
+            {   
+                var thisRot = camera.transform.localRotation * Quaternion.Euler(thisAngleX, 0, 0);
+                lowestQuaternion = GetLowerQuaternion(thisRot, lowestQuaternion);
+                foundOne = true;
+            }            
+        }
+        if(foundOne)
+        {
+            camera.transform.localRotation = lowestQuaternion;
+            m_CameraTargetRot = lowestQuaternion;
+        }
+
+        return;
 
         bool inFrame = false;
-        float vib = 0;
         foreach (var eye in eyes)
         {
             var vp =  camera.GetComponent<Camera>().WorldToViewportPoint(eye.transform.position);
@@ -151,7 +228,7 @@ public class MouseLookShy
                 var an = Vector3.Angle(dirCamTop, dirEye);
 
                 if(vp.y < 0.98 && LevelManager.Instance.PlayerActions.Look.Y > 0.4f)
-                    vib = 0.3f;
+                    vibIntensity = 0.3f;
                 
                 var lea = camera.transform.localEulerAngles;
                 lea.x += an;
@@ -173,7 +250,7 @@ public class MouseLookShy
             }
         }
 
-        InControl.InputManager.ActiveDevice.Vibrate(vib);
+        InControl.InputManager.ActiveDevice.Vibrate(vibIntensity);
 
         var step = 100.0f;
         if (inFrame)
@@ -189,6 +266,14 @@ public class MouseLookShy
 
             m_CameraTargetRot = Quaternion.Euler(lea);
         }
+    }
+
+    Quaternion GetLowerQuaternion(Quaternion q1, Quaternion q2)
+    {
+        var x1 = q1.x / q1.w;
+        var x2 = q2.x / q2.w;
+
+        return x2 > x1 ? q2 : q1;
     }
 
 
@@ -222,7 +307,7 @@ public class MouseLookShy
         }
 
 
-        Debug.Log(m_cursorIsLocked);
+        // Debug.Log(m_cursorIsLocked);
         if (m_cursorIsLocked)
         {
             // Cursor.lockState = CursorLockMode.Confined;
