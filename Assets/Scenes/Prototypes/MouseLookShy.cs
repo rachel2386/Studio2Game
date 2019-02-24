@@ -8,6 +8,15 @@ using Sirenix.OdinInspector;
 [Serializable]
 public class MouseLookShy
 {
+    public enum ShyMode
+    {
+        DEFAULT,
+        DYNAMIC,
+        FORCED,
+    }
+
+
+    #region Var: Original MouseLook 
     public float XSensitivity = 2f;
     public float YSensitivity = 2f;
     public bool clampVerticalRotation = true;
@@ -16,21 +25,13 @@ public class MouseLookShy
     public bool smooth;
     public float smoothTime = 5f;
     public bool lockCursor = true;    
-    
-    public enum ShyMode
-    {
-        DEFAULT,
-        DYNAMIC,
-        FORCED,
-    }
-    
-    
-
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
     private bool m_cursorIsLocked = true;
-    public bool shySmooth = true;
+    #endregion
 
+    #region Var: Shy MouseLook 
+    
 
     [FoldoutGroup("Shy"), EnumToggleButtons]
     public ShyMode shyMode = ShyMode.DYNAMIC;
@@ -43,6 +44,8 @@ public class MouseLookShy
             return shyMode == ShyMode.DYNAMIC;
         }            
     }
+    [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck")]
+    public bool smoothShyDown = true;
 
     public bool UseForcedAngle
     {
@@ -50,10 +53,10 @@ public class MouseLookShy
         {
             return shyMode == ShyMode.FORCED;
         }
-    }
-    
+    }    
     [FoldoutGroup("Shy"), EnableIf("UseForcedAngle")]
     public float forcedAngle = 60f;
+    #endregion
 
     public void Init(Transform character, Transform camera)
     {
@@ -160,7 +163,7 @@ public class MouseLookShy
 
                 var frameRot = Quaternion.Slerp(camera.localRotation, Quaternion.Euler(lea),
                 factor * Time.deltaTime);
-                if (!shySmooth)
+                if (!smoothShyDown)
                     frameRot = Quaternion.Euler(lea);
                 camera.localRotation = frameRot;
                 m_CameraTargetRot = frameRot;
