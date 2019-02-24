@@ -5,7 +5,7 @@ using System;
 using DG.Tweening;
 
 [Serializable]
-public class MouseLookPrototype1
+public class MouseLookShy
 {
     public float XSensitivity = 2f;
     public float YSensitivity = 2f;
