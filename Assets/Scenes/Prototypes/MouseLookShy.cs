@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 
 [Serializable]
 public class MouseLookShy
@@ -14,21 +15,45 @@ public class MouseLookShy
     public float MaximumX = 90F;
     public bool smooth;
     public float smoothTime = 5f;
-    public bool lockCursor = true;
-
-
-    public bool usePrototype1Camera = true;
-
-
-    public bool eyeLimitationMode = false;
+    public bool lockCursor = true;    
     
-    public float curLimitationAngle = 60f;
+    public enum ShyMode
+    {
+        DEFAULT,
+        DYNAMIC,
+        FORCED,
+    }
+    
     
 
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
     private bool m_cursorIsLocked = true;
     public bool shySmooth = true;
+
+
+    [FoldoutGroup("Shy"), EnumToggleButtons]
+    public ShyMode shyMode = ShyMode.DYNAMIC;
+
+
+    public bool UseDynamicCheck
+    {
+        get
+        {
+            return shyMode == ShyMode.DYNAMIC;
+        }            
+    }
+
+    public bool UseForcedAngle
+    {
+        get
+        {
+            return shyMode == ShyMode.FORCED;
+        }
+    }
+    
+    [FoldoutGroup("Shy"), EnableIf("UseForcedAngle")]
+    public float forcedAngle = 60f;
 
     public void Init(Transform character, Transform camera)
     {
@@ -40,9 +65,9 @@ public class MouseLookShy
 
     public void BeginLitimationMode(float to = 45)
     {
-        eyeLimitationMode = true;
+        shyMode = ShyMode.FORCED;       
         
-        DOTween.To(() => curLimitationAngle, x => curLimitationAngle = x, to, 2);
+        DOTween.To(() => forcedAngle, x => forcedAngle = x, to, 2);
         // MinimumX = eyeLimitationAngle;
     }
 
@@ -86,11 +111,7 @@ public class MouseLookShy
             camera.localRotation = m_CameraTargetRot;
         }
 
-        if(!usePrototype1Camera)
-        {
-
-        }
-        else if(usePrototype1Camera)
+       if(UseDynamicCheck)
         {
             CheckEye(camera);
         }        
@@ -222,8 +243,8 @@ public class MouseLookShy
         float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
 
         float min = MinimumX;
-        if (eyeLimitationMode)
-            min = curLimitationAngle;
+        if (UseForcedAngle)
+            min = forcedAngle;
 
         angleX = Mathf.Clamp(angleX, min, MaximumX);
 
