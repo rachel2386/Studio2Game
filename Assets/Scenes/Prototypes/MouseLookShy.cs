@@ -105,12 +105,20 @@ public class MouseLookShy
         var inputClass = InControl.InputManager.ActiveDevice.DeviceClass;
         if (inputClass == InControl.InputDeviceClass.Controller)
         {
-            sensitivityFactorX = 0.5f;
+            sensitivityFactorX = 0.4f;
             sensitivityFactorY = 0.3f;
         }
         float yRot = LevelManager.Instance.PlayerActions.Look.X * XSensitivity * sensitivityFactorX;
         float xRot = LevelManager.Instance.PlayerActions.Look.Y * YSensitivity * sensitivityFactorY;
 
+        //Debug.Log("x " + LevelManager.Instance.PlayerActions.Look.X);
+        //Debug.Log("y " + LevelManager.Instance.PlayerActions.Look.Y);
+        //if (Math.Abs(LevelManager.Instance.PlayerActions.Look.Y) > Math.Abs(LevelManager.Instance.PlayerActions.Look.X))
+        //{
+        //    Debug.Log("true");
+        //}
+
+        float vibIntensity = 0;
         bool isInShyAway = false;
         if (UseDynamicCheck)
         {
@@ -124,6 +132,11 @@ public class MouseLookShy
                 if (xRot > 0)
                 {
                     xRot = 0;
+                    if (Math.Abs(LevelManager.Instance.PlayerActions.Look.Y)> Math.Abs(LevelManager.Instance.PlayerActions.Look.X))
+                    {
+                        vibIntensity = 0.3f;
+                    }
+                      
                 }
 
                 // if the standard smooth is on
@@ -163,8 +176,8 @@ public class MouseLookShy
             camera.localRotation = m_CameraTargetRot;
         }
 
-        
 
+        InControl.InputManager.ActiveDevice.Vibrate(vibIntensity);
         UpdateCursorLock();
     }
 
@@ -172,7 +185,7 @@ public class MouseLookShy
     private Quaternion CheckEye(Transform camera)
     {
         var eyes = GameObject.FindObjectsOfType<Eye>();
-        float vibIntensity = 0;
+        
 
         // Debug.Log(camera.rotation.x / camera.rotation.w);
         Quaternion lowestQuaternion = camera.localRotation;
@@ -197,7 +210,8 @@ public class MouseLookShy
             var dirCamToEye = eye.transform.position - camera.transform.position;
             var thisAngleX = Vector3.SignedAngle(dirCamToTop, dirCamToEye, camera.right);
             var thisCamLimRot = camera.transform.localRotation * Quaternion.Euler(thisAngleX, 0, 0);
-
+            Debug.DrawLine(camera.transform.position, vpTopInWorld);
+            Debug.DrawLine(camera.transform.position, eye.transform.position);
 
             var backAngle = AngleBetweenEyeAndCameraPosi(eye.transform, camera.GetComponent<Camera>());
             var distance = Vector3.Distance(eye.transform.position, camera.position);
