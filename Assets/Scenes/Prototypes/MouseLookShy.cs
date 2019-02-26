@@ -45,8 +45,16 @@ public class MouseLookShy
 
     [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck")]
     public float whiskerDistance = 3;
-    [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck")]
+
+    [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck"), DisableIf("smooth")]
+    [PropertyTooltip("The lerp smooth speed when shy away if the standard smooth is not turned on")]
     public float shySmooth = 5;
+
+
+    [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck"), EnableIf("smooth")]
+    [PropertyTooltip("The lerp factor multiplied to the standard smooth when it's a shy process")]
+    public float smoothFactor = 0.5f;
+
 
 
     public bool UseForcedAngle
@@ -91,24 +99,33 @@ public class MouseLookShy
         float yRot = LevelManager.Instance.PlayerActions.Look.X * XSensitivity * sensitivityFactorX;
         float xRot = LevelManager.Instance.PlayerActions.Look.Y * YSensitivity * sensitivityFactorY;
 
+        bool isInShyAway = false;
         if (UseDynamicCheck)
         {
             var eyeLim = CheckEye(camera);
             // eye lim lower than current camera means camera should pitch down
             if (IsLowerThan(eyeLim, camera.localRotation))
             {
+                isInShyAway = true;
                 // if camera is about to pitch down
                 // we should ignore the xRot if xRot goes up
-                if(xRot > 0)
+                if (xRot > 0)
                 {
                     xRot = 0;
                 }
 
-                if (!smooth)
+                // if the standard smooth is on
+                // we should not slerp the destination here
+                // or else we will make a double lerp, which will make a pretty slow animation
+                if (smooth)
+                {
+                    m_CameraTargetRot = eyeLim;
+                }                
+                else
+                {
                     m_CameraTargetRot = Quaternion.Slerp(camera.localRotation, eyeLim,
                         shySmooth * Time.deltaTime);
-                else
-                    m_CameraTargetRot = eyeLim;
+                }                    
             }
         }
 
@@ -121,10 +138,12 @@ public class MouseLookShy
 
         if (smooth)
         {
+            // if is in shy away, maybe we need to make it shy away faster than regular lerp
+            var factor = isInShyAway ? smoothFactor : 1.0f;
             character.localRotation = Quaternion.Slerp(character.localRotation, m_CharacterTargetRot,
-                smoothTime * Time.deltaTime);
+                smoothTime * Time.deltaTime * factor);
             camera.localRotation = Quaternion.Slerp(camera.localRotation, m_CameraTargetRot,
-                smoothTime * Time.deltaTime);
+                smoothTime * Time.deltaTime * factor);
         }
         else
         {
@@ -152,6 +171,12 @@ public class MouseLookShy
         // for eyes in the view port
         foreach (var eye in eyes)
         {
+
+            if (IsBehindEye(eye.transform, camera.GetComponent<Camera>()))
+            {
+                continue;
+            }
+
             var eyeInVp = camera.GetComponent<Camera>().WorldToViewportPoint(eye.transform.position);
 
             var vpTopInVp = eyeInVp;
@@ -238,6 +263,35 @@ public class MouseLookShy
         return x1 > x2;
     }
 
+    float AngleBetweenEyeAndCamera(Transform eye, Camera camera)
+    {
+        var eyeForward = eye.forward;
+        eyeForward.y = 0;
+
+        var centerVpInWorld = camera.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 1));
+        var camForward = centerVpInWorld - camera.transform.position;
+        camForward.y = 0;
+
+        return Vector3.Angle(eyeForward, -camForward);
+    }
+
+    bool IsBehindEye(Transform eye, Camera camera)
+    {
+        bool ret = false;
+
+        var eyeForward = eye.forward;
+        eyeForward.y = 0;
+
+        var camToEye = eye.transform.position - camera.transform.position;
+        camToEye.y = 0;
+
+        var angle = Vector3.Angle(eyeForward, camToEye);
+        if (Mathf.Abs(angle) < 50)
+            ret = true;
+
+        return ret;
+
+    }
 
     public void SetCursorLock(bool value)
     {
