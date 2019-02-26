@@ -46,6 +46,8 @@ public class MouseLookShy
     [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck")]
     public float whiskerDistance = 3;
 
+    
+
     [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck"), DisableIf("smooth")]
     [PropertyTooltip("The lerp smooth speed when shy away if the standard smooth is not turned on")]
     public float shySmooth = 5;
@@ -55,7 +57,17 @@ public class MouseLookShy
     [PropertyTooltip("The lerp factor multiplied to the standard smooth when it's a shy process")]
     public float smoothFactor = 0.5f;
 
+    [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck")]
+    public bool angleCheck = true;
 
+    [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck"), EnableIf("angleCheck")]
+    public AnimationCurve nearAngleCurve = AnimationCurve.Linear(0, 0, 1, 1);
+
+    [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck"), EnableIf("angleCheck")]
+    public AnimationCurve farAngleCurve = AnimationCurve.Linear(0, 0, 1, 1);
+
+    [FoldoutGroup("Shy"), EnableIf("UseDynamicCheck"), EnableIf("angleCheck")]
+    public AnimationCurve distanceCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     public bool UseForcedAngle
     {
@@ -172,79 +184,107 @@ public class MouseLookShy
         foreach (var eye in eyes)
         {
 
-            if (IsBehindEye(eye.transform, camera.GetComponent<Camera>()))
-            {
-                continue;
-            }
+            //if (backCheck && IsBehindEye(eye.transform, camera.GetComponent<Camera>()))
+            //{
+            //    continue;
+            //}
 
             var eyeInVp = camera.GetComponent<Camera>().WorldToViewportPoint(eye.transform.position);
-
             var vpTopInVp = eyeInVp;
             vpTopInVp.y = 1;
             var vpTopInWorld = camera.GetComponent<Camera>().ViewportToWorldPoint(vpTopInVp);
-
             var dirCamToTop = vpTopInWorld - camera.transform.position;
             var dirCamToEye = eye.transform.position - camera.transform.position;
+            var thisAngleX = Vector3.SignedAngle(dirCamToTop, dirCamToEye, camera.right);
+            var thisCamLimRot = camera.transform.localRotation * Quaternion.Euler(thisAngleX, 0, 0);
 
-            var thisAngleX = Vector3.Angle(dirCamToTop, dirCamToEye);
 
-            if (eyeInVp.y > 0 && eyeInVp.y < 1 && eyeInVp.z > 0
-                && (eyeInVp.x > 1 || eyeInVp.x < 0))
+            var backAngle = AngleBetweenEyeAndCameraPosi(eye.transform, camera.GetComponent<Camera>());
+            var distance = Vector3.Distance(eye.transform.position, camera.position);
+            thisCamLimRot = GetGradualRotation(
+                thisCamLimRot, GetCameraMaxPitchRotation(camera),
+                0, 180, backAngle, distance);
+
+            // bool eyeInViewPortYZ = eyeInVp.y > 0 && eyeInVp.y < 1 && eyeInVp.z > 0;
+            bool eyeInViewPortYZ = IsLowerThan(thisCamLimRot, camera.localRotation) && eyeInVp.z > 0;
+            if (!eyeInViewPortYZ)
+                continue;
+
+
+            if (eyeInVp.x > 1 || eyeInVp.x < 0)
             {
                 float offSetX = 0;
-                if (eyeInVp.x > 1)
-                {
-                    offSetX = eyeInVp.x - 1;
-                    eyeInVp.x = 1;
-                }
-                else if (eyeInVp.x < 0)
-                {
-                    offSetX = 0 - eyeInVp.x;
-                    eyeInVp.x = 0;
-                }
+                bool inTheRight = eyeInVp.x > 1;
+                offSetX = inTheRight ? eyeInVp.x - 1 : 0 - eyeInVp.x;
+                
+                //if (eye.gameObject.name == "Eye1")
+                //    Debug.Log(offSetX);
 
-                if (eye.gameObject.name == "Eye1")
-                {
-                    Debug.Log(offSetX);
-                }
                 if (offSetX > whiskerDistance)
                     continue;
 
                 // 0
-                var rot0 = camera.transform.localRotation * Quaternion.Euler(thisAngleX, 0, 0);
+                var rot0 = thisCamLimRot;
                 // xWhiskerDistance
-                var lea = camera.transform.localEulerAngles;
-                lea.x = -89;
-                var rot1 = Quaternion.Euler(lea);
+                var rot1 = GetCameraMaxPitchRotation(camera);
+                var thisLerpedRot = Quaternion.Slerp(rot0, rot1, offSetX / whiskerDistance);
+                                
 
-                var thisRot = Quaternion.Slerp(rot0, rot1, offSetX / whiskerDistance);
-
-                var rot0X = rot0.eulerAngles.x;
-                var thisRotX = thisRot.eulerAngles.x;
-
-                lowestQuaternion = GetLowerQuaternion(thisRot, lowestQuaternion);
-                if (thisRot == lowestQuaternion)
+                lowestQuaternion = GetLowerQuaternion(thisLerpedRot, lowestQuaternion);
+                if (thisLerpedRot == lowestQuaternion)
                 {
                     int a = 1;
                     a++;
                 }
                 foundOne = true;
             }
-            else if (eyeInVp.y > 0 && eyeInVp.y < 1 && eyeInVp.z > 0 && eyeInVp.x >= 0 && eyeInVp.x <= 1)
+            else if (eyeInVp.x >= 0 && eyeInVp.x <= 1)
             {
-                var thisRot = camera.transform.localRotation * Quaternion.Euler(thisAngleX, 0, 0);
-                lowestQuaternion = GetLowerQuaternion(thisRot, lowestQuaternion);
+                lowestQuaternion = GetLowerQuaternion(thisCamLimRot, lowestQuaternion);
                 foundOne = true;
             }
         }
 
-        //if(foundOne)
-        //{
-        //    camera.transform.localRotation = lowestQuaternion;
-        //    m_CameraTargetRot = lowestQuaternion;
-        //}
+        
 
         return lowestQuaternion;
+    }
+
+    Quaternion GetCameraMaxPitchRotation(Transform camera)
+    {
+        var lea = camera.localEulerAngles;
+        lea.x = -60;
+        return Quaternion.Euler(lea);
+    }
+
+    Quaternion GetGradualRotation(Quaternion start, Quaternion end,
+        float startAngle, float endAngle, float angle, float distance)
+    {
+        if (endAngle <= startAngle)
+            return start;
+        float angleRatio = (angle - startAngle) / (endAngle - startAngle);
+        // var value = Quaternion.Slerp(start, end, curve.Evaluate(ratio));       
+
+
+        var nearEvaluate = nearAngleCurve.Evaluate(angleRatio);
+        var farEvaluate = farAngleCurve.Evaluate(angleRatio);
+
+        var startDistance = 1;
+        var endDistance = 5;
+        var distanceRatio = (distance - startDistance) / (endDistance - startDistance);
+        distanceRatio = Mathf.Clamp(distanceRatio, 0, 1);
+        var distanceEvaluate = distanceCurve.Evaluate(distanceRatio);
+
+        var mixedEvaluate = nearEvaluate + (farEvaluate - nearEvaluate) * distanceEvaluate;
+
+
+
+        var value = Quaternion.SlerpUnclamped(start, end, mixedEvaluate);
+
+
+
+
+        return value;
     }
 
     Quaternion GetLowerQuaternion(Quaternion q1, Quaternion q2)
@@ -263,7 +303,7 @@ public class MouseLookShy
         return x1 > x2;
     }
 
-    float AngleBetweenEyeAndCamera(Transform eye, Camera camera)
+    float AngleBetweenEyeAndCameraForward(Transform eye, Camera camera)
     {
         var eyeForward = eye.forward;
         eyeForward.y = 0;
@@ -273,6 +313,20 @@ public class MouseLookShy
         camForward.y = 0;
 
         return Vector3.Angle(eyeForward, -camForward);
+    }
+
+    // now we use -camToEye as return calculation
+    // 0 means in frount of NPC
+    // 180 means in back of NPC
+    float AngleBetweenEyeAndCameraPosi(Transform eye, Camera camera)
+    {
+        var eyeForward = eye.forward;
+        eyeForward.y = 0;
+
+        var camToEye = eye.transform.position - camera.transform.position;
+        camToEye.y = 0;
+
+        return Vector3.Angle(eyeForward, -camToEye);
     }
 
     bool IsBehindEye(Transform eye, Camera camera)
