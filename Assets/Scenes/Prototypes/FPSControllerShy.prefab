@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 664731987}
   - component: {fileID: 3212423269879791767}
   m_Layer: 0
-  m_Name: FPSController
+  m_Name: FPSControllerShy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,9 +177,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8ecf25a67e6f74e8b7acf0236410f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IsWalking: 0
-  m_WalkSpeed: 5
-  m_RunSpeed: 10
+  m_IsWalking: 1
+  m_WalkSpeed: 3
+  m_RunSpeed: 5
   m_RunstepLenghten: 0.7
   m_JumpSpeed: 10
   m_StickToGroundForce: 10
@@ -191,15 +191,144 @@ MonoBehaviour:
     MinimumX: -89
     MaximumX: 89
     smooth: 0
-    smoothTime: 5
+    smoothTime: 10
     lockCursor: 1
-    fixedMaxAngle: 1
-    eyeLimitationAngle: 60
-    shySmooth: 1
+    shyMode: 1
+    whiskerDistance: 0.5
+    shySmooth: 5
+    smoothFactor: 0.5
+    angleCheck: 1
+    nearAngleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.0021324158
+        value: -0.06892395
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5051608
+        value: 0.23149788
+        inSlope: 1.3901846
+        outSlope: 1.3901846
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6562354
+        value: 0.97342294
+        inSlope: 0.75270736
+        outSlope: 0.077311784
+        tangentMode: 65
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.2638473
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0.077311784
+        outSlope: 1
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    farAngleCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.59311473
+        value: 0.011491589
+        inSlope: 0.019374985
+        outSlope: 158.252
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5993627
+        value: 1.0002402
+        inSlope: 158.252
+        outSlope: -0.0005995615
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: -0.0005995615
+        outSlope: 1
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    distanceCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.2825888
+        value: 0.36465046
+        inSlope: 2.0623367
+        outSlope: 2.0623367
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.500772
+        value: 0.88550496
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    forcedAngle: 60
   m_UseFovKick: 1
   m_FovKick:
-    Camera: {fileID: 0}
-    originalFov: 0
+    Camera: {fileID: 1575361872}
+    originalFov: 60
     FOVIncrease: 3
     TimeToIncrease: 1
     TimeToDecrease: 1
@@ -270,8 +399,8 @@ MonoBehaviour:
     BobAmount: 0
   m_StepInterval: 5
   m_FootstepSounds:
-  - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
+  - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
 --- !u!1 &1575361868
@@ -300,13 +429,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575361868}
-  m_LocalRotation: {x: 0.0017452955, y: 0, z: 0, w: 0.9999985}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: -0.011693528, y: 0, z: 0, w: 0.99993163}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 664731991}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.2, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.34, y: 0, z: 0}
 --- !u!20 &1575361872
 Camera:
   m_ObjectHideFlags: 0
