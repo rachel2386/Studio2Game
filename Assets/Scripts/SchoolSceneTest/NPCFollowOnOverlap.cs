@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class NPCFollowOnOverlap : MonoBehaviour
@@ -24,24 +25,30 @@ public class NPCFollowOnOverlap : MonoBehaviour
         
         if (DetectPlayer())
         {
-           
+            float NPCspeed = 0;
             if (Vector3.Distance(NPCTransform.position, playerTransform.position) >= 0.2f)
             {
-                 NPCx= Mathf.MoveTowards(NPCTransform.position.x, playerTransform.position.x, 1f * Time.deltaTime);  
-                 NPCz= Mathf.MoveTowards(NPCTransform.position.z, playerTransform.position.z -playerTransform.localScale.z,1f * Time.deltaTime);  
+                NPCspeed = 1f * Time.deltaTime;
+            }
+            else if(Vector3.Distance(NPCTransform.position, playerTransform.position) >= 1.5f)
+            {
+                NPCspeed = 3f * Time.deltaTime;
             }
             else
-            {
-                
-                NPCx = NPCTransform.position.x;
-                NPCz = NPCTransform.position.z;
+           {
+
+                NPCspeed = 0f;
 
             }
 
+            NPCx= Mathf.MoveTowards(NPCTransform.position.x, playerTransform.position.x,NPCspeed );  
+            NPCz= Mathf.MoveTowards(NPCTransform.position.z, playerTransform.position.z -playerTransform.localScale.z,NPCspeed);  
+            
             newNPCPos.x = NPCx;
             newNPCPos.z = NPCz;
             newNPCPos.y = NPCTransform.position.y;
             NPCTransform.position = newNPCPos;
+            NPCTransform.LookAt(newNPCPos);
 
         }
     }
