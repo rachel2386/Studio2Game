@@ -5,39 +5,45 @@ using UnityEngine;
 
 public class NPCFollowOnOverlap : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     private Transform playerTransform;
     private Transform NPCTransform;
+    Animator NPCAnim;
     bool seePlayer = false;
+    float NPCspeed = 0;
    
     void Start()
     {
         playerTransform = GameObject.Find("PlayerBase").transform;
         NPCTransform = transform;
+        NPCAnim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     float NPCx = 0f;
     float NPCz = 0f;
     Vector3 newNPCPos = new Vector3(0, 0, 0);
+    private static readonly int Forward = Animator.StringToHash("Forward");
+
     void Update()
     {
         
+      
         if (DetectPlayer())
         {
-            float NPCspeed = 0;
-            if (Vector3.Distance(NPCTransform.position, playerTransform.position) >= 0.2f)
+            
+            if (Vector3.Distance(NPCTransform.position, playerTransform.position) <= 1f)
             {
-                NPCspeed = 1f * Time.deltaTime;
+                NPCspeed = Mathf.Lerp(NPCspeed, 0f, 2*Time.deltaTime);
             }
-            else if(Vector3.Distance(NPCTransform.position, playerTransform.position) >= 1.5f)
+            else if(Vector3.Distance(NPCTransform.position, playerTransform.position) <= 1.5f)
             {
-                NPCspeed = 3f * Time.deltaTime;
+
+                NPCspeed = Mathf.Lerp(NPCspeed, 0.02f, Time.deltaTime); //Mathf.MoveTowards(NPCspeed, 0.02f, Time.deltaTime/4);
             }
             else
-           {
+            {
 
-                NPCspeed = 0f;
+                NPCspeed = Mathf.Lerp(NPCspeed, 0.06f, Time.deltaTime);
 
             }
 
@@ -51,6 +57,12 @@ public class NPCFollowOnOverlap : MonoBehaviour
             NPCTransform.LookAt(newNPCPos);
 
         }
+        else
+        {
+            NPCspeed = 0;
+        }
+        
+        UpdateAnimator();
     }
 
     private void OnDrawGizmos()
@@ -76,5 +88,12 @@ public class NPCFollowOnOverlap : MonoBehaviour
         }
 
         return seePlayer;
+    }
+
+    void UpdateAnimator()
+    {
+        //print("Distance" + Vector3.Distance(NPCTransform.position, playerTransform.position) );
+        //print("npcSpeed" + NPCspeed);
+        NPCAnim.SetFloat(Forward, NPCspeed);
     }
 }
