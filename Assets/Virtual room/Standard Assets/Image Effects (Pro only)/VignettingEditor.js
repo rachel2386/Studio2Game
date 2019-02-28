@@ -12,6 +12,7 @@ class VignettingEditor extends Editor
   var axialAberration : SerializedProperty;
   var blur : SerializedProperty; // blur == 0 disables blur pass (optimization)
   var blurSpread : SerializedProperty;
+  var blurDistance : SerializedProperty;
   var luminanceDependency : SerializedProperty;
 
 	function OnEnable () {
@@ -24,12 +25,13 @@ class VignettingEditor extends Editor
     blur = serObj.FindProperty ("blur");
     blurSpread = serObj.FindProperty ("blurSpread");
     luminanceDependency = serObj.FindProperty ("luminanceDependency");
+    blurDistance = serObj.FindProperty ("blurDistance");
 	} 
     		
   function OnInspectorGUI () {         
     serObj.Update ();
         	    	
-    EditorGUILayout.LabelField("Simulates camera (lens) artifacts known as 'Vignette' and 'Aberration'", EditorStyles.miniLabel);
+    EditorGUILayout.LabelField("Simulates the common lens artifacts 'Vignette' and 'Aberration'", EditorStyles.miniLabel);
 
     EditorGUILayout.PropertyField (intensity, new GUIContent("Vignetting"));    
     EditorGUILayout.PropertyField (blur, new GUIContent(" Blurred Corners"));    
@@ -38,12 +40,13 @@ class VignettingEditor extends Editor
 
     EditorGUILayout.Separator ();
 
-    EditorGUILayout.PropertyField (mode, new GUIContent("Aberration Mode"));
+    EditorGUILayout.PropertyField (mode, new GUIContent("Aberration"));
     if(mode.intValue>0)  
     {
       EditorGUILayout.PropertyField (chromaticAberration, new GUIContent("  Tangential Aberration"));
       EditorGUILayout.PropertyField (axialAberration, new GUIContent("  Axial Aberration"));
       luminanceDependency.floatValue = EditorGUILayout.Slider("  Contrast Dependency", luminanceDependency.floatValue, 0.001f, 1.0f);
+      blurDistance.floatValue = EditorGUILayout.Slider("  Blur Distance", blurDistance.floatValue, 0.001f, 5.0f);
     }
     else
       EditorGUILayout.PropertyField (chromaticAberration, new GUIContent(" Chromatic Aberration"));

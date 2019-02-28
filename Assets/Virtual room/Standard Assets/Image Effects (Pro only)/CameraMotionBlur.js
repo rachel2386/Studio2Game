@@ -3,7 +3,7 @@
 
 @script ExecuteInEditMode
 @script RequireComponent (Camera)
-@script AddComponentMenu ("Image Effects/Camera Motion Blur") 
+@script AddComponentMenu ("Image Effects/Camera/Camera Motion Blur") 
 
 public class CameraMotionBlur extends PostEffectsBase 
 {
@@ -11,10 +11,11 @@ public class CameraMotionBlur extends PostEffectsBase
 	static var MAX_RADIUS : int = 10.0f;
 
 	public enum MotionBlurFilter {
-		CameraMotion = 0, // global screen blur based on cam motion
-		LocalBlur = 1, // cheap blur, no dilation or scattering
-		Reconstruction = 2, // advanced filter (simulates scattering) as in plausible motion blur paper
-		ReconstructionDX11 = 3, // advanced filter (simulates scattering) as in plausible motion blur paper
+		CameraMotion = 0, 			// global screen blur based on cam motion
+		LocalBlur = 1, 				// cheap blur, no dilation or scattering
+		Reconstruction = 2, 		// advanced filter (simulates scattering) as in plausible motion blur paper
+		ReconstructionDX11 = 3, 	// advanced filter (simulates scattering) as in plausible motion blur paper
+		ReconstructionDisc = 4,		// advanced filter using scaled poisson disc sampling
 	}
 
 	// settings		
@@ -26,7 +27,6 @@ public class CameraMotionBlur extends PostEffectsBase
 	public var movementScale : float = 0.0f;
 	public var rotationScale : float = 1.0f;
 	public var maxVelocity : float = 8.0f;	// maximum velocity in pixels
-	public var maxNumSamples : int = 17; // DX11
 	public var minVelocity : float = 0.1f;	// minimum velocity in pixels
 	public var velocityScale : float = 0.375f;	// global velocity scale
 	public var softZDistance : float = 0.005f;	// for z overlap check softness (reconstruction filter only)
@@ -43,7 +43,8 @@ public class CameraMotionBlur extends PostEffectsBase
 	private var motionBlurMaterial : Material = null;
 	private var dx11MotionBlurMaterial : Material = null;
 
-	public var noiseTexture : Texture2D = null;	
+	public var noiseTexture : Texture2D = null;
+	public var jitter : float = 0.05f;
 
 	// (internal) debug
 	public var showVelocity : boolean = false;
@@ -66,18 +67,16 @@ public class CameraMotionBlur extends PostEffectsBase
 		currentViewProjMat = projMat * viewMat;				
 	}
 	
-	function Start ()
-	{
+	function Start () {
 		CheckResources ();
 
 		wasActive = gameObject.activeInHierarchy;
 		CalculateViewProjection ();
 		Remember ();
-		prevFrameCount = -1;
 		wasActive = false; // hack to fake position/rotation update and prevent bad blurs
 	}
 
-	function OnEnable () {
+	function OnEnable () {		
 		camera.depthTextureMode |= DepthTextureMode.Depth;	
 	}
 		
@@ -98,18 +97,19 @@ public class CameraMotionBlur extends PostEffectsBase
 
 	function CheckResources () : boolean {
 		CheckSupport (true, true); // depth & hdr needed
-		motionBlurMaterial = CheckShaderAndCreateMaterial (shader, motionBlurMaterial); 
-		if(supportDX11 && filterType == MotionBlurFilter.ReconstructionDX11) {
-			dx11MotionBlurMaterial = CheckShaderAndCreateMaterial(dx11MotionBlurShader, dx11MotionBlurMaterial);
+		motionBlurMaterial = CheckShaderAndCreateMaterial (shader, motionBlurMaterial);
+
+		if (supportDX11 && filterType == MotionBlurFilter.ReconstructionDX11) {
+			dx11MotionBlurMaterial = CheckShaderAndCreateMaterial (dx11MotionBlurShader, dx11MotionBlurMaterial);
 		}
 	
-		if(!isSupported)
+		if (!isSupported)
 			ReportAutoDisable ();
 
 		return isSupported;			
 	}		
 	
-	function OnRenderImage(source : RenderTexture, destination : RenderTexture) {	
+	function OnRenderImage (source : RenderTexture, destination : RenderTexture) {	
 		if (false == CheckResources ()) {
 			Graphics.Blit (source, destination);
 			return;
@@ -125,9 +125,9 @@ public class CameraMotionBlur extends PostEffectsBase
 		var velBuffer : RenderTexture = RenderTexture.GetTemporary (divRoundUp (source.width, velocityDownsample), divRoundUp (source.height, velocityDownsample), 0, rtFormat);
 		var tileWidth : int = 1;
 		var tileHeight : int = 1;
-		maxVelocity = Mathf.Max(2.0f, maxVelocity);
+		maxVelocity = Mathf.Max (2.0f, maxVelocity);
 
-		var _maxVelocity = maxVelocity; // calculate 'k'
+		var _maxVelocity : float = maxVelocity; // calculate 'k'
 		// note: 's' is hardcoded in shaders except for DX11 path
 
 		// auto DX11 fallback!
@@ -136,7 +136,7 @@ public class CameraMotionBlur extends PostEffectsBase
 			fallbackFromDX11 = true;
 		}		
 
-		if (filterType == MotionBlurFilter.Reconstruction || fallbackFromDX11) {
+		if (filterType == MotionBlurFilter.Reconstruction || fallbackFromDX11 || filterType == MotionBlurFilter.ReconstructionDisc) {
 			maxVelocity = Mathf.Min (maxVelocity, MAX_RADIUS);
 			tileWidth = divRoundUp (velBuffer.width, maxVelocity);
 			tileHeight = divRoundUp (velBuffer.height, maxVelocity);
@@ -178,6 +178,7 @@ public class CameraMotionBlur extends PostEffectsBase
 		motionBlurMaterial.SetFloat ("_MaxRadiusOrKInPaper", _maxVelocity);
 		motionBlurMaterial.SetFloat ("_MinVelocity", minVelocity);
 		motionBlurMaterial.SetFloat ("_VelocityScale", velocityScale);
+		motionBlurMaterial.SetFloat ("_Jitter", jitter);
 		
 		// texture samplers
 		motionBlurMaterial.SetTexture ("_NoiseTex", noiseTexture);
@@ -189,10 +190,10 @@ public class CameraMotionBlur extends PostEffectsBase
 			// generate an artifical 'previous' matrix to simulate blur look
 			var viewMat : Matrix4x4 = camera.worldToCameraMatrix;
 			var offset : Matrix4x4 = Matrix4x4.identity;
-			offset.SetTRS(previewScale * 0.25f, Quaternion.identity, Vector3.one); // using only translation
+			offset.SetTRS(previewScale * 0.3333f, Quaternion.identity, Vector3.one); // using only translation
 			var projMat : Matrix4x4 = GL.GetGPUProjectionMatrix (camera.projectionMatrix, true);
 			prevViewProjMat = projMat * offset * viewMat;
-			motionBlurMaterial.SetMatrix("_PrevViewProj", prevViewProjMat);
+			motionBlurMaterial.SetMatrix ("_PrevViewProj", prevViewProjMat);
 			motionBlurMaterial.SetMatrix ("_ToPrevViewProjCombined", prevViewProjMat * invViewPrj);			
 		}
 
@@ -201,7 +202,7 @@ public class CameraMotionBlur extends PostEffectsBase
 			// build blur vector to be used in shader to create a global blur direction
 			var blurVector : Vector4 = Vector4.zero;
 
-			var lookUpDown : float = Vector3.Dot(transform.up, Vector3.up);
+			var lookUpDown : float = Vector3.Dot (transform.up, Vector3.up);
 			var distanceVector : Vector3 = prevFramePos-transform.position;
 
 			var distMag : float = distanceVector.magnitude;
@@ -209,24 +210,24 @@ public class CameraMotionBlur extends PostEffectsBase
 			var farHeur : float = 1.0f;
 
 			// pitch (vertical)
-			farHeur = (Vector3.Angle(transform.up, prevFrameUp) / camera.fieldOfView) * (source.width * 0.75f);
+			farHeur = (Vector3.Angle (transform.up, prevFrameUp) / camera.fieldOfView) * (source.width * 0.75f);
 			blurVector.x =  rotationScale * farHeur;//Mathf.Clamp01((1.0f-Vector3.Dot(transform.up, prevFrameUp)));
 
 			// yaw #1 (horizontal, faded by pitch)
-			farHeur = (Vector3.Angle(transform.forward, prevFrameForward) / camera.fieldOfView) * (source.width * 0.75f);
+			farHeur = (Vector3.Angle (transform.forward, prevFrameForward) / camera.fieldOfView) * (source.width * 0.75f);
 			blurVector.y = rotationScale * lookUpDown * farHeur;//Mathf.Clamp01((1.0f-Vector3.Dot(transform.forward, prevFrameForward)));
 
 			// yaw #2 (when looking down, faded by 1-pitch)
-			farHeur = (Vector3.Angle(transform.forward, prevFrameForward) / camera.fieldOfView) * (source.width * 0.75f);			
+			farHeur = (Vector3.Angle (transform.forward, prevFrameForward) / camera.fieldOfView) * (source.width * 0.75f);			
 			blurVector.z = rotationScale * (1.0f- lookUpDown) * farHeur;//Mathf.Clamp01((1.0f-Vector3.Dot(transform.forward, prevFrameForward)));
 
 			if (distMag > Mathf.Epsilon && movementScale > Mathf.Epsilon) {
 				// forward (probably most important)
-				blurVector.w = movementScale * (Vector3.Dot(transform.forward, distanceVector) ) * (source.width * 0.5f);
+				blurVector.w = movementScale * (Vector3.Dot (transform.forward, distanceVector) ) * (source.width * 0.5f);
 				// jump (maybe scale down further)
-				blurVector.x += movementScale * (Vector3.Dot(transform.up, distanceVector) ) * (source.width * 0.5f);
+				blurVector.x += movementScale * (Vector3.Dot (transform.up, distanceVector) ) * (source.width * 0.5f);
 				// strafe (maybe scale down further)
-				blurVector.y += movementScale * (Vector3.Dot(transform.right, distanceVector) ) * (source.width * 0.5f);
+				blurVector.y += movementScale * (Vector3.Dot (transform.right, distanceVector) ) * (source.width * 0.5f);
 			}
 
 			if (preview) // crude approximation
@@ -290,21 +291,17 @@ public class CameraMotionBlur extends PostEffectsBase
 		else {
 			if (filterType == MotionBlurFilter.ReconstructionDX11 && !fallbackFromDX11) {
 				// need to reset some parameters for dx11 shader
-				dx11MotionBlurMaterial.SetFloat ("_MaxVelocity", _maxVelocity);
 				dx11MotionBlurMaterial.SetFloat ("_MinVelocity", minVelocity);
 				dx11MotionBlurMaterial.SetFloat ("_VelocityScale", velocityScale);
-				
+				dx11MotionBlurMaterial.SetFloat ("_Jitter", jitter);
+
 				// texture samplers
 				dx11MotionBlurMaterial.SetTexture ("_NoiseTex", noiseTexture);
 				dx11MotionBlurMaterial.SetTexture ("_VelTex", velBuffer);
 				dx11MotionBlurMaterial.SetTexture ("_NeighbourMaxTex", neighbourMax);
 				
-				dx11MotionBlurMaterial.SetFloat ("_SoftZDistance", Mathf.Max(0.00025f, softZDistance) );
-				
-				// DX11 specific
+				dx11MotionBlurMaterial.SetFloat ("_SoftZDistance", Mathf.Max(0.00025f, softZDistance) );				
 				dx11MotionBlurMaterial.SetFloat ("_MaxRadiusOrKInPaper", _maxVelocity);
-				maxNumSamples = 2*(maxNumSamples/2)+1;
-				dx11MotionBlurMaterial.SetFloat ("_SampleCount", maxNumSamples * 1.0f);		
 				
 				// generate tile max and neighbour max		
 				Graphics.Blit (velBuffer, tileMax, dx11MotionBlurMaterial, 0);
@@ -324,12 +321,23 @@ public class CameraMotionBlur extends PostEffectsBase
 				// final blur
 				Graphics.Blit (source, destination, motionBlurMaterial, 4);
 			}
-			else if (filterType == MotionBlurFilter.CameraMotion)
-			{
+			else if (filterType == MotionBlurFilter.CameraMotion) {
+				// orange box style motion blur
 				Graphics.Blit (source, destination, motionBlurMaterial, 6);				
 			}
+			else if (filterType == MotionBlurFilter.ReconstructionDisc) {
+				// dof style motion blur defocuing and ellipse around the princical blur direction
+				// 'reconstructing' properly integrated color
+				motionBlurMaterial.SetFloat ("_SoftZDistance", Mathf.Max(0.00025f, softZDistance) );
+				
+				// generate tile max and neighbour max		
+				Graphics.Blit (velBuffer, tileMax, motionBlurMaterial, 2);
+				Graphics.Blit (tileMax, neighbourMax, motionBlurMaterial, 3);
+								
+				Graphics.Blit (source, destination, motionBlurMaterial, 7);
+			}
 			else {
-				// simple blur, blurring along velocity (gather)
+				// simple & fast blur (low quality): just blurring along velocity
 				Graphics.Blit (source, destination, motionBlurMaterial, 5);
 			}
 		}

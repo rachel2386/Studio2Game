@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [ExecuteInEditMode]
-[AddComponentMenu("Image Effects/Contrast Stretch")]
+[AddComponentMenu("Image Effects/Color Adjustments/Contrast Stretch")]
 public class ContrastStretchEffect : MonoBehaviour
 {
 	/// Adaptation speed - percents per frame, if playing at 30FPS.
@@ -102,7 +102,7 @@ public class ContrastStretchEffect : MonoBehaviour
 		for( int i = 0; i < 2; ++i )
 		{
 			if( !adaptRenderTex[i] ) {
-				adaptRenderTex[i] = new RenderTexture( 1, 1, 32 );
+				adaptRenderTex[i] = new RenderTexture(1, 1, 0);
 				adaptRenderTex[i].hideFlags = HideFlags.HideAndDontSave;
 			}
 		}
@@ -183,6 +183,9 @@ public class ContrastStretchEffect : MonoBehaviour
 			limitMaximum,
 			0.0f
 		));
+		// clear destination RT so its contents don't need to be restored
+		Graphics.SetRenderTarget(adaptRenderTex[curAdaptIndex]);
+		GL.Clear(false, true, Color.black);
 		Graphics.Blit (
 			adaptRenderTex[prevAdaptIndex],
 			adaptRenderTex[curAdaptIndex],

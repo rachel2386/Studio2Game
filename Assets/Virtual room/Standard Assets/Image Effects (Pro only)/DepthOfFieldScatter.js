@@ -3,7 +3,7 @@
 
 @script ExecuteInEditMode
 @script RequireComponent (Camera)
-@script AddComponentMenu ("Image Effects/Depth of Field (Lens Blur, Scatter, DX11)") 
+@script AddComponentMenu ("Image Effects/Camera/Depth of Field (Lens Blur, Scatter, DX11)") 
 
 class DepthOfFieldScatter extends PostEffectsBase 
 {	
@@ -105,24 +105,36 @@ class DepthOfFieldScatter extends PostEffectsBase
 		return camera.WorldToViewportPoint((worldDist-camera.nearClipPlane) * camera.transform.forward + camera.transform.position).z / (camera.farClipPlane-camera.nearClipPlane);	
 	}
 
-	private function WriteCoc (fromTo : RenderTexture, temp1 : RenderTexture, temp2 : RenderTexture, fgDilate : boolean) {
+	private function WriteCoc (fromTo : RenderTexture, fgDilate : boolean) {
 		dofHdrMaterial.SetTexture("_FgOverlap", null); 
 
 		if (nearBlur && fgDilate) {
+
+			var rtW : int = fromTo.width/2;
+			var rtH : int = fromTo.height/2;
+
 			// capture fg coc
+			var temp2 : RenderTexture = RenderTexture.GetTemporary (rtW, rtH, 0, fromTo.format);
 			Graphics.Blit (fromTo, temp2, dofHdrMaterial, 4); 
 			
 			// special blur
 			var fgAdjustment : float = internalBlurWidth * foregroundOverlap;
 
 			dofHdrMaterial.SetVector ("_Offsets", Vector4 (0.0f, fgAdjustment , 0.0f, fgAdjustment));
+			var temp1 : RenderTexture = RenderTexture.GetTemporary (rtW, rtH, 0, fromTo.format);
 			Graphics.Blit (temp2, temp1, dofHdrMaterial, 2);
+			RenderTexture.ReleaseTemporary(temp2);
+
 			dofHdrMaterial.SetVector ("_Offsets", Vector4 (fgAdjustment, 0.0f, 0.0f, fgAdjustment));		
-			Graphics.Blit (temp1, temp2, dofHdrMaterial, 2);	 			
+			temp2 = RenderTexture.GetTemporary (rtW, rtH, 0, fromTo.format);
+			Graphics.Blit (temp1, temp2, dofHdrMaterial, 2);
+			RenderTexture.ReleaseTemporary(temp1);
 
 			// "merge up" with background COC
             dofHdrMaterial.SetTexture("_FgOverlap", temp2);
+            fromTo.MarkRestoreExpected(); // only touching alpha channel, RT restore expected
 			Graphics.Blit (fromTo, fromTo, dofHdrMaterial,  13);
+			RenderTexture.ReleaseTemporary(temp2);
 		}
 		else {
 			// capture full coc in alpha channel (fromTo is not read, but bound to detect screen flip)
@@ -165,10 +177,7 @@ class DepthOfFieldScatter extends PostEffectsBase
 			//
 			//
 
-			rtLow = RenderTexture.GetTemporary (source.width>>1, source.height>>1, 0, source.format);		
-			rtLow2 = RenderTexture.GetTemporary (source.width>>1, source.height>>1, 0, source.format);
-		
-			WriteCoc (source, rtLow, rtLow2, true);
+			WriteCoc (source, true);
 			Graphics.Blit (source, destination, dofHdrMaterial, 16);
 		}		
 		else if ((blurType == BlurType.DX11) && dx11bokehMaterial) 
@@ -191,7 +200,7 @@ class DepthOfFieldScatter extends PostEffectsBase
 				var dest2 = RenderTexture.GetTemporary (source.width, source.height, 0, source.format);	
 
 				// capture COC
-				WriteCoc (source, null, null, false);
+				WriteCoc (source, false);
 
 				// blur a bit so we can do a frequency check
 				rtSuperLow1 = RenderTexture.GetTemporary(source.width>>1, source.height>>1, 0, source.format);
@@ -260,7 +269,7 @@ class DepthOfFieldScatter extends PostEffectsBase
 				fgBlurDist = internalBlurWidth * foregroundOverlap;
 
 				// capture COC & color in low resolution
-				WriteCoc (source, null, null, false);
+				WriteCoc (source, false);
 				source.filterMode = FilterMode.Bilinear;
 				Graphics.Blit (source, rtLow, dofHdrMaterial, 6);
 
@@ -339,13 +348,14 @@ class DepthOfFieldScatter extends PostEffectsBase
 			//
 			//
 
-			rtLow = RenderTexture.GetTemporary (source.width >> 1, source.height >> 1, 0, source.format);		
-			rtLow2 = RenderTexture.GetTemporary (source.width >> 1, source.height >> 1, 0, source.format);		
 			source.filterMode = FilterMode.Bilinear;
 
 			if(highResolution) internalBlurWidth *= 2.0f;
 
-			WriteCoc (source, rtLow, rtLow2, true);	
+			WriteCoc (source, true);
+
+			rtLow = RenderTexture.GetTemporary (source.width >> 1, source.height >> 1, 0, source.format);
+			rtLow2 = RenderTexture.GetTemporary (source.width >> 1, source.height >> 1, 0, source.format);
 
 			var blurPass : int = (blurSampleCount == BlurSampleCount.High || blurSampleCount == BlurSampleCount.Medium) ? 17 : 11;
 

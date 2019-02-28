@@ -8,7 +8,7 @@ using UnityEngine;
  
 [ExecuteInEditMode]
 [RequireComponent (typeof(Camera))]
-[AddComponentMenu("Image Effects/Glow")]
+[AddComponentMenu("Image Effects/Bloom and Glow/Glow (Deprecated)")]
 public class GlowEffect : MonoBehaviour
 {
 	/// The brightness of the glow. Values larger than one give extra "boost".
@@ -151,8 +151,9 @@ public class GlowEffect : MonoBehaviour
 		blurIterations = Mathf.Clamp( blurIterations, 0, 30 );
 		blurSpread = Mathf.Clamp( blurSpread, 0.5f, 1.0f );
 		
-		RenderTexture buffer = RenderTexture.GetTemporary(source.width/4, source.height/4, 0);
-		RenderTexture buffer2 = RenderTexture.GetTemporary(source.width/4, source.height/4, 0);
+		int rtW = source.width/4;
+		int rtH = source.height/4;
+		RenderTexture buffer = RenderTexture.GetTemporary(rtW, rtH, 0);
 		
 		// Copy source to the 4x4 smaller texture.
 		DownSample4x (source, buffer);
@@ -161,24 +162,18 @@ public class GlowEffect : MonoBehaviour
 		float extraBlurBoost = Mathf.Clamp01( (glowIntensity - 1.0f) / 4.0f );
 		blurMaterial.color = new Color( 1F, 1F, 1F, 0.25f + extraBlurBoost );
 		
-		bool oddEven = true;
 		for(int i = 0; i < blurIterations; i++)
 		{
-			if( oddEven )
-				FourTapCone (buffer, buffer2, i);
-			else
-				FourTapCone (buffer2, buffer, i);
-			oddEven = !oddEven;
+			RenderTexture buffer2 = RenderTexture.GetTemporary(rtW, rtH, 0);
+			FourTapCone (buffer, buffer2, i);
+			RenderTexture.ReleaseTemporary(buffer);
+			buffer = buffer2;
 		}
 		Graphics.Blit(source,destination);
 				
-		if( oddEven )
-			BlitGlow(buffer, destination);
-		else
-			BlitGlow(buffer2, destination);
+		BlitGlow(buffer, destination);
 		
 		RenderTexture.ReleaseTemporary(buffer);
-		RenderTexture.ReleaseTemporary(buffer2);
 	}
 	
 	public void BlitGlow( RenderTexture source, RenderTexture dest )

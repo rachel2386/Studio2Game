@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-[AddComponentMenu("Image Effects/Sepia Tone")]
+[AddComponentMenu("Image Effects/Color Adjustments/Sepia Tone")]
 public class SepiaToneEffect : ImageEffectBase {
 
 	// Called by camera to apply image effect

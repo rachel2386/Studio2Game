@@ -1,7 +1,7 @@
 
 #pragma strict
 @script ExecuteInEditMode
-@script AddComponentMenu ("Image Effects/Color Correction (Curves, Saturation)")
+@script AddComponentMenu ("Image Effects/Color Adjustments/Color Correction (Curves, Saturation)")
 
 enum ColorCorrectionMode {
 	Simple = 0,
@@ -81,7 +81,9 @@ class ColorCorrectionCurves extends PostEffectsBase
 	}	
 	
 	public function UpdateParameters () 
-	{			
+	{
+		CheckResources(); // textures might not be created if we're tweaking UI while disabled
+		
 		if (redChannel && greenChannel && blueChannel) {		
 			for (var i : float = 0.0f; i <= 1.0f; i += 1.0f / 255.0f) {
 				var rCh : float = Mathf.Clamp (redChannel.Evaluate(i), 0.0f, 1.0f);

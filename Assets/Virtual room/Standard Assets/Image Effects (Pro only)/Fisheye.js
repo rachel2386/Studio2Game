@@ -3,7 +3,7 @@
 
 @script ExecuteInEditMode
 @script RequireComponent (Camera)
-@script AddComponentMenu ("Image Effects/Fisheye")
+@script AddComponentMenu ("Image Effects/Displacement/Fisheye")
 
 class Fisheye extends PostEffectsBase {
 	public var strengthX : float = 0.05f;

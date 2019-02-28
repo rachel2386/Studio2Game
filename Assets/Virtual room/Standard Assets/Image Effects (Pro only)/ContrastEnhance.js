@@ -3,7 +3,7 @@
 
 @script ExecuteInEditMode
 @script RequireComponent(Camera)
-@script AddComponentMenu("Image Effects/Contrast Enhance (Unsharp Mask)")
+@script AddComponentMenu("Image Effects/Color Adjustments/Contrast Enhance (Unsharp Mask)")
 
 class ContrastEnhance extends PostEffectsBase {
 	public var intensity : float = 0.5;
@@ -33,32 +33,38 @@ class ContrastEnhance extends PostEffectsBase {
 			Graphics.Blit (source, destination);
 			return;
 		}
+
+		var rtW : int = source.width;
+		var rtH : int = source.height;
 				
-		var halfRezColor : RenderTexture = RenderTexture.GetTemporary (source.width / 2.0, source.height / 2.0, 0);	
-		var quarterRezColor : RenderTexture = RenderTexture.GetTemporary (source.width / 4.0, source.height / 4.0, 0);	
-		var secondQuarterRezColor : RenderTexture = RenderTexture.GetTemporary (source.width / 4.0, source.height / 4.0, 0);	
+		var color2 : RenderTexture = RenderTexture.GetTemporary (rtW/2, rtH/2, 0);	
 			
-		// ddownsample
-		
-		Graphics.Blit (source, halfRezColor);
-		Graphics.Blit (halfRezColor, quarterRezColor); 
+		// downsample
+
+		Graphics.Blit (source, color2);
+		var color4a : RenderTexture = RenderTexture.GetTemporary (rtW/4, rtH/4, 0);
+		Graphics.Blit (color2, color4a); 
+		RenderTexture.ReleaseTemporary (color2);
 	
 		// blur
 		
-		separableBlurMaterial.SetVector ("offsets", Vector4 (0.0, (blurSpread * 1.0) / quarterRezColor.height, 0.0, 0.0));	
-		Graphics.Blit (quarterRezColor, secondQuarterRezColor, separableBlurMaterial);				
-		separableBlurMaterial.SetVector ("offsets", Vector4 ((blurSpread * 1.0) / quarterRezColor.width, 0.0, 0.0, 0.0));	
-		Graphics.Blit (secondQuarterRezColor, quarterRezColor, separableBlurMaterial); 
+		separableBlurMaterial.SetVector ("offsets", Vector4 (0.0, (blurSpread * 1.0) / color4a.height, 0.0, 0.0));	
+		var color4b : RenderTexture = RenderTexture.GetTemporary (rtW/4, rtH/4, 0);
+		Graphics.Blit (color4a, color4b, separableBlurMaterial);
+		RenderTexture.ReleaseTemporary (color4a);
+
+		separableBlurMaterial.SetVector ("offsets", Vector4 ((blurSpread * 1.0) / color4a.width, 0.0, 0.0, 0.0));	
+		color4a = RenderTexture.GetTemporary (rtW/4, rtH/4, 0);
+		Graphics.Blit (color4b, color4a, separableBlurMaterial); 
+		RenderTexture.ReleaseTemporary (color4b);
 	
 		// composite
-		
-		contrastCompositeMaterial.SetTexture ("_MainTexBlurred", quarterRezColor);
+
+		contrastCompositeMaterial.SetTexture ("_MainTexBlurred", color4a);
 		contrastCompositeMaterial.SetFloat ("intensity", intensity);
 		contrastCompositeMaterial.SetFloat ("threshhold", threshhold);
 		Graphics.Blit (source, destination, contrastCompositeMaterial); 
 		
-		RenderTexture.ReleaseTemporary (halfRezColor);	
-		RenderTexture.ReleaseTemporary (quarterRezColor);	
-		RenderTexture.ReleaseTemporary (secondQuarterRezColor);			
+		RenderTexture.ReleaseTemporary (color4a);
 	}
 }

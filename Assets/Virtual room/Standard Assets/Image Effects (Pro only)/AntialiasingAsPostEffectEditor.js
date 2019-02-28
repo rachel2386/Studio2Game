@@ -36,7 +36,7 @@ class AntialiasingAsPostEffectEditor extends Editor
     function OnInspectorGUI () {        
     	serObj.Update ();
     	
-		GUILayout.Label("Luminance based fullscreen antialiasing (edge blur)", EditorStyles.miniBoldLabel);
+		GUILayout.Label("Luminance based fullscreen antialiasing", EditorStyles.miniBoldLabel);
     	
     	EditorGUILayout.PropertyField (mode, new GUIContent ("Technique"));
     	
