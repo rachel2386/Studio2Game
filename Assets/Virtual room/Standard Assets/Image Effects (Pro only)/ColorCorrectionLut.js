@@ -1,7 +1,7 @@
 
 #pragma strict
 @script ExecuteInEditMode
-@script AddComponentMenu ("Image Effects/Color Correction (3D Lookup Texture)")
+@script AddComponentMenu ("Image Effects/Color Adjustments/Color Correction (3D Lookup Texture)")
 
 public class ColorCorrectionLut extends PostEffectsBase
 {
@@ -17,7 +17,7 @@ public class ColorCorrectionLut extends PostEffectsBase
 
 		material = CheckShaderAndCreateMaterial (shader, material);
 
-		if(!isSupported)
+		if(!isSupported || !SystemInfo.supports3DTextures)
 			ReportAutoDisable ();
 		return isSupported;			
 	}
@@ -106,7 +106,7 @@ public class ColorCorrectionLut extends PostEffectsBase
 	}
 
 	function OnRenderImage (source : RenderTexture, destination : RenderTexture) {	
-		if(CheckResources () == false) {
+		if(CheckResources () == false || !SystemInfo.supports3DTextures) {
 			Graphics.Blit (source, destination);
 			return;
 		}

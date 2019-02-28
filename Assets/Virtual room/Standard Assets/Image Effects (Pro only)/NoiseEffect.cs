@@ -2,7 +2,7 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent (typeof(Camera))]
-[AddComponentMenu("Image Effects/Noise")]
+[AddComponentMenu("Image Effects/Noise/Noise and Scratches")]
 public class NoiseEffect : MonoBehaviour
 {
 	/// Monochrome noise just adds grain. Non-monochrome noise

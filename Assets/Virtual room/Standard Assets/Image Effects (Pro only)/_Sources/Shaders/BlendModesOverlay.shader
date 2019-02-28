@@ -20,11 +20,16 @@ Shader "Hidden/BlendModesOverlay" {
 	
 	half _Intensity;
 	half4 _MainTex_TexelSize;
+	half4 _UV_Transform = half4(1, 0, 0, 1);
 		
 	v2f vert( appdata_img v ) { 
 		v2f o;
 		o.pos = UnityObjectToClipPos(v.vertex);
-		o.uv[0] =  v.texcoord.xy;
+		
+		o.uv[0] = float2(
+			dot(v.texcoord.xy, _UV_Transform.xy),
+			dot(v.texcoord.xy, _UV_Transform.zw)
+		);
 		
 		#if UNITY_UV_STARTS_AT_TOP
 		if(_MainTex_TexelSize.y<0.0)

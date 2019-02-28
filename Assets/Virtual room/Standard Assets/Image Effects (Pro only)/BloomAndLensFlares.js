@@ -3,7 +3,7 @@
 
 @script ExecuteInEditMode
 @script RequireComponent (Camera)
-@script AddComponentMenu ("Image Effects/BloomAndFlares (3.5, Deprecated)")
+@script AddComponentMenu ("Image Effects/Bloom and Glow/BloomAndFlares (3.5, Deprecated)")
 
 enum LensflareStyle34 {
 	Ghosting = 0,

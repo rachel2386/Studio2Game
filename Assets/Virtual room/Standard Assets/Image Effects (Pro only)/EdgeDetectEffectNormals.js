@@ -3,13 +3,14 @@
 
 @script ExecuteInEditMode
 @script RequireComponent (Camera)
-@script AddComponentMenu ("Image Effects/Edge Detection (Geometry)")
+@script AddComponentMenu ("Image Effects/Edge Detection/Edge Detection")
 
 enum EdgeDetectMode {
 	TriangleDepthNormals = 0,
 	RobertsCrossDepthNormals = 1,
 	SobelDepth = 2,
 	SobelDepthThin = 3,
+	TriangleLuminance = 4,
 }
 
 class EdgeDetectEffectNormals extends PostEffectsBase {	
@@ -17,6 +18,7 @@ class EdgeDetectEffectNormals extends PostEffectsBase {
 	public var mode : EdgeDetectMode = EdgeDetectMode.SobelDepthThin;
 	public var sensitivityDepth : float = 1.0f;
 	public var sensitivityNormals : float = 1.0f;
+	public var lumThreshhold : float = 0.2f;
 	public var edgeExp : float = 1.0f;
 	public var sampleDist : float = 1.0f;
 	public var edgesOnly : float = 0.0f;
@@ -67,7 +69,8 @@ class EdgeDetectEffectNormals extends PostEffectsBase {
 		edgeDetectMaterial.SetFloat ("_BgFade", edgesOnly);	
 		edgeDetectMaterial.SetFloat ("_SampleDistance", sampleDist);		
 		edgeDetectMaterial.SetVector ("_BgColor", edgesOnlyBgColor);	
-		edgeDetectMaterial.SetFloat ("_Exponent", edgeExp);	
+		edgeDetectMaterial.SetFloat ("_Exponent", edgeExp);
+		edgeDetectMaterial.SetFloat ("_Threshold", lumThreshhold);
 		
 		Graphics.Blit (source, destination, edgeDetectMaterial, mode);
 	}
