@@ -53,7 +53,7 @@ public class DoubleRachelPlayerActions : PlayerActionSet
         // playerActions.Back.AddDefaultBinding( Key.Shift, Key.Tab );
         // playerActions.Next.AddDefaultBinding( KeyCombo.With( Key.Tab ).AndNot( Key.Shift ) );
 
-        playerActions.Fire.AddDefaultBinding(Key.A);
+        // playerActions.Fire.AddDefaultBinding(Key.A);
         playerActions.Fire.AddDefaultBinding(InputControlType.Action1);
         playerActions.Fire.AddDefaultBinding(Mouse.LeftButton);
 

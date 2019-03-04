@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour
     {
         if(playerActions.Fire.WasPressed)
         {
-            Debug.Log("Fire Pressed");
+            // Debug.Log("Fire Pressed");
         }
     }
 }

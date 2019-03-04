@@ -6,7 +6,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 
 [Serializable]
-public class MouseLookShy
+public class ShyMouseLook
 {
     public enum ShyMode
     {
