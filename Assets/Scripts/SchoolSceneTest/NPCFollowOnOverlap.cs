@@ -11,7 +11,7 @@ public class NPCFollowOnOverlap : MonoBehaviour
     Animator NPCAnim;
     bool seePlayer = false;
     float NPCspeed = 0;
-   
+   public float sphereRadius = 1.8f;
     void Start()
     {
         playerTransform = GameObject.Find("PlayerBase").transform;
@@ -70,14 +70,14 @@ public class NPCFollowOnOverlap : MonoBehaviour
         if (NPCTransform != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(NPCTransform.position,1);
+            Gizmos.DrawSphere(NPCTransform.position,sphereRadius);
         }
     }
 
     bool DetectPlayer()
     {
        
-        Collider[] stuffInSphere = Physics.OverlapSphere(NPCTransform.position, 1.5f);
+        Collider[] stuffInSphere = Physics.OverlapSphere(NPCTransform.position, sphereRadius);
 
         for (int i = 0; i < stuffInSphere.Length; i++)
         {
