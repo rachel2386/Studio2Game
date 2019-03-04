@@ -13,6 +13,13 @@ public class ShyInteractionSystem : MonoBehaviour
     string needToRefreshCenterText;
 
     GameObject curHeldObject;
+    public GameObject CurHeldObject
+    {
+        get
+        {
+            return curHeldObject;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +61,7 @@ public class ShyInteractionSystem : MonoBehaviour
         {
             var go = hit.collider.gameObject;
             var io = go.GetComponent<ShyInteractableObject>();
-            if (!io)
+            if (!io || !io.canInteract)
                 continue;            
 
             var po = io as ShyPickableObject;
@@ -91,7 +98,7 @@ public class ShyInteractionSystem : MonoBehaviour
         if (!io)
             return;
 
-        needToRefreshCenterText = io.tooltip;
+        needToRefreshCenterText = io.GetTooltip();
         if (wasPressed)
         {
             io.Clicked();
@@ -113,17 +120,31 @@ public class ShyInteractionSystem : MonoBehaviour
 
     void PutBack(GameObject go)
     {
+        // nothing in hand
         if (!curHeldObject)
             return;
-
+            
         var po = curHeldObject.GetComponent<ShyPickableObject>();
         var body = curHeldObject.GetComponent<Rigidbody>();
-
         var pbo = go.GetComponent<ShyPutBackObject>();
+
+        // wrong thing
+        var validate = pbo.Validate(curHeldObject);
+        if (!validate)
+            return;
+
+        // right thing
         curHeldObject.transform.SetParent(null);
         curHeldObject.transform.eulerAngles = po.OriRotation;
         curHeldObject.transform.localScale = po.OriLocalScale;
         curHeldObject.transform.position = pbo.putBackAnchor ? pbo.putBackAnchor.transform.position : pbo.transform.position;
+
+        pbo.AddObjectToContainer(curHeldObject);
+
+        if(!pbo.canPickAfterPut)
+        {
+            po.canInteract = false;
+        }
 
         if (body)
             body.isKinematic = false;

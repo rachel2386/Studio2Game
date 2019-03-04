@@ -2983,8 +2983,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb19346fd44758d4eae918bb3b215a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canInteract: 1
   tooltip: Put it back!
   putBackAnchor: {fileID: 115917659}
+  needValidate: 1
+  keyWords:
+  - cup
+  emptyHandTooltip: Get me something!
+  wrongThingTooltip: Wrong thing!
+  canPickAfterPut: 0
+  invokeNumber: 1
+  fullEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  fullMsgFsm: {fileID: 8322202893684845678}
+  fullMsgName: DOOR_CLICKED
 --- !u!1 &1412561662 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 432351226674235453, guid: 43a1443653851dd4fa972fd357c47c73,
@@ -3248,6 +3263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bbc200f8168fa47a3ae7557c4e9cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canInteract: 1
   tooltip: '>_<'
   pickupRotaion: {x: -90, y: 0, z: 0}
   pickupScale: {x: 4, y: 4, z: 4}
@@ -8952,6 +8968,9 @@ MonoBehaviour:
       isSystemEvent: 1
       isGlobal: 0
     - name: DOOR_CLICKED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: HAHA
       isSystemEvent: 0
       isGlobal: 0
     globalTransitions: []

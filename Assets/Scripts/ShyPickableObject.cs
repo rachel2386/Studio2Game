@@ -29,8 +29,9 @@ public class ShyPickableObject : ShyInteractableObject
 
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         oriRotation = transform.eulerAngles;
         oriLocalScale = transform.localScale; 
     }

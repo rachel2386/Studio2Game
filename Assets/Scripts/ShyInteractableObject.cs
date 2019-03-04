@@ -7,15 +7,18 @@ using UnityEngine;
 
 public class ShyInteractableObject : MonoBehaviour
 {
+    public bool canInteract = true;
     // the string 
     public string tooltip;
-
+        
     public event Action<ShyInteractableObject> OnClicked;
 
+    protected ShyInteractionSystem sis;
+
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
-        
+        sis = FindObjectOfType<ShyInteractionSystem>();
     }
 
     // Update is called once per frame
@@ -27,6 +30,12 @@ public class ShyInteractableObject : MonoBehaviour
     void CheckIfClickedInUpdate()
     {  
 
+    }
+
+
+    public virtual string GetTooltip()
+    {
+        return tooltip;
     }
 
     public virtual void Clicked()
