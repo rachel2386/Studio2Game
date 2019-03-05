@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using HutongGames.PlayMaker.Actions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PopUpDialogue : MonoBehaviour
@@ -21,12 +22,16 @@ public class PopUpDialogue : MonoBehaviour
    private Canvas myCanvas;
 
    private NPCFollowOnOverlap followPlayer;
-   
+
+  public static bool checkSceneSwitched = false;
     
     void Start()
     {
-       
-        playerRB = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+
+        if (!checkSceneSwitched)
+            playerRB = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+        else
+            playerRB = null;
         
         followPlayer = GetComponent<NPCFollowOnOverlap>();
         _isfollowPlayerNotNull = followPlayer != null;
@@ -97,6 +102,8 @@ public class PopUpDialogue : MonoBehaviour
                     {
                         textPlayed = true;
                         isFollowing = true;
+                        if(gameObject.CompareTag("Respawn"))
+                            SwitchScene();
                     }
               
             }
@@ -180,5 +187,11 @@ public class PopUpDialogue : MonoBehaviour
 
 
     }
+
+   void SwitchScene()
+   {
+       checkSceneSwitched = true;
+       SceneManager.LoadScene(1);
+   }
   
 }
