@@ -16,6 +16,8 @@ public class PopUpDialogue : MonoBehaviour
    private GameObject DialogueBubble;
    private string message;
    public float letterTime;
+   public AudioClip dialogue;
+   private AudioSource audioSource;
    private bool textPlayed = false;
 
    private ParticleSystem txtParticles;
@@ -48,7 +50,9 @@ public class PopUpDialogue : MonoBehaviour
         dialogueTxt = DialogueBubble.GetComponentInChildren<Text>();
         message = dialogueTxt.text;
         dialogueTxt.text = "";
-        
+
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     private bool addingTxt = false;
@@ -80,6 +84,8 @@ public class PopUpDialogue : MonoBehaviour
                if (!addingTxt)
                StartCoroutine(PlayTxt()); 
                
+               if (!audioSource.isPlaying)
+               audioSource.PlayOneShot(dialogue, 1F);
                
                SetDialogueState(myCanvas.transform, true);
               
