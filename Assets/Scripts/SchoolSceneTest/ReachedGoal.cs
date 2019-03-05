@@ -53,8 +53,7 @@ public class ReachedGoal : MonoBehaviour
 
     private void Update()
     {
-       
-        
+     
         MyAnim.SetBool("DoorOpen",_doorOpen);
         MyAnim.SetBool("DoorClose", _doorClosed);
     }
