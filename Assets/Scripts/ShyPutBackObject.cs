@@ -92,9 +92,11 @@ public class ShyPutBackObject : ShyInteractableObject
         container.Add(go);
         if(container.Count == invokeNumber)
         {
-            fullEvent.Invoke();
-
-            
+            fullEvent.Invoke();            
+            if (fullMsgFsm)
+            {
+                fullMsgFsm.SendEvent(fullMsgEvent);
+            }
         }
     }
 

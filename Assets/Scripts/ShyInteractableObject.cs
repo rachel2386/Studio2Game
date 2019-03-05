@@ -46,9 +46,9 @@ public class ShyInteractableObject : MonoBehaviour
     // Start is called before the first frame update
     protected void Start()
     {
-        sis = FindObjectOfType<ShyInteractionSystem>();
+        sis = FindObjectOfType<ShyInteractionSystem>();        
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -81,6 +81,11 @@ public class ShyInteractableObject : MonoBehaviour
     { 
         if(OnClicked != null)
             OnClicked.Invoke(this);
+
+        if(clickedMsgFsm)
+        {
+            clickedMsgFsm.SendEvent(clickedMsgEvent);
+        }
     }
 
     protected void UpdateEventNames(PlayMakerFSM fsm, List<string> names)
