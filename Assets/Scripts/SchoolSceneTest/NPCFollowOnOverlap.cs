@@ -74,14 +74,14 @@ public class NPCFollowOnOverlap : MonoBehaviour
         }
     }
 
-    bool DetectPlayer()
+    public bool DetectPlayer()
     {
        
         Collider[] stuffInSphere = Physics.OverlapSphere(NPCTransform.position, sphereRadius);
 
-        for (int i = 0; i < stuffInSphere.Length; i++)
+        foreach (Collider t in stuffInSphere)
         {
-            if (stuffInSphere[i].CompareTag("Player"))
+            if (t.CompareTag("Player"))
             {
                 seePlayer = true;
             }
