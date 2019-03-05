@@ -122,7 +122,7 @@ public class ShyMouseLook
         bool isInShyAway = false;
         if (UseDynamicCheck)
         {
-            var eyeLim = CheckEye(camera);
+            var eyeLim = CheckEye(character, camera);
             // eye lim lower than current camera means camera should pitch down
             if (IsLowerThan(eyeLim, camera.localRotation))
             {
@@ -181,8 +181,22 @@ public class ShyMouseLook
         UpdateCursorLock();
     }
 
+    bool IsLineOfSightBlocked(Transform eye, Transform camera, Transform character)
+    {
+        bool ret = false;
 
-    private Quaternion CheckEye(Transform camera)
+        Ray ray = new Ray(eye.position, camera.position - eye.position);
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit, 1000.0f))
+        {
+            if(hit.collider.gameObject != character.gameObject)
+                return true;
+        }
+
+        return ret;
+    }
+
+    private Quaternion CheckEye(Transform character, Transform camera)
     {
         var eyes = GameObject.FindObjectsOfType<Eye>();
         
@@ -201,6 +215,8 @@ public class ShyMouseLook
             //{
             //    continue;
             //}
+            if (IsLineOfSightBlocked(eye.transform, camera, character))
+                continue;
 
             var eyeInVp = camera.GetComponent<Camera>().WorldToViewportPoint(eye.transform.position);
             var vpTopInVp = eyeInVp;
