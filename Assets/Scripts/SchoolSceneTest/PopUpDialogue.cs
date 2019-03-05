@@ -12,7 +12,7 @@ public class PopUpDialogue : MonoBehaviour
    private Rigidbody playerRB;
 
    private Text dialogueTxt;
-   public GameObject DialogueBubble;
+   private GameObject DialogueBubble;
    private string message;
    public float letterTime;
    private bool textPlayed = false;
@@ -52,13 +52,14 @@ public class PopUpDialogue : MonoBehaviour
 
     private bool _isfollowPlayerNotNull;
 
+    private bool isFollowing = false;
+
     // Update is called once per frame
     void Update()
     {
         
         if (DetectPlayer())
         {
-            
             
             if(!txtParticles.isPlaying)
                 txtParticles.Play();
@@ -74,16 +75,18 @@ public class PopUpDialogue : MonoBehaviour
                if (!addingTxt)
                StartCoroutine(PlayTxt()); 
                
-               //setUItocanvas
+               
                SetDialogueState(myCanvas.transform, true);
               
             }
             else
             {
+                addingTxt = false;
                 StopCoroutine(PlayTxt());
                 reducedSpeed = false;
                 dialogueTxt.text = "";
-                SetDialogueState(myCanvas.transform, false); 
+                SetDialogueState(transform, false); 
+            
             }
 
 
@@ -93,24 +96,29 @@ public class PopUpDialogue : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         textPlayed = true;
-                   
+                        isFollowing = true;
                     }
               
             }
             
             
         }
-//        
-//        else  if (_isfollowPlayerNotNull)
-//        {
-//            if(followPlayer.DetectPlayer())
-//                textPlayed = true;
-//        }
+        
         else
         {
-            addingTxt = false;
-            textPlayed = false;
-            txtParticles.Stop();
+            if (_isfollowPlayerNotNull)
+            {
+                if(followPlayer.DetectPlayer())
+                    if (isFollowing)
+                        textPlayed = true;
+            }
+            else
+            {
+                textPlayed = false;
+                txtParticles.Stop();
+            }
+
+            
         }
 
        
@@ -123,7 +131,12 @@ public class PopUpDialogue : MonoBehaviour
         Collider[] stuffInSphere = Physics.OverlapSphere(transform.position, sphereRadius);
         foreach (Collider t in stuffInSphere)
         {
-            playerDetected = t.gameObject.CompareTag("Player");
+            if (t.gameObject.CompareTag("Player"))
+                playerDetected = true;
+           
+//            playerDetected = t.gameObject.CompareTag("Player");
+//            if (playerDetected)
+//                break;
         }
 
         Array.Clear(stuffInSphere, 0, stuffInSphere.Length);
@@ -135,8 +148,9 @@ public class PopUpDialogue : MonoBehaviour
     {
         DialogueBubble.transform.SetParent(parent);
         DialogueBubble.SetActive(activeState);
-        DialogueBubble.transform.localPosition = new Vector3(0, -90, 0);
+        DialogueBubble.transform.localPosition = new Vector3(0, -100, 0);
         DialogueBubble.transform.localEulerAngles = new Vector3(0,0,0);
+        DialogueBubble.transform.localScale = new Vector3(1,1,1);
     }
 
     void ReducePlayerSpeed(bool speedReduced)

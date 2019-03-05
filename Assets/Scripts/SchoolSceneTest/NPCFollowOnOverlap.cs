@@ -5,18 +5,20 @@ using UnityEngine;
 
 public class NPCFollowOnOverlap : MonoBehaviour
 {
-
+    private ParticleSystem speechParticle;
     private Transform playerTransform;
     private Transform NPCTransform;
     Animator NPCAnim;
     bool seePlayer = false;
     float NPCspeed = 0;
-   public float sphereRadius = 1.8f;
+   public float sphereRadius = 1.6f;
     void Start()
     {
         playerTransform = GameObject.Find("PlayerBase").transform;
         NPCTransform = transform;
         NPCAnim = GetComponent<Animator>();
+        speechParticle = GetComponentInChildren<ParticleSystem>();
+        
     }
 
     float NPCx = 0f;
@@ -30,7 +32,9 @@ public class NPCFollowOnOverlap : MonoBehaviour
       
         if (DetectPlayer())
         {
-            
+            if(!speechParticle.isPlaying)
+            speechParticle.Play();
+                
             if (Vector3.Distance(NPCTransform.position, playerTransform.position) <= 1f)
             {
                 NPCspeed = Mathf.Lerp(NPCspeed, 0f, 2*Time.deltaTime);
@@ -60,6 +64,7 @@ public class NPCFollowOnOverlap : MonoBehaviour
         else
         {
             NPCspeed = 0;
+            speechParticle.Stop();
         }
         
         UpdateAnimator();
@@ -67,11 +72,10 @@ public class NPCFollowOnOverlap : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (NPCTransform != null)
-        {
+        
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(NPCTransform.position,sphereRadius);
-        }
+            Gizmos.DrawSphere(transform.position,sphereRadius);
+        
     }
 
     public bool DetectPlayer()
