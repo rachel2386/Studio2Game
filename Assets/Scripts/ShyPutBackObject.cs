@@ -6,43 +6,43 @@ using UnityEngine.Events;
 
 public class ShyPutBackObject : ShyInteractableObject
 {
-    public GameObject putBackAnchor;
-
-    public bool needValidate = false;
-    [ShowIf("needValidate")]
-    public List<string> keyWords;
-
-    [PropertyOrder(-1)]
+    [PropertyOrder(-9)]
     public string emptyHandTooltip;
-    [PropertyOrder(-1)]
+    [PropertyOrder(-9)]
     public string wrongThingTooltip;
 
-    // whether the object can pick up again
-    // after it has been put on this putback object
+    public GameObject putBackAnchor;
     public bool canPickAfterPut = false;
 
+    [FoldoutGroup("Validation")]
+    public bool needValidate = false;
+    [FoldoutGroup("Validation"), ShowIf("needValidate")]
+    public List<string> keyWords;
 
+    #region FullEvent
     // if get enough number of objects put into the putback object
     // we invoke an event
-    [FoldoutGroup("Full Event")]
+    [FoldoutGroup("Full Event")]    
     public int invokeNumber = 1;
     [FoldoutGroup("Full Event")]
     public UnityEvent fullEvent = new UnityEvent();
-    [FoldoutGroup("Full Event")]
+
+    // Playmaker Related
+    [FoldoutGroup("Full Event"), InlineButton("AutoAssignFsmToFullEvent", "Auto")]
     public PlayMakerFSM fullMsgFsm;
 
-
-    List<string> avaEventNames = new List<string>();
-    private List<string> AvaEventNames
+    List<string> fullEventNames = new List<string>();
+    private List<string> FullEventNames
     {
         get
         {
-            UpdateAvaEventNames();
-            return avaEventNames;
+            UpdateEventNames(fullMsgFsm, fullEventNames);
+            return fullEventNames;
         }        
     }
-    [FoldoutGroup("Full Event"), ValueDropdown("AvaEventNames")]
-    public string fullMsgName;
+    [FoldoutGroup("Full Event"), ValueDropdown("FullEventNames")]
+    public string fullMsgEvent;
+    #endregion
 
     List<GameObject> container = new List<GameObject>();
     // Start is called before the first frame update
@@ -75,7 +75,7 @@ public class ShyPutBackObject : ShyInteractableObject
 
     public override string GetTooltip()
     {
-        var curHeld = sis.CurHeldObject;
+        var curHeld = sis.curHeldObject;
         if (!curHeld)
             return emptyHandTooltip;
 
@@ -83,7 +83,7 @@ public class ShyPutBackObject : ShyInteractableObject
         if (!val)
             return wrongThingTooltip;
                      
-        return tooltip;
+        return defaultTooltip;
     }
  
 
@@ -98,14 +98,54 @@ public class ShyPutBackObject : ShyInteractableObject
         }
     }
 
-    void UpdateAvaEventNames()
+
+    void AutoAssignFsmToFullEvent()
     {
-        // Debug.Log("update names called");
-        avaEventNames.Clear();
-        var events = fullMsgFsm.FsmEvents;
-        foreach (var ev in events)
+        AutoAssignFsm(out fullMsgFsm);
+    }
+
+
+    public override void HandleInteraction()
+    {
+        base.HandleInteraction();
+
+        bool wasPressed = LevelManager.Instance.PlayerActions.Fire.WasPressed;
+        if (wasPressed)
+            PutBack();
+    }
+
+
+    void PutBack()
+    {
+        // nothing in hand
+        if (!sis.curHeldObject)
+            return;
+
+        var po = sis.curHeldObject.GetComponent<ShyPickableObject>();
+        var body = sis.curHeldObject.GetComponent<Rigidbody>();
+
+
+        // wrong thing
+        var validate = Validate(sis.curHeldObject);
+        if (!validate)
+            return;
+
+        // right thing
+        sis.curHeldObject.transform.SetParent(null);
+        sis.curHeldObject.transform.eulerAngles = po.OriRotation;
+        sis.curHeldObject.transform.localScale = po.OriLocalScale;
+        sis.curHeldObject.transform.position = putBackAnchor ? putBackAnchor.transform.position : transform.position;
+
+        AddObjectToContainer(sis.curHeldObject);
+
+        if (!canPickAfterPut)
         {
-            avaEventNames.Add(ev.Name);
+            po.canInteract = false;
         }
+
+        if (body)
+            body.isKinematic = false;
+
+        sis.curHeldObject = null;
     }
 }

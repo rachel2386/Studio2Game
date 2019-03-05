@@ -2984,22 +2984,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInteract: 1
-  tooltip: Put it back!
+  defaultTooltip: Put it here
+  clickedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  clickedMsgFsm: {fileID: 0}
+  clickedMsgEvent: None
+  emptyHandTooltip: Get me something!
+  wrongThingTooltip: Wrong thing!
   putBackAnchor: {fileID: 115917659}
+  canPickAfterPut: 0
   needValidate: 1
   keyWords:
   - cup
-  emptyHandTooltip: Get me something!
-  wrongThingTooltip: Wrong thing!
-  canPickAfterPut: 0
   invokeNumber: 1
   fullEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  fullMsgFsm: {fileID: 8322202893684845678}
-  fullMsgName: DOOR_CLICKED
+  fullMsgFsm: {fileID: 0}
+  fullMsgEvent: None
 --- !u!1 &1412561662 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 432351226674235453, guid: 43a1443653851dd4fa972fd357c47c73,
@@ -3264,7 +3271,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInteract: 1
-  tooltip: '>_<'
+  defaultTooltip: '>_<'
+  clickedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  clickedMsgFsm: {fileID: 0}
+  clickedMsgEvent: 
   pickupRotaion: {x: -90, y: 0, z: 0}
   pickupScale: {x: 4, y: 4, z: 4}
 --- !u!54 &1456470842

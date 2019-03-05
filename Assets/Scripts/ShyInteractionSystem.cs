@@ -6,20 +6,21 @@ using UnityEngine.UI;
 public class ShyInteractionSystem : MonoBehaviour
 {
     ShyCamera shyCamera;
-    GameObject pickupRoot;
+    [HideInInspector]
+    public GameObject pickupRoot;    
     Camera cam;
     ShyUI uiLayer;
     Text centerText;
+    
     string needToRefreshCenterText;
-
-    GameObject curHeldObject;
-    public GameObject CurHeldObject
+    public string NeedToRefreshCenterText
     {
-        get
-        {
-            return curHeldObject;
-        }
+        set { needToRefreshCenterText = value; }
+        get { return needToRefreshCenterText; }
     }
+
+    [HideInInspector]
+    public GameObject curHeldObject;
 
     // Start is called before the first frame update
     void Start()
@@ -98,24 +99,27 @@ public class ShyInteractionSystem : MonoBehaviour
         if (!io)
             return;
 
-        needToRefreshCenterText = io.GetTooltip();
-        if (wasPressed)
-        {
-            io.Clicked();
+        //needToRefreshCenterText = io.GetTooltip();
 
-            var po = io as ShyPickableObject;
-            var pbo = io as ShyPutBackObject;
-            // Shy PickableObject
-            if (po)
-            {
-                PickUp(go);
-            }
-            // Shy PutBackObject
-            else if (pbo)
-            {
-                PutBack(go);
-            }
-        }
+        io.HandleInteraction();
+
+        //if (wasPressed)
+        //{
+        //    io.Clicked();
+
+        //    var po = io as ShyPickableObject;
+        //    var pbo = io as ShyPutBackObject;
+        //    // Shy PickableObject
+        //    if (po)
+        //    {
+        //        PickUp(go);
+        //    }
+        //    // Shy PutBackObject
+        //    else if (pbo)
+        //    {
+        //        PutBack(go);
+        //    }
+        //}
     }
 
     void PutBack(GameObject go)

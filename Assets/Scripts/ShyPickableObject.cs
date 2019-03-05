@@ -41,4 +41,31 @@ public class ShyPickableObject : ShyInteractableObject
     {
 
     }
+
+    public override void HandleInteraction()
+    {
+        base.HandleInteraction();
+
+        bool wasPressed = LevelManager.Instance.PlayerActions.Fire.WasPressed;
+        if(wasPressed)
+            PickUp();
+    }
+
+    void PickUp()
+    {
+        var po = GetComponent<ShyPickableObject>();
+        var body = GetComponent<Rigidbody>();
+
+        transform.SetParent(sis.pickupRoot.transform);
+        transform.localPosition = Vector3.zero;
+        transform.localEulerAngles = po.pickupRotaion;
+        transform.localScale = po.pickupScale;
+
+        if (body)
+            body.isKinematic = true;
+
+        sis.curHeldObject = gameObject;
+    }
+
+
 }
