@@ -6,29 +6,20 @@ using UnityEngine.Events;
 
 public class ShyPutBackObject : ShyInteractableObject
 {
-    [PropertyOrder(-9)]
-    public string emptyHandTooltip;
-    [PropertyOrder(-9)]
-    public string wrongThingTooltip;
 
     public GameObject putBackAnchor;
     public bool canPickAfterPut = false;
-
-    [FoldoutGroup("Validation")]
-    public bool needValidate = false;
-    [FoldoutGroup("Validation"), ShowIf("needValidate")]
-    public List<string> keyWords;
-
+    
     #region FullEvent
     // if get enough number of objects put into the putback object
     // we invoke an event
-    [FoldoutGroup("Full Event")]    
+    [FoldoutGroup("Full Event"), PropertyOrder(10)]    
     public int invokeNumber = 1;
-    [FoldoutGroup("Full Event")]
-    public UnityEvent fullEvent = new UnityEvent();
+    [FoldoutGroup("Full Event"), PropertyOrder(10)]
+    public UnityEventWithShyObject fullEvent = new UnityEventWithShyObject();
 
     // Playmaker Related
-    [FoldoutGroup("Full Event"), InlineButton("AutoAssignFsmToFullEvent", "Auto")]
+    [FoldoutGroup("Full Event"), PropertyOrder(10), InlineButton("AutoAssignFsmToFullEvent", "Auto")]
     public PlayMakerFSM fullMsgFsm;
 
     List<string> fullEventNames = new List<string>();
@@ -56,33 +47,14 @@ public class ShyPutBackObject : ShyInteractableObject
     {
         
     }
-    
-    public bool Validate(GameObject go)
-    {
-        if (!needValidate)
-            return true;
-
-        bool ret = false;
-        var inputName = go.name.ToLower();
-        foreach(var keyWord in keyWords)
-        {
-            if (inputName.Contains(keyWord.ToLower()))
-                return true;
-        }
-
-        return ret;
-    }
-
+  
     public override string GetTooltip()
     {
-        var curHeld = sis.curHeldObject;
-        if (!curHeld)
-            return emptyHandTooltip;
+        if(IsEmptyHand())
+            return GetTooltipString(Tooltip.HAND_IS_EMPTY);
+        else if(!IsHeldObjectNeeded())
+            return GetTooltipString(Tooltip.WRONG_THING);
 
-        bool val = Validate(curHeld);
-        if (!val)
-            return wrongThingTooltip;
-                     
         return defaultTooltip;
     }
  
@@ -92,10 +64,10 @@ public class ShyPutBackObject : ShyInteractableObject
         container.Add(go);
         if(container.Count == invokeNumber)
         {
-            fullEvent.Invoke();            
+            fullEvent.Invoke(this);            
             if (fullMsgFsm)
             {
-                fullMsgFsm.SendEvent(fullMsgEvent);
+                fullMsgFsm.MySendMessageToAll(fullMsgEvent);
             }
         }
     }
@@ -120,7 +92,7 @@ public class ShyPutBackObject : ShyInteractableObject
     void PutBack()
     {
         // nothing in hand
-        if (!sis.curHeldObject)
+        if (IsEmptyHand())
             return;
 
         var po = sis.curHeldObject.GetComponent<ShyPickableObject>();
@@ -128,7 +100,7 @@ public class ShyPutBackObject : ShyInteractableObject
 
 
         // wrong thing
-        var validate = Validate(sis.curHeldObject);
+        var validate = Validate();
         if (!validate)
             return;
 
@@ -149,5 +121,12 @@ public class ShyPutBackObject : ShyInteractableObject
             body.isKinematic = false;
 
         sis.curHeldObject = null;
+    }
+
+
+    protected override bool NeedValidateModeButton()
+    {
+        validationMode = ValidationMode.NEED_HELD;
+        return false ;
     }
 }

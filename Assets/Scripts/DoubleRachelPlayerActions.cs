@@ -9,6 +9,8 @@ public class DoubleRachelPlayerActions : PlayerActionSet
 {
     public PlayerAction Fire;
     public PlayerAction Jump;
+    public PlayerAction Throw;
+
     public PlayerAction MoveLeft;
     public PlayerAction MoveRight;
     public PlayerAction MoveUp;
@@ -19,6 +21,8 @@ public class DoubleRachelPlayerActions : PlayerActionSet
     public PlayerAction LookUp;
     public PlayerAction LookDown;
 
+    
+
 
     public PlayerTwoAxisAction Move;
     public PlayerTwoAxisAction Look;
@@ -28,7 +32,7 @@ public class DoubleRachelPlayerActions : PlayerActionSet
     {
         Fire = CreatePlayerAction("Fire");
         Jump = CreatePlayerAction("Jump");
-
+        Throw = CreatePlayerAction("Throw");
 
         MoveLeft = CreatePlayerAction("Move Left");
         MoveRight = CreatePlayerAction("Move Right");
@@ -60,6 +64,8 @@ public class DoubleRachelPlayerActions : PlayerActionSet
         playerActions.Jump.AddDefaultBinding(Key.Space);
         playerActions.Jump.AddDefaultBinding(InputControlType.Action3);
         playerActions.Jump.AddDefaultBinding(InputControlType.Back);
+
+        playerActions.Throw.AddDefaultBinding(Key.G);
 
         //playerActions.MoveUp.AddDefaultBinding(Key.UpArrow);
         //playerActions.MoveDown.AddDefaultBinding(Key.DownArrow);

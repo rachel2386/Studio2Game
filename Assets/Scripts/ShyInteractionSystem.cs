@@ -21,6 +21,8 @@ public class ShyInteractionSystem : MonoBehaviour
 
     [HideInInspector]
     public GameObject curHeldObject;
+    [HideInInspector]
+    public GameObject curAimedObject;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,27 @@ public class ShyInteractionSystem : MonoBehaviour
     void Update()
     {
         CheckIterableObject();
+
+        CheckButton();
+    }
+
+    void CheckButton()
+    {
+        bool wasThrowPressed = LevelManager.Instance.PlayerActions.Fire.WasPressed;
+        if (wasThrowPressed && curHeldObject && !curAimedObject)
+        {
+            var po = curHeldObject.GetComponent<ShyPickableObject>();
+            var body = curHeldObject.GetComponent<Rigidbody>();
+
+            curHeldObject.transform.SetParent(null);
+            curHeldObject.transform.eulerAngles = po.OriRotation;
+            curHeldObject.transform.localScale = po.OriLocalScale;
+
+            if (body)
+                body.isKinematic = false;
+
+            curHeldObject = null;
+        }
     }
 
     void CheckIterableObject()
@@ -58,7 +81,9 @@ public class ShyInteractionSystem : MonoBehaviour
         GameObject firstPO = null;
         GameObject firstPBO = null;
 
-        foreach(var hit in hits)
+        curAimedObject = null;
+
+        foreach (var hit in hits)
         {
             var go = hit.collider.gameObject;
             var io = go.GetComponent<ShyInteractableObject>();
@@ -86,6 +111,7 @@ public class ShyInteractionSystem : MonoBehaviour
         else
             priorObject = firstIO;
 
+        curAimedObject = priorObject;
         HandleInteraction(priorObject);
     }
 
@@ -133,7 +159,7 @@ public class ShyInteractionSystem : MonoBehaviour
         var pbo = go.GetComponent<ShyPutBackObject>();
 
         // wrong thing
-        var validate = pbo.Validate(curHeldObject);
+        var validate = pbo.Validate();
         if (!validate)
             return;
 
@@ -170,5 +196,10 @@ public class ShyInteractionSystem : MonoBehaviour
             body.isKinematic = true;
 
         curHeldObject = go;
+    }
+
+    public bool IsEmptyHand()
+    {
+        return curHeldObject == null;
     }
 }
