@@ -726,44 +726,50 @@ MonoBehaviour:
   targetIsPlayer: 1
   target: {fileID: 1787697199}
   distance: 1.88
-  showArea: 1
+  showArea: 0
   debugColor: {r: 1, g: 0.92, b: 0.016, a: 0.3}
   enterEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4942076}
-        m_MethodName: StartDialog
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  enterMsgFsm: {fileID: 4942074}
-  enterMsgEvent: IN
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4942076}
+          m_MethodName: StartDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 4942074}
+    fsmEventSelect: IN
+    fsmEventAdd: 
+    component: {fileID: 4942075}
   leaveEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4942076}
-        m_MethodName: StopDialog
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  leaveMsgFsm: {fileID: 4942074}
-  leaveMsgEvent: OUT
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4942076}
+          m_MethodName: StopDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 4942074}
+    fsmEventSelect: OUT
+    fsmEventAdd: 
+    component: {fileID: 4942075}
 --- !u!114 &4942076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,6 +787,16 @@ MonoBehaviour:
   lockMouseLook: 0
   canStillInteract: 0
   scriptToLoad: {fileID: 4900000, guid: 266365006c7f62742a016137bc2cc18c, type: 3}
+  completeEvent:
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 4942074}
+    fsmEventSelect: 
+    fsmEventAdd: 
+    component: {fileID: 4942076}
 --- !u!1 &6165003
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +835,7 @@ Transform:
   - {fileID: 1880853882}
   - {fileID: 4942073}
   - {fileID: 544227507}
+  - {fileID: 1641502786}
   m_Father: {fileID: 1078728818}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1296,12 +1313,15 @@ MonoBehaviour:
   validationMode: 0
   keyWords: []
   clickedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEventWithShyObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  clickedMsgFsm: {fileID: 8322202893684845678}
-  clickedMsgEvent: DOOR_CLICKED
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 0}
+    fsmEventSelect: 
+    fsmEventAdd: 
+    component: {fileID: 0}
 --- !u!1 &244970455
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,7 +2396,28 @@ MonoBehaviour:
   lockMove: 0
   lockMouseLook: 0
   canStillInteract: 0
-  scriptToLoad: {fileID: 4900000, guid: 266365006c7f62742a016137bc2cc18c, type: 3}
+  scriptToLoad: {fileID: 0}
+  completeEvent:
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 544227510}
+    fsmEventSelect: OUT
+    fsmEventAdd: 
+    component: {fileID: 544227508}
 --- !u!114 &544227509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2393,26 +2434,29 @@ MonoBehaviour:
   defaultTooltip: Say
   emptyHandTooltip: 
   wrongThingTooltip: 
-  validationMode: 2
+  validationMode: 0
   keyWords: []
   clickedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 544227508}
-        m_MethodName: StartDialog
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEventWithShyObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  clickedMsgFsm: {fileID: 0}
-  clickedMsgEvent: 
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 544227508}
+          m_MethodName: StartDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 544227510}
+    fsmEventSelect: IN
+    fsmEventAdd: 
+    component: {fileID: 544227509}
 --- !u!114 &544227510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2437,7 +2481,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 50
-        y: 100
+        y: 116
         width: 100
         height: 16
       isBreakpoint: 0
@@ -2488,8 +2532,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 272
-        y: 128
+        x: 208
+        y: 112
         width: 100
         height: 32
       isBreakpoint: 0
@@ -2596,8 +2640,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 272
-        y: 192
+        x: 208
+        y: 176
         width: 100
         height: 32
       isBreakpoint: 0
@@ -2718,8 +2762,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 272
-        y: 272
+        x: 208
+        y: 240
         width: 100
         height: 16
       isBreakpoint: 0
@@ -2969,7 +3013,7 @@ MonoBehaviour:
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 0
+    editorFlags: 1
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -3836,7 +3880,7 @@ MeshCollider:
   m_Mesh: {fileID: 4300096, guid: 921a5902d9f0d464e9c3f55a550e5693, type: 3}
 --- !u!1 &922846288
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -3853,7 +3897,7 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &922846289
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -3863,7 +3907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845e8bd83609e3549af5a311ad811681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockedObjects: []
+  lockedObjects:
+  - {fileID: 1953810077}
   editModeVisibileObjects: []
   editModeInvisibleObjects: []
   wireframeHiddenObjects: []
@@ -3871,7 +3916,7 @@ MonoBehaviour:
   gameObjectColorValues: []
 --- !u!4 &922846290
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5606,33 +5651,28 @@ MonoBehaviour:
   keyWords:
   - cup
   clickedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: ShyInteractableObject, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 111
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEventWithShyObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  clickedMsgFsm: {fileID: 0}
-  clickedMsgEvent: None
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 0}
+    fsmEventSelect: 
+    fsmEventAdd: 
+    component: {fileID: 1401444058}
   putBackAnchor: {fileID: 115917659}
   canPickAfterPut: 0
-  invokeNumber: 1
+  fullNumber: 5
   fullEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEventWithShyObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  fullMsgFsm: {fileID: 0}
-  fullMsgEvent: None
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 0}
+    fsmEventSelect: 
+    fsmEventAdd: 
+    component: {fileID: 1401444058}
 --- !u!1 &1412561662 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 432351226674235453, guid: 43a1443653851dd4fa972fd357c47c73,
@@ -6815,6 +6855,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7957157029022051192}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1456470838 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7957157029914824769, guid: f0929db0711e3444cb18317513c025d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 7957157029022051192}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456470836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82bbc200f8168fa47a3ae7557c4e9cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1468200087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 432351226674235851, guid: 43a1443653851dd4fa972fd357c47c73,
@@ -7300,6 +7352,200 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300158, guid: 921a5902d9f0d464e9c3f55a550e5693, type: 3}
+--- !u!1 &1641502785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641502786}
+  - component: {fileID: 1641502788}
+  - component: {fileID: 1641502787}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1641502786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641502785}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6165004}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1641502787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641502785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1384774831, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fsm:
+    dataVersion: 2
+    usedInTemplate: {fileID: 0}
+    name: FSM
+    startState: State 1
+    states:
+    - name: State 1
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 50
+        y: 100
+        width: 100
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames: []
+        customNames: []
+        actionEnabled: 
+        actionIsOpen: 
+        actionStartIndex: 
+        actionHashCodes: 
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 
+        paramName: []
+        paramDataPos: 
+        paramByteDataSize: 
+    events: []
+    globalTransitions: []
+    variables:
+      floatVariables: []
+      intVariables: []
+      boolVariables: []
+      stringVariables: []
+      vector2Variables: []
+      vector3Variables: []
+      colorVariables: []
+      rectVariables: []
+      quaternionVariables: []
+      gameObjectVariables: []
+      objectVariables: []
+      materialVariables: []
+      textureVariables: []
+      arrayVariables: []
+      enumVariables: []
+      categories:
+      - 
+      variableCategoryIDs: 
+    description: 
+    docUrl: 
+    showStateLabel: 0
+    maxLoopCount: 0
+    watermark: 
+    password: 
+    locked: 0
+    manualUpdate: 0
+    keepDelayedEventsOnStateExit: 0
+    preprocessed: 0
+    ExposedEvents: []
+    RestartOnEnable: 1
+    EnableDebugFlow: 0
+    EnableBreakpoints: 1
+    editorFlags: 1
+    activeStateName: 
+    mouseEvents: 0
+    handleLevelLoaded: 0
+    handleTriggerEnter2D: 0
+    handleTriggerExit2D: 0
+    handleTriggerStay2D: 0
+    handleCollisionEnter2D: 0
+    handleCollisionExit2D: 0
+    handleCollisionStay2D: 0
+    handleTriggerEnter: 0
+    handleTriggerExit: 0
+    handleTriggerStay: 0
+    handleCollisionEnter: 0
+    handleCollisionExit: 0
+    handleCollisionStay: 0
+    handleParticleCollision: 0
+    handleControllerColliderHit: 0
+    handleJointBreak: 0
+    handleJointBreak2D: 0
+    handleOnGUI: 0
+    handleFixedUpdate: 0
+    handleLateUpdate: 0
+    handleApplicationEvents: 0
+    handleUiEvents: 0
+    handleLegacyNetworking: 0
+    handleAnimatorMove: 0
+    handleAnimatorIK: 0
+  fsmTemplate: {fileID: 0}
+  eventHandlerComponentsAdded: 0
+--- !u!114 &1641502788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641502785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac27ac111b3c03b428c5dfd4a6a32daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  talkToNode: 
+  lockMove: 1
+  lockMouseLook: 1
+  canStillInteract: 0
+  scriptToLoad: {fileID: 0}
+  completeEvent:
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 1641502787}
+    fsmEventSelect: ' '
+    fsmEventAdd: ' '
+    component: {fileID: 1641502788}
 --- !u!1 &1652963573 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 432351226674235509, guid: 43a1443653851dd4fa972fd357c47c73,
@@ -8097,6 +8343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5877294903268727493, guid: f0929db0711e3444cb18317513c025d4, type: 3}
+    - {fileID: 7957157029914824769, guid: f0929db0711e3444cb18317513c025d4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f0929db0711e3444cb18317513c025d4, type: 3}
 --- !u!4 &1880853882 stripped
 Transform:
@@ -8104,6 +8351,61 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1880853881}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1880853883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7957157029914824780, guid: f0929db0711e3444cb18317513c025d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1880853881}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1880853884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880853883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d76469f78ec20439d56b7bb1f50c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canInteract: 1
+  defaultTooltip: 
+  emptyHandTooltip: 
+  wrongThingTooltip: 
+  validationMode: 2
+  keyWords: []
+  clickedEvent:
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 8322202893684845678}
+    fsmEventSelect: 
+    fsmEventAdd: 
+    component: {fileID: 1880853884}
+  switchState: 0
+  onToOffEvent:
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 0}
+    fsmEventSelect: 
+    fsmEventAdd: hahaha
+    component: {fileID: 1880853884}
+  offToOnEvent:
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    fsm: {fileID: 8322202893684845678}
+    fsmEventSelect: 
+    fsmEventAdd: 
+    component: {fileID: 1880853884}
 --- !u!1 &1882624162 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 432351225559425260, guid: 43a1443653851dd4fa972fd357c47c73,
@@ -8631,6 +8933,7 @@ MonoBehaviour:
   - da3f266d-5495-427c-a18a-21f685ef6df3
   - 5ef410cd-d1ad-4482-94e7-0cecfe6dfaa6
   - 8dcd1505-e35f-4574-8370-99af262d812c
+  - 1fd25fed-60de-4fad-8aae-d902f47c09c0
   objects:
   - {fileID: 1787697199}
   - {fileID: 941800662189891717}
@@ -8649,6 +8952,7 @@ MonoBehaviour:
   - {fileID: 1576932128}
   - {fileID: 6165003}
   - {fileID: 853244736}
+  - {fileID: 244970455}
 --- !u!114 &6131175552093361808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8787,6 +9091,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957157029914824769, guid: f0929db0711e3444cb18317513c025d4,
+        type: 3}
+      propertyPath: clickedEvent.fsm
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957157029914824769, guid: f0929db0711e3444cb18317513c025d4,
+        type: 3}
+      propertyPath: clickedEvent.fsmEventAdd
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957157029914824769, guid: f0929db0711e3444cb18317513c025d4,
+        type: 3}
+      propertyPath: clickedEvent.component
+      value: 
+      objectReference: {fileID: 1456470838}
+    - target: {fileID: 7957157029914824769, guid: f0929db0711e3444cb18317513c025d4,
+        type: 3}
+      propertyPath: clickedEvent.fsmEventSelect
+      value: None
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0929db0711e3444cb18317513c025d4, type: 3}
@@ -10129,7 +10453,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: "\u72B6\u6001 1"
+        toState: LoadNextScene
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -10974,14 +11298,14 @@ MonoBehaviour:
         - storeResult
         paramDataPos: 000000000000000001000000000000000100000000000000
         paramByteDataSize: 000000000000000000000000010000000100000000000000
-    - name: "\u72B6\u6001 1"
+    - name: LoadNextScene
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 466
-        y: 619
-        width: 100
+        x: 464
+        y: 624
+        width: 133
         height: 16
       isBreakpoint: 0
       isSequence: 0

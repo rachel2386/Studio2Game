@@ -16,7 +16,7 @@ public class ShyDialogTrigger : MonoBehaviour
     [Header("Optional")]    
     public TextAsset scriptToLoad;
 
-    public ShyEvent completeEvent = new ShyEvent("OnCompleted");
+    public ShyEvent completeEvent = new ShyEvent("On Completed");
 
     [OnInspectorGUI]
     void SetShyEventParent()
@@ -32,6 +32,7 @@ public class ShyDialogTrigger : MonoBehaviour
         {
             FindObjectOfType<Yarn.Unity.DialogueRunner>().AddScript(scriptToLoad);
         }
+        SetShyEventParent();
     }
 
     // Update is called once per frame

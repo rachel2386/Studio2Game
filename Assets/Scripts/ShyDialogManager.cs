@@ -267,6 +267,9 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
 
         RestoreLockState();
 
+        if (curDialogTrigger)
+            curDialogTrigger.completeEvent.Invoke();
+
         curDialogTrigger = null;
         Debug.Log("Complete!");
 

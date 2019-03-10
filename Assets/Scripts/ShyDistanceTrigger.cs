@@ -19,44 +19,16 @@ public class ShyDistanceTrigger : MonoBehaviour
     public Color debugColor = new Color(1, 0.92f, 0.016f, 0.3f);
 
 
-    // Enter start
-    [FoldoutGroup("Enter Event")]
-    public UnityEventWithGameObject enterEvent = new UnityEventWithGameObject();
-    
-    [FoldoutGroup("Enter Event"), InlineButton("SelfAssignFsmToEnterEvent", "Self")]
-    public PlayMakerFSM enterMsgFsm;
-    List<string> enterEventNames = new List<string>();
-    private List<string> EnterEventNames
+    // Events
+    public ShyEvent enterEvent = new ShyEvent("On Enter");
+    public ShyEvent leaveEvent = new ShyEvent("On Leave");
+
+    [OnInspectorGUI]
+    void SetShyEventParent()
     {
-        get
-        {
-            UpdateEventNames(enterMsgFsm, enterEventNames);
-            return enterEventNames;
-        }
+        enterEvent.component = this;
+        leaveEvent.component = this;
     }
-    [FoldoutGroup("Enter Event"), ValueDropdown("EnterEventNames")]
-    public string enterMsgEvent;
-    // Enter end
-
-
-    // Leave start
-    [FoldoutGroup("Leave Event")]
-    public UnityEventWithGameObject leaveEvent = new UnityEventWithGameObject();
-
-    [FoldoutGroup("Leave Event"), InlineButton("SelfAssignFsmToLeaveEvent", "Self")]
-    public PlayMakerFSM leaveMsgFsm;
-    List<string> leaveEventNames = new List<string>();
-    private List<string> LeaveEventNames
-    {
-        get
-        {
-            UpdateEventNames(leaveMsgFsm, leaveEventNames);
-            return leaveEventNames;
-        }
-    }
-    [FoldoutGroup("Leave Event"), ValueDropdown("LeaveEventNames")]
-    public string leaveMsgEvent;
-    // Leave end
 
 
     float lastDistance = 10000;
@@ -65,8 +37,9 @@ public class ShyDistanceTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetShyEventParent();
     }
+
 
     [OnInspectorGUI]
     void UpdateTarget()
@@ -83,24 +56,16 @@ public class ShyDistanceTrigger : MonoBehaviour
         // Enter
         if(lastDistance > distance && curDis <= distance)
         {            
-            enterEvent.Invoke(gameObject);
-            if(enterMsgFsm)
-                enterMsgFsm.MySendEventToAll(enterMsgEvent);
+            enterEvent.Invoke();
         }
         // Leave
         else if(lastDistance <= distance && curDis > distance)
         {
-            leaveEvent.Invoke(gameObject);
-            if(leaveMsgFsm)
-                leaveMsgFsm.MySendEventToAll(leaveMsgEvent);
+            leaveEvent.Invoke();
         }
         lastDistance = curDis;
     }
 
-    protected void SelfAssignFSM(out PlayMakerFSM targetFSM)
-    {
-        targetFSM = this.GetComponent<PlayMakerFSM>();
-    }   
 
     protected void UpdateEventNames(PlayMakerFSM fsm, List<string> names)
     {
@@ -117,15 +82,6 @@ public class ShyDistanceTrigger : MonoBehaviour
         }
     }
 
-    void SelfAssignFsmToEnterEvent()
-    {
-        SelfAssignFSM(out enterMsgFsm);
-    }
-
-    void SelfAssignFsmToLeaveEvent()
-    {
-        SelfAssignFSM(out leaveMsgFsm);
-    }
 
     void OnDrawGizmos()
     {

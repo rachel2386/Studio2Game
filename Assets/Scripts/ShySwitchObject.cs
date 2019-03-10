@@ -15,32 +15,19 @@ public class ShySwitchObject : ShyInteractableObject
     public SwitchState switchState;
 
     #region Switch Event
-    [FoldoutGroup("Switch Event"), PropertyOrder(10)]
-    public UnityEventWithShyObject onToOffEvent = new UnityEventWithShyObject();
-    [FoldoutGroup("Switch Event"), PropertyOrder(10)]
-    public UnityEventWithShyObject offToOnEvent = new UnityEventWithShyObject();
-
-    // Playmaker Related
-    [FoldoutGroup("Switch Event"), PropertyOrder(10), 
-        InlineButton("SelfAssignFsmToSwitchEvent", "Self"), 
-        InlineButton("AutoAssignFsmToSwitchEvent", "Auto")]
-    public PlayMakerFSM switchMsgFsm;
-
-    List<string> switchEventNames = new List<string>();
-    private List<string> SwitchEventNames
-    {
-        get
-        {
-            UpdateEventNames(switchMsgFsm, switchEventNames);
-            return switchEventNames;
-        }
-    }
-    [FoldoutGroup("Switch Event"), PropertyOrder(10), ValueDropdown("SwitchEventNames")]
-    public string onToOffMsgEvent;
-    [FoldoutGroup("Switch Event"), PropertyOrder(10), ValueDropdown("SwitchEventNames")]
-    public string offToOnMsgEvent;
+    [PropertyOrder(10)]
+    public ShyEvent onToOffEvent = new ShyEvent("On OnToOff");
+    [PropertyOrder(10)]
+    public ShyEvent offToOnEvent = new ShyEvent("On OffToOn");
     #endregion
 
+    protected override void SetShyEventParent()
+    {
+        
+        base.SetShyEventParent();
+        onToOffEvent.component = this;
+        offToOnEvent.component = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -71,23 +58,17 @@ public class ShySwitchObject : ShyInteractableObject
         if (!val)
             return;
 
-        string eventName = "";
+        
         if(switchState == SwitchState.ON)
         {
-            eventName = onToOffMsgEvent;
-            onToOffEvent.Invoke(this);
+            onToOffEvent.Invoke();
         }
         else if(switchState == SwitchState.OFF)
         {
-            eventName = offToOnMsgEvent;
-            offToOnEvent.Invoke(this);
+            offToOnEvent.Invoke();
         }
 
-
-        if (switchMsgFsm)
-        {
-            switchMsgFsm.MySendEventToAll(eventName);
-        }
+        
 
         SwapSwitchState();
     }
@@ -107,13 +88,4 @@ public class ShySwitchObject : ShyInteractableObject
         return false;
     }
 
-    void AutoAssignFsmToSwitchEvent()
-    {
-        AutoAssignFsm(out switchMsgFsm);
-    }
-
-    void SelfAssignFsmToSwitchEvent()
-    {
-        SelfAssignFSM(out switchMsgFsm);
-    }
 }

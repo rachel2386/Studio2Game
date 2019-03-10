@@ -48,43 +48,33 @@ public class ShyInteractableObject : MonoBehaviour
     public string wrongThingTooltip;
 
    
-    #region Clicked Event
+   
    
     [FoldoutGroup("Validation"), PropertyOrder(9), EnableIf("NeedValidateModeButton"), EnumToggleButtons]
     public ValidationMode validationMode = ValidationMode.NEED_EMPTY;
     [FoldoutGroup("Validation"), PropertyOrder(9), ShowIf("NeedValidateHeld")]
     public List<string> keyWords;
 
-        
+    #region Clicked Event
     // If the object is clickable and we found a click
     // send a click event
-    [FoldoutGroup("Clicked Event"), PropertyOrder(10)]
-    public UnityEventWithShyObject clickedEvent = new UnityEventWithShyObject();
-
-    // Playmaker Related
-    [FoldoutGroup("Clicked Event"), PropertyOrder(10), InlineButton("AutoAssignFSMToClickedEvent", "Auto")]
-    public PlayMakerFSM clickedMsgFsm;
-
-    List<string> clickedEventNames = new List<string>();
-    private List<string> ClickedEventNames
-    {
-        get
-        {
-            UpdateEventNames(clickedMsgFsm, clickedEventNames);
-            return clickedEventNames;
-        }
-    }
-    [FoldoutGroup("Clicked Event"), PropertyOrder(10), ValueDropdown("ClickedEventNames")]
-    public string clickedMsgEvent;
+    [PropertyOrder(10)]
+    public ShyEvent clickedEvent = new ShyEvent("On Clicked");
     #endregion
 
+    [OnInspectorGUI]
+    protected virtual void SetShyEventParent()
+    {
+        clickedEvent.component = this;
+    }
 
     protected ShyInteractionSystem sis;
 
     // Start is called before the first frame update
     protected void Start()
     {
-        sis = FindObjectOfType<ShyInteractionSystem>();        
+        sis = FindObjectOfType<ShyInteractionSystem>();
+        SetShyEventParent();
     }
     
     // Update is called once per frame
@@ -161,12 +151,7 @@ public class ShyInteractableObject : MonoBehaviour
         if (!validate)
             return;
         
-        clickedEvent.Invoke(this);
-
-        if (clickedMsgFsm)
-        {
-            clickedMsgFsm.MySendEventToAll(clickedMsgEvent);
-        }
+        clickedEvent.Invoke();        
     }
 
     protected void UpdateEventNames(PlayMakerFSM fsm, List<string> names)
@@ -184,35 +169,7 @@ public class ShyInteractableObject : MonoBehaviour
         }
     }
 
-    void AutoAssignFSMToClickedEvent()
-    {
-        AutoAssignFsm(out clickedMsgFsm);
-    }
 
-    protected void AutoAssignFsm(out PlayMakerFSM targetFsm)
-    {
-        targetFsm = null;
-        var main = GameObject.Find("MainFSM");
-        if (!main)
-        {
-            Debug.Log("MainFSM not found");
-            return;
-        }
-
-        var fsm = main.GetComponent<PlayMakerFSM>();
-        if (!fsm)
-        {
-            Debug.Log("No PlayMakerFSM found on MainFSM");
-            return;
-        }
-
-        targetFsm = fsm;
-    }
-
-    protected void SelfAssignFSM(out PlayMakerFSM targetFSM)
-    {
-        targetFSM = this.GetComponent<PlayMakerFSM>();
-    }
 
     public virtual bool Validate()
     {

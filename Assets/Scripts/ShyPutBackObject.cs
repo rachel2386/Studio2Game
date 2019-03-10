@@ -9,33 +9,25 @@ public class ShyPutBackObject : ShyInteractableObject
 
     public GameObject putBackAnchor;
     public bool canPickAfterPut = false;
-    
+
     #region FullEvent
+
+    public int fullNumber = 1;
     // if get enough number of objects put into the putback object
-    // we invoke an event
-    [FoldoutGroup("Full Event"), PropertyOrder(10)]    
-    public int invokeNumber = 1;
-    [FoldoutGroup("Full Event"), PropertyOrder(10)]
-    public UnityEventWithShyObject fullEvent = new UnityEventWithShyObject();
+    // we invoke an event 
+    [PropertyOrder(10)]
+    public ShyEvent fullEvent = new ShyEvent("On Full");
 
-    // Playmaker Related
-    [FoldoutGroup("Full Event"), PropertyOrder(10), InlineButton("AutoAssignFsmToFullEvent", "Auto")]
-    public PlayMakerFSM fullMsgFsm;
-
-    List<string> fullEventNames = new List<string>();
-    private List<string> FullEventNames
-    {
-        get
-        {
-            UpdateEventNames(fullMsgFsm, fullEventNames);
-            return fullEventNames;
-        }        
-    }
-    [FoldoutGroup("Full Event"), ValueDropdown("FullEventNames")]
-    public string fullMsgEvent;
     #endregion
 
     List<GameObject> container = new List<GameObject>();
+    protected override void SetShyEventParent()
+    {
+        base.SetShyEventParent();
+        fullEvent.component = this;
+    }
+
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -62,21 +54,13 @@ public class ShyPutBackObject : ShyInteractableObject
     public void AddObjectToContainer(GameObject go)
     {
         container.Add(go);
-        if(container.Count == invokeNumber)
+        if(container.Count == fullNumber)
         {
-            fullEvent.Invoke(this);            
-            if (fullMsgFsm)
-            {
-                fullMsgFsm.MySendEventToAll(fullMsgEvent);
-            }
+            fullEvent.Invoke();            
+            
         }
     }
 
-
-    void AutoAssignFsmToFullEvent()
-    {
-        AutoAssignFsm(out fullMsgFsm);
-    }
 
 
     public override void HandleInteraction()

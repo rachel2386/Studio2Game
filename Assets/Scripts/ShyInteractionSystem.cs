@@ -118,7 +118,9 @@ public class ShyInteractionSystem : MonoBehaviour
         {
             var go = hit.collider.gameObject;
             var io = go.GetComponent<ShyInteractableObject>();
-            if (!io || !io.canInteract)
+            // sometimes io can be the curHeldObject very occasionally
+            // need to ignore this
+            if (!io || !io.canInteract || io == curHeldObject)
                 continue;            
 
             var po = io as ShyPickableObject;

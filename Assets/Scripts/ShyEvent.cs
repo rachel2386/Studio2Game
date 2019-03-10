@@ -7,13 +7,29 @@ using UnityEngine;
 [Serializable]
 public class ShyEvent
 {
-    [LabelText("$ShyEventNameLabel")]
-    public UnityEventWithGameObject unityEvent = new UnityEventWithGameObject();
-    
-    [Indent(-1), InlineButton("SelfAssign", "Self"), InlineButton("AutoAssign", "Auto")]
+    [BoxGroup, LabelText("$ShyEventNameLabel")]
+    public UnityEventWithGameObject unityEvent = new UnityEventWithGameObject();    
+    [BoxGroup, InlineButton("AutoAssign", "Auto"), InlineButton("SelfAssign", "Self")]
     public PlayMakerFSM fsm;
-    [Indent(-1)]
-    public string fsmEvent;
+    [BoxGroup,  ValueDropdown("EventList")]
+    public string fsmEventSelect;
+
+    [BoxGroup,  InlineButton("AddFsmEvent", "Add")]
+    public string fsmEventAdd;
+
+    public List<string> EventList()
+    {
+        List<string> events = new List<string>();
+        events.Add("None");
+        if(fsm)
+        {
+            foreach (var ev in fsm.FsmEvents)
+            {
+                events.Add(ev.Name);
+            }
+        }       
+        return events;
+    }
 
     [HideInInspector]
     public MonoBehaviour component;
@@ -24,7 +40,7 @@ public class ShyEvent
         unityEvent.Invoke(component.gameObject);
 
         if(fsm)
-            fsm.MySendEventToAll(fsmEvent);
+            fsm.MySendEventToAll(fsmEventSelect);
     }
 
 
@@ -57,5 +73,30 @@ public class ShyEvent
 
         if(autoFSM)
             fsm = autoFSM;
+    }
+
+    void AddFsmEvent()
+    {
+        if (!fsm)
+            return;
+
+        if (fsmEventAdd.Trim() == "")
+            return; 
+       
+        if (!fsm.Fsm.HasEvent(fsmEventAdd))
+        {
+            var events = fsm.Fsm.Events;
+            var newArray = new HutongGames.PlayMaker.FsmEvent[events.Length + 1];
+            for (int i = 0; i < events.Length; i++)
+            {
+                newArray[i] = events[i];
+            }
+            newArray[newArray.Length - 1] = new HutongGames.PlayMaker.FsmEvent(fsmEventAdd);
+            fsm.Fsm.Events = newArray;
+
+        }
+
+        fsmEventSelect = fsmEventAdd;
+        fsmEventAdd = "";
     }
 }
