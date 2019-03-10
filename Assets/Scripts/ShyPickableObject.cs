@@ -53,6 +53,11 @@ public class ShyPickableObject : ShyInteractableObject
 
     void PickUp()
     {
+        bool validate = Validate();
+        if (!validate)
+            return;
+
+
         var po = GetComponent<ShyPickableObject>();
         var body = GetComponent<Rigidbody>();
 
