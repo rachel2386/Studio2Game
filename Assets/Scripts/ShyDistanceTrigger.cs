@@ -85,14 +85,14 @@ public class ShyDistanceTrigger : MonoBehaviour
         {            
             enterEvent.Invoke(gameObject);
             if(enterMsgFsm)
-                enterMsgFsm.MySendMessageToAll(enterMsgEvent);
+                enterMsgFsm.MySendEventToAll(enterMsgEvent);
         }
         // Leave
         else if(lastDistance <= distance && curDis > distance)
         {
             leaveEvent.Invoke(gameObject);
             if(leaveMsgFsm)
-                leaveMsgFsm.MySendMessageToAll(leaveMsgEvent);
+                leaveMsgFsm.MySendEventToAll(leaveMsgEvent);
         }
         lastDistance = curDis;
     }

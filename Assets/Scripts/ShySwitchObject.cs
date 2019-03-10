@@ -86,7 +86,7 @@ public class ShySwitchObject : ShyInteractableObject
 
         if (switchMsgFsm)
         {
-            switchMsgFsm.MySendMessageToAll(eventName);
+            switchMsgFsm.MySendEventToAll(eventName);
         }
 
         SwapSwitchState();

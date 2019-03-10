@@ -67,7 +67,7 @@ public class ShyPutBackObject : ShyInteractableObject
             fullEvent.Invoke(this);            
             if (fullMsgFsm)
             {
-                fullMsgFsm.MySendMessageToAll(fullMsgEvent);
+                fullMsgFsm.MySendEventToAll(fullMsgEvent);
             }
         }
     }

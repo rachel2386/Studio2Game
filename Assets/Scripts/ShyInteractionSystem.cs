@@ -24,6 +24,9 @@ public class ShyInteractionSystem : MonoBehaviour
     [HideInInspector]
     public GameObject curAimedObject;
 
+    // used when the dialog or the other GUI is on
+    bool IsWorking { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,15 +35,44 @@ public class ShyInteractionSystem : MonoBehaviour
         cam = Camera.main;
         uiLayer = FindObjectOfType<ShyUI>();
         centerText = uiLayer.centerText.GetComponent<Text>();
+
+        IsWorking = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckIterableObject();
-
-        CheckButton();
+        UpdateInner();
     }
+
+    public void SetIsWorking(bool work)
+    {
+        IsWorking = work;        
+    }
+
+    void UpdateInner()
+    {
+        ResetUI();
+
+        if (IsWorking)
+        {
+            CheckIterableObject();
+            CheckButton();
+        }
+
+        ApplyUI();
+    }
+
+    void ResetUI()
+    {
+        needToRefreshCenterText = "";
+    }
+
+    void ApplyUI()
+    {
+        centerText.text = needToRefreshCenterText;
+    }
+
 
     void CheckButton()
     {
@@ -63,7 +95,6 @@ public class ShyInteractionSystem : MonoBehaviour
 
     void CheckIterableObject()
     {
-        needToRefreshCenterText = "";
 
         var ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 1));
         RaycastHit[] hits = Physics.RaycastAll(ray, 1000f);
@@ -72,7 +103,7 @@ public class ShyInteractionSystem : MonoBehaviour
             HandleInteractionS(hits);
         }
 
-        centerText.text = needToRefreshCenterText;
+        
     }
 
     void HandleInteractionS(RaycastHit[] hits)
@@ -123,80 +154,12 @@ public class ShyInteractionSystem : MonoBehaviour
         bool wasPressed = LevelManager.Instance.PlayerActions.Fire.WasPressed;
         var io = go.GetComponent<ShyInteractableObject>();
         if (!io)
-            return;
-
-        //needToRefreshCenterText = io.GetTooltip();
+            return;        
 
         io.HandleInteraction();
-
-        //if (wasPressed)
-        //{
-        //    io.Clicked();
-
-        //    var po = io as ShyPickableObject;
-        //    var pbo = io as ShyPutBackObject;
-        //    // Shy PickableObject
-        //    if (po)
-        //    {
-        //        PickUp(go);
-        //    }
-        //    // Shy PutBackObject
-        //    else if (pbo)
-        //    {
-        //        PutBack(go);
-        //    }
-        //}
+        
     }
-
-    void PutBack(GameObject go)
-    {
-        // nothing in hand
-        if (!curHeldObject)
-            return;
-            
-        var po = curHeldObject.GetComponent<ShyPickableObject>();
-        var body = curHeldObject.GetComponent<Rigidbody>();
-        var pbo = go.GetComponent<ShyPutBackObject>();
-
-        // wrong thing
-        var validate = pbo.Validate();
-        if (!validate)
-            return;
-
-        // right thing
-        curHeldObject.transform.SetParent(null);
-        curHeldObject.transform.eulerAngles = po.OriRotation;
-        curHeldObject.transform.localScale = po.OriLocalScale;
-        curHeldObject.transform.position = pbo.putBackAnchor ? pbo.putBackAnchor.transform.position : pbo.transform.position;
-
-        pbo.AddObjectToContainer(curHeldObject);
-
-        if(!pbo.canPickAfterPut)
-        {
-            po.canInteract = false;
-        }
-
-        if (body)
-            body.isKinematic = false;
-
-        curHeldObject = null;
-    }
-
-    void PickUp(GameObject go)
-    {
-        var po = go.GetComponent<ShyPickableObject>();
-        var body = go.GetComponent<Rigidbody>();
-
-        go.transform.SetParent(pickupRoot.transform);
-        go.transform.localPosition = Vector3.zero;
-        go.transform.localEulerAngles = po.pickupRotaion;
-        go.transform.localScale = po.pickupScale;
-
-        if (body)
-            body.isKinematic = true;
-
-        curHeldObject = go;
-    }
+    
 
     public bool IsEmptyHand()
     {

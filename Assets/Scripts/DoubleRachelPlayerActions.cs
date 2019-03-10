@@ -10,6 +10,7 @@ public class DoubleRachelPlayerActions : PlayerActionSet
     public PlayerAction Fire;
     public PlayerAction Jump;
     public PlayerAction Throw;
+    
 
     public PlayerAction MoveLeft;
     public PlayerAction MoveRight;
@@ -32,7 +33,7 @@ public class DoubleRachelPlayerActions : PlayerActionSet
     {
         Fire = CreatePlayerAction("Fire");
         Jump = CreatePlayerAction("Jump");
-        Throw = CreatePlayerAction("Throw");
+        Throw = CreatePlayerAction("Throw");       
 
         MoveLeft = CreatePlayerAction("Move Left");
         MoveRight = CreatePlayerAction("Move Right");

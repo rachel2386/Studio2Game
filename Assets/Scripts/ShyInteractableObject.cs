@@ -165,7 +165,7 @@ public class ShyInteractableObject : MonoBehaviour
 
         if (clickedMsgFsm)
         {
-            clickedMsgFsm.MySendMessageToAll(clickedMsgEvent);
+            clickedMsgFsm.MySendEventToAll(clickedMsgEvent);
         }
     }
 

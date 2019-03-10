@@ -6,18 +6,24 @@ using UnityEngine.Serialization;
 
 public class ShyDialogTrigger : MonoBehaviour
 {
-    [Tooltip("Not used curretly")]
-    public string characterName = "";
-
     [FormerlySerializedAs("startNode")]
     public string talkToNode = "";
 
-    public bool lockMove = false;
-    public bool lockMouseLook = false;
+    public bool lockMove = true;
+    public bool lockMouseLook = true;
+    public bool canStillInteract = false;
     
-
     [Header("Optional")]    
     public TextAsset scriptToLoad;
+
+    public ShyEvent completeEvent = new ShyEvent("OnCompleted");
+
+    [OnInspectorGUI]
+    void SetShyEventParent()
+    {
+        completeEvent.component = this;
+    }
+
 
     // Use this for initialization
     void Start()

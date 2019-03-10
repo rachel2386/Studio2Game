@@ -118,7 +118,7 @@ public class ShyMouseLook
         float yRot = LevelManager.Instance.PlayerActions.Look.X * XSensitivity * sensitivityFactorX;
         float xRot = LevelManager.Instance.PlayerActions.Look.Y * YSensitivity * sensitivityFactorY;
 
-        if(controller.lockMouseLook)
+        if(controller.lockMouseLook || needTempShowCursor)
         {
             yRot = 0;
             xRot = 0;

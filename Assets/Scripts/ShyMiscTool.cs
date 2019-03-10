@@ -4,17 +4,27 @@ using UnityEngine;
 
 public static class ShyMiscTool
 {
-    public static void MySendMessageToAll(this PlayMakerFSM fsm,  string name)
+    // Send FSM event to all FSMs that is in the same game object with the input fsm / monobehavior
+    public static void MySendEventToAll(this MonoBehaviour mb,  string name)
     {
-        if (!fsm)
+        if (!mb)
             return;
 
-        var go = fsm.gameObject;
+        var go = mb.gameObject;
 
-        foreach(var i in go.GetComponents<PlayMakerFSM>())
+        MySendEventToAll(go, name);
+    }
+
+    // Send FSM event to all FSMs that is in the game object
+    public static void MySendEventToAll(this GameObject go, string name)
+    {
+        if (!go)
+            return;
+
+        foreach (var i in go.GetComponents<PlayMakerFSM>())
         {
             i.SendEvent(name);
         }
     }
-    
+
 }

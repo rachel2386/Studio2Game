@@ -14,10 +14,15 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     ShyDialogUI dialogUI;
     ShyDialogTrigger curDialogTrigger;
     ShyFPSController fpsController;
+    ShyInteractionSystem sis;
+
+    PlayMakerFSM dialogFSM;
 
     bool inDialog = false;
     bool inOption = false;
     bool needForceStop = false;
+
+
 
 
     /// The object that contains the dialogue and the options.
@@ -57,6 +62,8 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         dialogRunner = FindObjectOfType<DialogueRunner>();
         dialogUI = FindObjectOfType<ShyDialogUI>();
         fpsController = FindObjectOfType<ShyFPSController>();
+        sis = FindObjectOfType<ShyInteractionSystem>();
+        dialogFSM = GetComponent<PlayMakerFSM>();
         if (dialogUI)
         {
             dialogueContainer = dialogUI.container;
@@ -112,6 +119,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
                 if (needForceStop)
                     break;
 
+                
                 stringBuilder.Append(c);
                 lineText.text = stringBuilder.ToString();
                 yield return new WaitForSeconds(textSpeed);
@@ -128,7 +136,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
             continuePrompt.SetActive(true);
 
         // Wait for any user input
-        while (Input.anyKeyDown == false && !needForceStop)
+        while (!ContinueClicked() && !needForceStop)
         {
             yield return null;
         }
@@ -139,6 +147,11 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         if (continuePrompt != null)
             continuePrompt.SetActive(false);
 
+    }
+
+    bool ContinueClicked()
+    {
+        return LevelManager.Instance.PlayerActions.Fire.WasPressed;
     }
 
     /// Show a list of options, and wait for the player to make a selection.
@@ -202,8 +215,24 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     {
         // "Perform" the command
         Debug.Log("Command: " + command.text);
+        var words = command.text.Split(' ');
+        HandleCommand(words);
 
         yield break;
+    }
+
+    public void HandleCommand(string[] args)
+    {
+        if (args == null || args.Length == 0)
+            return;
+
+        // 1.Send FSM event to the DialogManager FSM
+        var eventName = args[0];
+        dialogFSM.MySendEventToAll(eventName);
+
+        // 2.Also FSM event to the current trigger FSM if it exsist
+        if (curDialogTrigger)
+            curDialogTrigger.MySendEventToAll(eventName);
     }
 
     /// Called when the dialogue system has started running.
@@ -211,6 +240,9 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     {
         inDialog = true;
         Debug.Log("Dialogue starting!");
+
+        if(curDialogTrigger && !curDialogTrigger.canStillInteract)
+            sis.SetIsWorking(false);
 
         // Enable the dialogue controls.
         if (dialogueContainer != null)
@@ -231,6 +263,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         inDialog = false;
         needForceStop = false;
         inOption = false;
+        sis.SetIsWorking(true);
 
         RestoreLockState();
 
@@ -265,8 +298,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     public void StartDialog(ShyDialogTrigger trigger, string talkToNode, bool needMatch)
     {
         if (!dialogRunner)
-            return;
-
+            return;        
 
         if (!needMatch || !inDialog || curDialogTrigger == trigger)
         {
@@ -295,7 +327,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
             // Hence, the complete callback will be involked later
             dialogRunner.Stop();
             needForceStop = true;
-            curDialogTrigger = null;
+            // curDialogTrigger = null;
         }            
     }
 
@@ -310,7 +342,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
             RestoreLockState();
 
             dialogRunner.Stop();
-            curDialogTrigger = null;
+            // curDialogTrigger = null;
         }
     }
 
