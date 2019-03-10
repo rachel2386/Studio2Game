@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Text;
 using System.Collections.Generic;
 using Yarn.Unity;
+using InControl;
 
 
 // This is not a singleton
@@ -13,7 +14,9 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     ShyDialogUI dialogUI;
     ShyDialogTrigger curDialogTrigger;
     ShyFPSController fpsController;
+
     bool inDialog = false;
+    bool inOption = false;
     bool needForceStop = false;
 
 
@@ -60,11 +63,18 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
             lineText = dialogUI.content.GetComponent<Text>();
             continuePrompt = dialogUI.content;
 
-            foreach(var option in dialogUI.options)
+            int index = 0;
+            foreach (var option in dialogUI.options)
             {
                 var btn = option.GetComponent<Button>();
+                
                 if(btn)
+                {
+                    int thisIndex = index;
                     optionButtons.Add(btn);
+                    btn.onClick.AddListener(() => SetOption(thisIndex));
+                    index++;
+                }
             }
         }
 
@@ -135,6 +145,10 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     public override IEnumerator RunOptions(Yarn.Options optionsCollection,
                                             Yarn.OptionChooser optionChooser)
     {
+        inOption = true;
+        // show cursor
+        ShowCursor(true);
+
         // Do a little bit of safety checking
         if (optionsCollection.options.Count > optionButtons.Count)
         {
@@ -155,11 +169,15 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         SetSelectedOption = optionChooser;
 
         // Wait until the chooser has been used and then removed (see SetOption below)
-        while (SetSelectedOption != null)
+        while (SetSelectedOption != null && !needForceStop)
         {
             yield return null;
         }
 
+
+        inOption = false;
+        // hide cursor
+        ShowCursor(false);
         // Hide all the buttons
         foreach (var button in optionButtons)
         {
@@ -212,6 +230,8 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     {
         inDialog = false;
         needForceStop = false;
+        inOption = false;
+
         RestoreLockState();
 
         curDialogTrigger = null;
@@ -265,6 +285,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         if (!dialogRunner)
             return;
 
+        
         if (!needMatch || curDialogTrigger == trigger)
         {
 
@@ -293,5 +314,14 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         }
     }
 
-   
+    public void ShowCursor(bool show)
+    {
+        bool isController = LevelManager.Instance.PlayerActions.ActiveDevice.DeviceClass == InputDeviceClass.Controller;
+
+        // If is using controller, ignore the show cursor process
+        if (show && !isController)
+            fpsController.SetTempShowCursor(true);
+        else
+            fpsController.SetTempShowCursor(false);
+    }
 }

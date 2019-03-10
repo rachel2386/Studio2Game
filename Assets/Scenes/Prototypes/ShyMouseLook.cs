@@ -18,6 +18,9 @@ public class ShyMouseLook
 
     ShyFPSController controller;
 
+    [HideInInspector]
+    public bool needTempShowCursor = false;
+
     #region Var: Original MouseLook 
     public float XSensitivity = 2f;
     public float YSensitivity = 2f;
@@ -88,6 +91,7 @@ public class ShyMouseLook
         m_CameraTargetRot = camera.localRotation;
 
         controller = character.gameObject.GetComponent<ShyFPSController>();
+        
     }
 
 
@@ -415,21 +419,26 @@ public class ShyMouseLook
             m_cursorIsLocked = true;
         }
 
-
         // Debug.Log(m_cursorIsLocked);
         if (m_cursorIsLocked)
         {   
             // Cursor.lockState = CursorLockMode.Confined;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            Debug.Log("NotLocked");                       
+            if(needTempShowCursor)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+                             
         }
         else if (!m_cursorIsLocked)
         {
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            Debug.Log("shouldn't be here");
+            Cursor.visible = true;            
         }
     }
 
@@ -453,4 +462,6 @@ public class ShyMouseLook
         return q;
     }
 
+
+    
 }

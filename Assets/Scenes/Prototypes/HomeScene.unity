@@ -778,7 +778,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 
   talkToNode: HomeNpcStart
-  lockPlayer: 1
+  lockMove: 1
+  lockMouseLook: 1
   scriptToLoad: {fileID: 4900000, guid: 266365006c7f62742a016137bc2cc18c, type: 3}
 --- !u!1 &6165003
 GameObject:
@@ -1082,7 +1083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.2688679, b: 0.2688679, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2373,7 +2374,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 
   talkToNode: bbb
-  lockPlayer: 0
+  lockMove: 0
+  lockMouseLook: 0
   scriptToLoad: {fileID: 4900000, guid: 266365006c7f62742a016137bc2cc18c, type: 3}
 --- !u!114 &544227509
 MonoBehaviour:

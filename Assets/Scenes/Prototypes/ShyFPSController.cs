@@ -278,5 +278,10 @@ public class ShyFPSController : MonoBehaviour
         }
         body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
     }
+
+    public void SetTempShowCursor(bool show)
+    {
+        m_MouseLook.needTempShowCursor = show;
+    }
 }
 

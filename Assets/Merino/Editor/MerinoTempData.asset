@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13981b66f67204744891820795ef4230, type: 3}
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
-  editedID: 14
-  timestamp: 7651.528246969622
+  editedID: 13
+  timestamp: 12490.379159828017
   m_TreeElements:
   - m_ID: 0
     m_Name: Root
@@ -149,26 +149,12 @@ MonoBehaviour:
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
     nodeTags: 
-    nodeBody: 'This is the Start node. Write the beginning of your Yarn story here.
-
-      // You can make comments with ''//'' and the player won''t see it.
-
-      TronTron: Hi, nihao
-
-      Wenhaolian: Nishuoshenme?
-
-      TronTron: Hi, nihao
-
-      Wenhaolian: Nishuoshenme?
-
-      TronTron: Hi, nihao
-
-      Wenhaolian: Nishuoshenme?
-
-
-      // IMPORTANT: node options are only offered at the end of the passage
-
-      Do you want to read more about Yarn features?'
+    nodeBody: "This is the Start node. Write the beginning of your Yarn story here.\n//
+      You can make comments with '//' and the player won't see it.\nTronTron: Hi,
+      nihao\nWenhaolian: Nishuoshenme?\n->This is option 1\n\tYou selected option
+      1.\n->This is option 2\n\tYou selected option 2.\n\n// IMPORTANT: node options
+      are only offered at the end of the passage\nDo you want to read more about Yarn
+      features?"
     enabled: 1
     leafType: 0
   - m_ID: 14
@@ -201,16 +187,64 @@ MonoBehaviour:
       Wenhaolian: ssss?'
     enabled: 1
     leafType: 0
+  - m_ID: 15
+    m_Name: HomeNPC2.yarn
+    m_Depth: 0
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 
+    enabled: 1
+    leafType: 1
+  - m_ID: 16
+    m_Name: Start
+    m_Depth: 1
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'This is the Start node. Write the beginning of your Yarn story here.
+
+      // You can make comments with ''//'' and the player won''t see it.
+
+
+      // There''s two ways to do choices in Yarn. The most basic way is to link to
+      other nodes like this:
+
+      [[Go see more examples|Start_MoreExamples]]
+
+      [[Actually, let''s restart this node again|Start]]
+
+
+      // IMPORTANT: node options are only offered at the end of the passage
+
+      Do you want to read more about Yarn features?'
+    enabled: 1
+    leafType: 0
+  - m_ID: 17
+    m_Name: Start_MoreExamples
+    m_Depth: 1
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: "This node is called Start_MoreExamples.\nThe second way to do choices
+      in Yarn is with 'shortcut options' like this:\n\n->This is option 1\n\tYou selected
+      option 1.\n->This is option 2\n\tYou selected option 2.\n\t<<set $didOption2
+      to true>>\n\nBased on choices, you can set variables, and then check those variables
+      later.\n<<if $didOption2 is true>>\nBy checking $didOption2, I remember you
+      chose option 2!\n<<else>>\nI can't detect a variable $didOption2, so that means
+      you chose option 1\n<<endif>>\n\nDo you want to go back to Start now?\n-> Yes,
+      send me back to Start.\n\t[[Start]]\n-> No thanks, I want to stop.\n\nOk here's
+      the end, good luck!"
+    enabled: 1
+    leafType: 0
   currentFiles:
   - {fileID: 4900000, guid: c76d734350cdfe74f834346146ccf820, type: 3}
   - {fileID: 4900000, guid: 8b6ae1e8d32e840f0b3fd0b033e52253, type: 3}
   - {fileID: 4900000, guid: 24f22b038d584445ba4f43344cc5733d, type: 3}
   - {fileID: 4900000, guid: 266365006c7f62742a016137bc2cc18c, type: 3}
+  - {fileID: 4900000, guid: d6a01713a2fab7f4797a4eeea33ccbf9, type: 3}
   viewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0e000000
-    m_LastClickedID: 14
-    m_ExpandedIDs: 0000000001000000050000000a0000000c000000
+    m_SelectedIDs: 0d000000
+    m_LastClickedID: 13
+    m_ExpandedIDs: 0000000001000000050000000a0000000c0000000f000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
