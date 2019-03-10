@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using UnityStandardAssets.Characters.FirstPerson;
 
 [Serializable]
 public class ShyMouseLook
@@ -15,6 +16,7 @@ public class ShyMouseLook
         FORCED,
     }
 
+    ShyFPSController controller;
 
     #region Var: Original MouseLook 
     public float XSensitivity = 2f;
@@ -85,6 +87,7 @@ public class ShyMouseLook
         m_CharacterTargetRot = character.localRotation;
         m_CameraTargetRot = camera.localRotation;
 
+        controller = character.gameObject.GetComponent<ShyFPSController>();
     }
 
 
@@ -110,6 +113,12 @@ public class ShyMouseLook
         }
         float yRot = LevelManager.Instance.PlayerActions.Look.X * XSensitivity * sensitivityFactorX;
         float xRot = LevelManager.Instance.PlayerActions.Look.Y * YSensitivity * sensitivityFactorY;
+
+        if(controller.lockMouseLook)
+        {
+            yRot = 0;
+            xRot = 0;
+        }
 
         //Debug.Log("x " + LevelManager.Instance.PlayerActions.Look.X);
         //Debug.Log("y " + LevelManager.Instance.PlayerActions.Look.Y);
@@ -409,15 +418,18 @@ public class ShyMouseLook
 
         // Debug.Log(m_cursorIsLocked);
         if (m_cursorIsLocked)
-        {
+        {   
             // Cursor.lockState = CursorLockMode.Confined;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            Debug.Log("NotLocked");                       
         }
         else if (!m_cursorIsLocked)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            Debug.Log("shouldn't be here");
         }
     }
 
