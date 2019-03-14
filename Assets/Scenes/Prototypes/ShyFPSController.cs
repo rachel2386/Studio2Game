@@ -42,6 +42,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        public bool disablePlayerMovement = false;
+
         // Use this for initialization
         private void Start()
         {
@@ -212,15 +214,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void GetInput(out float speed)
         {
             // Read input
-
-
             //float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             //float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+            float horizontal;
+            float vertical;
+            if (!disablePlayerMovement)
+            {
+                horizontal = LevelManager.Instance.PlayerActions.Move.X;
+                 vertical = LevelManager.Instance.PlayerActions.Move.Y;
+            }
+            else
+            {
+                horizontal = 0;
+                vertical = 0;
+            }
 
-            float horizontal = LevelManager.Instance.PlayerActions.Move.X;
-            float vertical = LevelManager.Instance.PlayerActions.Move.Y;
-
- 
 
             bool waswalking = m_IsWalking;
 
