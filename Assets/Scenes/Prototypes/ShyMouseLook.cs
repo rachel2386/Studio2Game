@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using UnityStandardAssets.Characters.FirstPerson;
 
 [Serializable]
 public class ShyMouseLook
@@ -15,6 +16,10 @@ public class ShyMouseLook
         FORCED,
     }
 
+    ShyFPSController controller;
+
+    [HideInInspector]
+    public bool needTempShowCursor = false;
 
     #region Var: Original MouseLook 
     public float XSensitivity = 2f;
@@ -85,6 +90,8 @@ public class ShyMouseLook
         m_CharacterTargetRot = character.localRotation;
         m_CameraTargetRot = camera.localRotation;
 
+        controller = character.gameObject.GetComponent<ShyFPSController>();
+        
     }
 
 
@@ -110,6 +117,12 @@ public class ShyMouseLook
         }
         float yRot = LevelManager.Instance.PlayerActions.Look.X * XSensitivity * sensitivityFactorX;
         float xRot = LevelManager.Instance.PlayerActions.Look.Y * YSensitivity * sensitivityFactorY;
+
+        if(controller.lockMouseLook || needTempShowCursor)
+        {
+            yRot = 0;
+            xRot = 0;
+        }
 
         //Debug.Log("x " + LevelManager.Instance.PlayerActions.Look.X);
         //Debug.Log("y " + LevelManager.Instance.PlayerActions.Look.Y);
@@ -406,18 +419,26 @@ public class ShyMouseLook
             m_cursorIsLocked = true;
         }
 
-
         // Debug.Log(m_cursorIsLocked);
         if (m_cursorIsLocked)
-        {
+        {   
             // Cursor.lockState = CursorLockMode.Confined;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if(needTempShowCursor)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+                             
         }
         else if (!m_cursorIsLocked)
         {
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            Cursor.visible = true;            
         }
     }
 
@@ -441,4 +462,6 @@ public class ShyMouseLook
         return q;
     }
 
+
+    
 }

@@ -5,33 +5,59 @@ using HutongGames.PlayMaker.Actions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class PopUpDialogue : MonoBehaviour
 {
-    public float sphereRadius = 1.5f;
-
+    
+   private GameObject _playerObject;
    private Rigidbody playerRB;
+   private ShyFPSController _playerController;
+   private NPCFollowOnOverlap followPlayer;
 
+   #region Dialogue Variables
+   
+   private Canvas myCanvas;
    private Text dialogueTxt;
    private GameObject DialogueBubble;
+   
+   [Header("Dialogue Bubble Properties")]
+   //dialogueBox properties
+   public Vector3 bubblePos = new Vector3(0,-100,0);
+
+   public Vector2 bubbleSize = new Vector2(650,150);
+  
+   public int textSize = 30;
+   
+   //for text animation
    private string message;
    public float letterTime;
    private bool textPlayed = false;
-
+   
+   //audio
+   public AudioClip dialogue;
+   private AudioSource audioSource;
+   
+   //dialogue particles 
    private ParticleSystem txtParticles;
-   private Canvas myCanvas;
+   
+   #endregion
 
-   private NPCFollowOnOverlap followPlayer;
-
+  
+   public float sphereRadius = 1.5f;
   public static bool checkSceneSwitched = false;
     
     void Start()
     {
-
+        
         if (!checkSceneSwitched)
-            playerRB = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+            _playerObject = GameObject.FindGameObjectWithTag("Player");  
         else
-            playerRB = null;
+        playerRB.gameObject.tag = null;
+        
+            playerRB = _playerObject.GetComponent<Rigidbody>();
+      
+        _playerController =_playerObject.GetComponent<ShyFPSController>();
         
         followPlayer = GetComponent<NPCFollowOnOverlap>();
         _isfollowPlayerNotNull = followPlayer != null;
@@ -48,7 +74,9 @@ public class PopUpDialogue : MonoBehaviour
         dialogueTxt = DialogueBubble.GetComponentInChildren<Text>();
         message = dialogueTxt.text;
         dialogueTxt.text = "";
-        
+
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     private bool addingTxt = false;
@@ -80,6 +108,8 @@ public class PopUpDialogue : MonoBehaviour
                if (!addingTxt)
                StartCoroutine(PlayTxt()); 
                
+               if (!audioSource.isPlaying)
+               audioSource.PlayOneShot(dialogue, 1F);
                
                SetDialogueState(myCanvas.transform, true);
               
@@ -107,8 +137,7 @@ public class PopUpDialogue : MonoBehaviour
                     }
               
             }
-            
-            
+        
         }
         
         else
@@ -124,8 +153,7 @@ public class PopUpDialogue : MonoBehaviour
                 textPlayed = false;
                 txtParticles.Stop();
             }
-
-            
+ 
         }
 
        
@@ -155,16 +183,22 @@ public class PopUpDialogue : MonoBehaviour
     {
         DialogueBubble.transform.SetParent(parent);
         DialogueBubble.SetActive(activeState);
-        DialogueBubble.transform.localPosition = new Vector3(0, -100, 0);
+        DialogueBubble.transform.localPosition = bubblePos;
         DialogueBubble.transform.localEulerAngles = new Vector3(0,0,0);
-        DialogueBubble.transform.localScale = new Vector3(1,1,1);
+        DialogueBubble.GetComponent<RectTransform>().sizeDelta = bubbleSize;
+        dialogueTxt.fontSize = textSize;
     }
 
     void ReducePlayerSpeed(bool speedReduced)
     {
         if (speedReduced)
-        playerRB.velocity = Vector3.zero;
-     
+        {
+            _playerController.disablePlayerMovement = true;
+            playerRB.velocity = Vector3.zero;
+        }
+        else _playerController.disablePlayerMovement = false;
+
+
     }
     
    
