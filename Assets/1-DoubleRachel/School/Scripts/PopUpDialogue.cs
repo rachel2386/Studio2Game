@@ -46,18 +46,14 @@ public class PopUpDialogue : MonoBehaviour
   
    public float sphereRadius = 1.5f;
   public static bool checkSceneSwitched = false;
+  
+  private bool _isPlayerObjectNotNull;
     
     void Start()
     {
-        
-        if (!checkSceneSwitched)
-            _playerObject = GameObject.FindGameObjectWithTag("Player");  
-        else
-        playerRB.gameObject.tag = null;
-        
-            playerRB = _playerObject.GetComponent<Rigidbody>();
-      
-        _playerController =_playerObject.GetComponent<ShyFPSController>();
+       _playerObject = GameObject.FindGameObjectWithTag("Player");  
+     //playerRB = _playerObject.GetComponent<Rigidbody>();
+      _playerController =_playerObject.GetComponent<ShyFPSController>();
         
         followPlayer = GetComponent<NPCFollowOnOverlap>();
         _isfollowPlayerNotNull = followPlayer != null;
@@ -86,47 +82,49 @@ public class PopUpDialogue : MonoBehaviour
     private bool _isfollowPlayerNotNull;
 
     private bool isFollowing = false;
+    
 
     // Update is called once per frame
     void Update()
     {
         
-        if (DetectPlayer())
-        {
-            
-            if(!txtParticles.isPlaying)
-                txtParticles.Play();
-            
-            
-            ReducePlayerSpeed(reducedSpeed);
-            
-            if (!textPlayed)
+            Debug.Log("player found");
+            if (DetectPlayer())
             {
+            
+                if(!txtParticles.isPlaying)
+                    txtParticles.Play();
+            
+            
+                ReducePlayerSpeed(reducedSpeed);
+            
+                if (!textPlayed)
+                {
              
-               reducedSpeed = true;
+                    reducedSpeed = true;
               
-               if (!addingTxt)
-               StartCoroutine(PlayTxt()); 
+                    if (!addingTxt)
+                        StartCoroutine(PlayTxt()); 
                
-               if (!audioSource.isPlaying)
-               audioSource.PlayOneShot(dialogue, 1F);
+                    if (!audioSource.isPlaying)
+                        audioSource.PlayOneShot(dialogue, 1F);
                
-               SetDialogueState(myCanvas.transform, true);
+                    SetDialogueState(myCanvas.transform, true);
               
-            }
-            else
-            {
-                addingTxt = false;
-                StopCoroutine(PlayTxt());
-                reducedSpeed = false;
-                dialogueTxt.text = "";
-                SetDialogueState(transform, false); 
+                }
+                else
+                {
+                    addingTxt = false;
+                    StopCoroutine(PlayTxt());
+                    reducedSpeed = false;
+                    dialogueTxt.text = "";
+                    SetDialogueState(transform, false); 
             
-            }
+                }
 
 
-            if (dialogueTxt.text.ToCharArray().Length == message.ToCharArray().Length) // if coroutine finishes 
-            {
+                if (dialogueTxt.text.ToCharArray().Length == message.ToCharArray().Length) // if coroutine finishes 
+                {
                
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -136,27 +134,27 @@ public class PopUpDialogue : MonoBehaviour
                             SwitchScene();
                     }
               
+                }
+        
             }
         
-        }
-        
-        else
-        {
-            if (_isfollowPlayerNotNull)
-            {
-                if(followPlayer.DetectPlayer())
-                    if (isFollowing)
-                        textPlayed = true;
-            }
             else
             {
-                textPlayed = false;
-                txtParticles.Stop();
-            }
+                if (_isfollowPlayerNotNull)
+                {
+                    if(followPlayer.DetectPlayer())
+                        if (isFollowing)
+                            textPlayed = true;
+                }
+                else
+                {
+                    textPlayed = false;
+                    txtParticles.Stop();
+                }
  
-        }
+            }
+        
 
-       
     }
 
     bool DetectPlayer()
@@ -194,7 +192,7 @@ public class PopUpDialogue : MonoBehaviour
         if (speedReduced)
         {
             _playerController.disablePlayerMovement = true;
-            playerRB.velocity = Vector3.zero;
+            //playerRB.velocity = Vector3.zero;
         }
         else _playerController.disablePlayerMovement = false;
 
