@@ -1076,7 +1076,9 @@ MonoBehaviour:
   jumpAnchorY: {fileID: 286192158}
   radio: {fileID: 181809128}
   foodRoot: {fileID: 1202754986}
+  musicPlayerController: {fileID: 0}
   musicInterval: 1.77
+  reminder: 2
 --- !u!114 &17894837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1598,7 +1600,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 0101
-        actionIsOpen: 0000
+        actionIsOpen: 0001
         actionStartIndex: 0000000002000000
         actionHashCodes: 5ac852041bcdca04
         unityObjectParams: []
@@ -1775,7 +1777,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - GOOD
-        - BAD
+        - GOOD
         - BAD
         byteData: 0000
         arrayParamSizes: 
@@ -2704,102 +2706,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1389379563}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &181809130
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181809128}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ba01fcfa188675449989e3af5e69ab58, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &181809131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11862,6 +11768,7 @@ MonoBehaviour:
   - da3f266d-5495-427c-a18a-21f685ef6df3
   - 5ef410cd-d1ad-4482-94e7-0cecfe6dfaa6
   - 8dcd1505-e35f-4574-8370-99af262d812c
+  - 432b7b7b-9808-4952-87e2-d9d4bf7a6ab1
   objects:
   - {fileID: 1787697199}
   - {fileID: 941800662189891717}
@@ -11880,6 +11787,7 @@ MonoBehaviour:
   - {fileID: 1576932128}
   - {fileID: 6165003}
   - {fileID: 853244736}
+  - {fileID: 17894834}
 --- !u!114 &6131175552093361808
 MonoBehaviour:
   m_ObjectHideFlags: 0

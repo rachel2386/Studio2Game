@@ -12,6 +12,7 @@ public class Pan : MonoBehaviour
 
     public GameObject foodRoot;
     List<GameObject> foodList = new List<GameObject>();
+  
 
     float radius;
     public float Radius
@@ -95,7 +96,7 @@ public class Pan : MonoBehaviour
     }
 
     public void StartMusic()
-    {
+    {       
         StartCoroutine(MusicTrigger());
     }
 
@@ -125,6 +126,5 @@ public class Pan : MonoBehaviour
             radio.MySendEventToAll("SHAKE");
         }
     }
-
 
 }
