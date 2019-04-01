@@ -27,4 +27,13 @@ public static class ShyMiscTool
         }
     }
 
+    public static float GetPlaneDistance(Vector3 go1, Vector3 go2)
+    {
+        go1.y = 0;
+        go2.y = 0;
+
+        return Vector3.Distance(go1, go2);
+    }
+    
+
 }
