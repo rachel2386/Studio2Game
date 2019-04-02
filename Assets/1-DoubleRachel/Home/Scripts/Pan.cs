@@ -12,8 +12,11 @@ public class Pan : MonoBehaviour
 
     public GameObject foodRoot;
     List<GameObject> foodList = new List<GameObject>();
-  
+    public float[] beats;
+    public float threshouldTime = 0.3f;
 
+
+    AudioSource bgm;
     float radius;
     public float Radius
     {
@@ -48,13 +51,15 @@ public class Pan : MonoBehaviour
         foreach (var com in foodCompenents)
             foodList.Add(com.gameObject);
 
+        bgm = radio.GetComponent<AudioSource>();
         StartMusic();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Debug.Log(radio.GetComponent<AudioSource>().time);
+        CheckMusicProgress();
     }
 
     // Return and remove the food from the list
@@ -96,35 +101,62 @@ public class Pan : MonoBehaviour
     }
 
     public void StartMusic()
-    {       
-        StartCoroutine(MusicTrigger());
+    {
+        bgm.Play();
+        
+        
     }
 
     public void RefreshGrade()
     {
-        var dt = Time.time - lastTriggerTime;
-        if (dt > musicInterval / 2)
-            dt = musicInterval - dt;
+        // the reference is either the next beat or the last trigger beat
+        var refLast = lastTriggerTime;
+
+        float span = 0;
+        if (lastTriggerIndex != beats.Length - 1)
+        {
+            span = beats[lastTriggerIndex + 1] - beats[lastTriggerIndex];
+        }
+        else
+            span = bgm.clip.length - beats[lastTriggerIndex] + beats[0];
+        var refNext = lastTriggerTime + span;
+
+        var dt = Mathf.Min(Mathf.Abs(Time.time - refLast), Mathf.Abs(Time.time - refNext));
+        //Debug.Log("Now: " + Time.time);
+        //Debug.Log("Deviation: " + dt);
 
         // 0 best    dt = 0
-        // 10 worst  dt = 0.5
+        // 10 worst  dt = threshouldTime
 
-
-        var grade = dt / 0.5f * 10.0f;
+        var grade = dt / threshouldTime * 10.0f;
         grade = Mathf.Clamp(grade, 0, 10);
         lastGrade = grade;
     }
 
-    float lastTriggerTime = 0;
-    public float musicInterval = 1.77f;
-    IEnumerator MusicTrigger()
+    float lastTriggerTime = -1;
+    int lastTriggerIndex = 0;
+    
+
+    int beatIndex = 0;
+    void CheckMusicProgress()
     {
-        while(true)
+        var pt = bgm.time % bgm.clip.length;        
+        
+
+        if (pt > beats[beatIndex]
+            && !(beatIndex == 0 && pt > beats[1]))
         {
-            yield return new WaitForSeconds(musicInterval);
+            
             lastTriggerTime = Time.time;
+            lastTriggerIndex = beatIndex;
+
+            // Debug.Log("LastTriggerTime: " + lastTriggerTime);
+
+            beatIndex++;
+            beatIndex %= beats.Length;
             radio.MySendEventToAll("SHAKE");
         }
+        
     }
 
 }
