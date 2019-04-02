@@ -18,11 +18,14 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
 
     PlayMakerFSM dialogFSM;
 
-    bool inDialog = false;
+    private bool inDialog = false;
     bool inOption = false;
     bool needForceStop = false;
 
-
+    public bool InDialog {
+        get => inDialog;
+        set => inDialog = value;
+    }
 
 
     /// The object that contains the dialogue and the options.
@@ -238,7 +241,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     /// Called when the dialogue system has started running.
     public override IEnumerator DialogueStarted()
     {
-        inDialog = true;
+        InDialog = true;
         Debug.Log("Dialogue starting!");
 
         if(curDialogTrigger && !curDialogTrigger.canStillInteract)
@@ -260,7 +263,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     /// Called when the dialogue system has finished running.
     public override IEnumerator DialogueComplete()
     {
-        inDialog = false;
+        InDialog = false;
         needForceStop = false;
         inOption = false;
         sis.SetIsWorking(true);
@@ -303,7 +306,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         if (!dialogRunner)
             return;        
 
-        if (!needMatch || !inDialog || curDialogTrigger == trigger)
+        if (!needMatch || !InDialog || curDialogTrigger == trigger)
         {
             if (trigger)
             {
