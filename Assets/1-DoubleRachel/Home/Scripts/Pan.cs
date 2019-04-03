@@ -15,6 +15,7 @@ public class Pan : MonoBehaviour
     public float[] beats;
     public float threshouldTime = 0.3f;
 
+    public float lastTossTime = -1;
 
     AudioSource bgm;
     float radius;
@@ -52,7 +53,8 @@ public class Pan : MonoBehaviour
             foodList.Add(com.gameObject);
 
         bgm = radio.GetComponent<AudioSource>();
-        StartMusic();
+        
+        ResetFoodMat();
     }
 
     // Update is called once per frame
@@ -60,6 +62,8 @@ public class Pan : MonoBehaviour
     {
         // Debug.Log(radio.GetComponent<AudioSource>().time);
         CheckMusicProgress();
+
+        UpdateFoodMat();
     }
 
     // Return and remove the food from the list
@@ -100,11 +104,17 @@ public class Pan : MonoBehaviour
         }
     }
 
+    bool inCook = false;
     public void StartMusic()
     {
         bgm.Play();
-        
-        
+        StartCook();
+    }
+
+    public void StartCook()
+    {
+        inCook = true;
+
     }
 
     public void RefreshGrade()
@@ -138,15 +148,24 @@ public class Pan : MonoBehaviour
     
 
     int beatIndex = 0;
+
+    float lastProgress = -1;
     void CheckMusicProgress()
     {
-        var pt = bgm.time % bgm.clip.length;        
-        
+        if (!bgm.isPlaying)
+            return;
 
-        if (pt > beats[beatIndex]
-            && !(beatIndex == 0 && pt > beats[1]))
+
+        var pt = bgm.time % bgm.clip.length;
+
+        if (pt < lastProgress)
+            lastProgress = -1;
+        
+        //if (pt > beats[beatIndex]
+        //    && !(beatIndex == 0 && pt > beats[1]))
+        if(lastProgress < beats[beatIndex] && pt >= beats[beatIndex])
         {
-            
+            BeatEncountered(beatIndex);
             lastTriggerTime = Time.time;
             lastTriggerIndex = beatIndex;
 
@@ -154,9 +173,73 @@ public class Pan : MonoBehaviour
 
             beatIndex++;
             beatIndex %= beats.Length;
-            radio.MySendEventToAll("SHAKE");
+            
+        }
+
+        lastProgress = pt;
+    }
+
+    public void UnpauseBGM()
+    {
+        bgm.UnPause();
+    }
+
+    bool firstTurnOn = true;
+    void BeatEncountered(int index)
+    {
+        Debug.Log(index);
+
+        if (firstTurnOn && index == 0)
+            firstTurnOn = false;
+        else
+            radio.MySendEventToAll("SHAKE");       
+
+
+    }
+
+  
+    public float foodBottomColor = -3f;
+    public float expandMax = 0.3f;
+    public float heightChangeMax = -0.5f;
+
+    void UpdateFoodMat()
+    {
+        if (!inCook)
+            return;
+        
+        foreach (var go in foodList)
+        {
+           
+            var bC = go.GetComponent<Renderer>().material.GetFloat("_bottomColor");
+            var expand = go.GetComponent<Renderer>().material.GetFloat("_expand");
+            var heightChange  = go.GetComponent<Renderer>().material.GetFloat("_heightChange");
+
+            /// heightChange           
+            go.GetComponent<Renderer>().material.SetFloat("_bottomColor", Mathf.Lerp(bC, foodBottomColor, 0.15f * Time.deltaTime));
+            go.GetComponent<Renderer>().material.SetFloat("_expand", Mathf.Lerp(expand, expandMax, 0.15f * Time.deltaTime));
+            go.GetComponent<Renderer>().material.SetFloat("_heightChange", Mathf.Lerp(heightChange, heightChangeMax, 0.15f * Time.deltaTime));
+
+            // go.GetComponent<Renderer>().material.color = Color.Lerp(c, Color.black, 0.15f * Time.deltaTime);
         }
         
     }
 
+
+    public void PanTossed()
+    {
+        lastTossTime = Time.time;
+        ResetFoodMat();
+    }
+
+    void ResetFoodMat()
+    {
+        foreach (var go in foodList)
+        {
+            // go.GetComponent<Renderer>().material.color = Color.white;
+            go.GetComponent<Renderer>().material.SetFloat("_bottomColor", 1);
+            go.GetComponent<Renderer>().material.SetFloat("_expand", 0);
+            go.GetComponent<Renderer>().material.SetFloat("_heightChange", 0);
+        }
+    }
 }
+
