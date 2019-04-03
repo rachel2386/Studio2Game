@@ -6,6 +6,8 @@ public class ShyUI : MonoBehaviour
 {
     public GameObject centerDot;
     public GameObject centerText;
+    public GameObject topCurtain;
+    public GameObject bottomCurtain;
 
     // Start is called before the first frame update
     void Start()

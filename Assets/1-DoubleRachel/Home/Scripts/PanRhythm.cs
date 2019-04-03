@@ -45,43 +45,10 @@ public class PanRhythm : Pan
         UpdateFoodMat();
     }
 
-    // Return and remove the food from the list
-    public GameObject PopRandomFood()
-    {
-        if (foodList.Count == 0)
-            return null;
 
-        var ranIndex = Random.Range(0, foodList.Count);
 
-        var ret = foodList[ranIndex];
-        foodList.RemoveAt(ranIndex);
 
-        return ret;
-    }
-
-    public void SendEventGoodMode()
-    {
-        foreach(var food in foodList)
-        {
-            food.MySendEventToAll("FOOD_TOSS");
-        }
-    }
-
-    public void SendEventBadMode()
-    {
-        var spiltFood = PopRandomFood();
-        if (spiltFood)
-        {
-            spiltFood.MySendEventToAll("SPILT");
-            spiltFood.transform.SetParent(null);
-        }
-           
-
-        foreach (var food in foodList)
-        {
-            food.MySendEventToAll("FOOD_TOSS");
-        }
-    }
+    
 
     bool inCook = false;
     public void StartMusic()

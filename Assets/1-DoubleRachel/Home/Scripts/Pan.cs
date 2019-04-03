@@ -44,4 +44,48 @@ public class Pan : MonoBehaviour
     {
         
     }
+
+
+    public void SendEventGoodMode()
+    {
+        foreach (var food in foodList)
+        {
+            food.MySendEventToAll("FOOD_TOSS");
+        }
+    }
+
+    public void SendEventBadMode()
+    {
+        SpiltFood();
+
+        foreach (var food in foodList)
+        {
+            food.MySendEventToAll("FOOD_TOSS");
+        }
+    }
+
+    // Return and remove the food from the list
+    public GameObject PopRandomFood()
+    {
+        if (foodList.Count == 0)
+            return null;
+
+        var ranIndex = Random.Range(0, foodList.Count);
+
+        var ret = foodList[ranIndex];
+        foodList.RemoveAt(ranIndex);
+
+        return ret;
+    }
+
+    public void SpiltFood()
+    {
+        var spiltFood = PopRandomFood();
+        if (spiltFood)
+        {
+            spiltFood.MySendEventToAll("SPILT");
+            spiltFood.transform.SetParent(null);
+        }
+
+    }
 }

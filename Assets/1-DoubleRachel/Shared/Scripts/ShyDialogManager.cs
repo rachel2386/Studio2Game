@@ -60,7 +60,8 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     private void Start()
     {
         dialogRunner = FindObjectOfType<DialogueRunner>();
-        dialogUI = FindObjectOfType<ShyDialogUI>();
+        dialogUI = Resources.FindObjectsOfTypeAll<ShyDialogUI>()[0];
+        dialogUI.gameObject.SetActive(true);
         fpsController = FindObjectOfType<ShyFPSController>();
         sis = FindObjectOfType<ShyInteractionSystem>();
         dialogFSM = GetComponent<PlayMakerFSM>();
