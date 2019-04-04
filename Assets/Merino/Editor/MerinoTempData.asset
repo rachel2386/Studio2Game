@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
   editedID: 2
-  timestamp: 6870.731263711106
+  timestamp: 6854.3111690622545
   m_TreeElements:
   - m_ID: 0
     m_Name: Root
@@ -42,25 +42,37 @@ MonoBehaviour:
 
       Hey! I am talking to you!
 
-      [[What|NPC1]]
+      [[What|SchoolWiki]]
 
-      [[No way.|NPC2]]'
+      [[No way.|RejectionCrap]]'
     enabled: 1
     leafType: 0
   - m_ID: 3
-    m_Name: NPC1
+    m_Name: End
     m_Depth: 2
     nodePosition: {x: 0, y: 0}
     nodeTags: 
-    nodeBody: '
-
-      Hey
-
-      Do you know:
-
-      A school is an educational institution designed to provide learning spaces and
-      learning environments for the teaching of students (or "pupils") under the direction
-      of teachers. Most countries have systems of formal education, which is commonly
+    nodeBody: Goodbye. Sorry I take up so much of your time. I just can't help it
+      when I SEE YOU.
+    enabled: 1
+    leafType: 0
+  - m_ID: 4
+    m_Name: SchoolWiki
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: "\nDo you know:\nA school is an educational institution designed to
+      provide learning spaces and learning environments for the teaching of students
+      (or \"pupils\") under the direction of teachers. \n[[So?|SchoolWiki2]]\n[[I
+      Don't really care.|RejectionCrap]]\n"
+    enabled: 1
+    leafType: 0
+  - m_ID: 5
+    m_Name: SchoolWiki2
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'Most countries have systems of formal education, which is commonly
       compulsory.[citation needed] In these systems, students progress through a series
       of schools. The names for these schools vary by country (discussed in the Regional
       section below) but generally include primary school for young children and secondary
@@ -68,27 +80,15 @@ MonoBehaviour:
       higher education is taught, is commonly called a university college or university,
       but these higher education institutions are usually not compulsory.
 
+      [[Ok.I get it.|End]]
+
+      [[What else do you know?|ShoolWiki3]]
+
 '
     enabled: 1
     leafType: 0
-  - m_ID: 4
-    m_Name: NPC2
-    m_Depth: 2
-    nodePosition: {x: 0, y: 0}
-    nodeTags: 
-    nodeBody: "Why I love Being Rejected. And You Should Too.\nTo pull my socks up
-      after a defeat isn\u2019t the only thing I\u2019ve learned from my Literature
-      teacher.\r\r\nShe also taught me to love being rejected.\r\r\nThat wasn\u2019t
-      her intention though. She was just doubtful about my potential.\r\r\nDuring
-      my High School senior year, in Argentina, I had to take some English exams.
-      The stakes were high.\r\r\nMonths later, when the results came back from England,
-      my teacher was surprised that I didn\u2019t fail. My scores were among the top
-      15% of the class.\r\r\nThat\u2019s how powerful rejection can be when I use
-      it as fuel.\n\n"
-    enabled: 1
-    leafType: 0
-  - m_ID: 5
-    m_Name: NPC3
+  - m_ID: 6
+    m_Name: SchoolWiki3
     m_Depth: 2
     nodePosition: {x: 0, y: 0}
     nodeTags: 
@@ -100,10 +100,28 @@ MonoBehaviour:
       personal achievements. Schools for adults include institutions of corporate
       training, military education and training and business sc
 
-'
+      [[All right. Thank you for sharing.|End]]
+
+      [[You can FXXK OFF NOW |RejectionCrap]]'
     enabled: 1
     leafType: 0
-  - m_ID: 6
+  - m_ID: 7
+    m_Name: RejectionCrap
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: "It's ok. I love rejections. Let me tell you why:\n\nWhy I love Being
+      Rejected. And You Should Too.\nTo pull my socks up after a defeat isn\u2019t
+      the only thing I\u2019ve learned from my Literature teacher.\n\nShe also taught
+      me to love being rejected.\n\nThat wasn\u2019t her intention though. She was
+      just doubtful about my potential.\n\nDuring my High School senior year, in Argentina,
+      I had to take some English exams. The stakes were high.\n\nMonths later, when
+      the results came back from England, my teacher was surprised that I didn\u2019t
+      fail. My scores were among the top 15% of the class.\n\nThat\u2019s how powerful
+      rejection can be when I use it as fuel.\n[[Bye.|End]]\n\n\n"
+    enabled: 1
+    leafType: 0
+  - m_ID: 8
     m_Name: Start_MoreExamples
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -128,8 +146,8 @@ MonoBehaviour:
     m_ExpandedIDs: 00000000010000000200000003000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: NPC2
-      m_OriginalName: NPC2
+      m_Name: SchoolWiki2
+      m_OriginalName: SchoolWiki2
       m_EditFieldRect:
         serializedVersion: 2
         x: 0

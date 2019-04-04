@@ -9,22 +9,19 @@ public class timeCountdown : MonoBehaviour
 
     private Text myText;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         myText = GetComponent<Text>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        myText.text = "Time Left:" + Mathf.FloorToInt(time/60f) + "m" + Mathf.RoundToInt(time%60) + "s";
+        myText.text = "Time Left:" + Mathf.RoundToInt(time / 60f) + "m" + Mathf.FloorToInt(time % 60) + "s";
         if (time >= 0)
-        {
             time -= Time.deltaTime;
-        }
         else
-        {
             time = 0;
-        }
+       
     }
 }
