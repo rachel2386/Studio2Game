@@ -48,7 +48,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.8
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -178,6 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8ecf25a67e6f74e8b7acf0236410f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockMove: 0
+  lockMouseLook: 0
   m_IsWalking: 1
   m_WalkSpeed: 3
   m_RunSpeed: 5
@@ -186,6 +188,7 @@ MonoBehaviour:
   m_StickToGroundForce: 10
   m_GravityMultiplier: 2
   m_MouseLook:
+    needTempShowCursor: 0
     XSensitivity: 4
     YSensitivity: 4
     clampVerticalRotation: 1
@@ -404,6 +407,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+  disablePlayerMovement: 0
 --- !u!114 &1787697200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab583198231a7d429cc8a876de50918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupRoot: {fileID: 0}
+  curHeldObject: {fileID: 0}
+  curAimedObject: {fileID: 0}
 --- !u!1 &1284270763
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,7 +510,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -512,11 +519,11 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 0
+  m_HDR: 1
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
