@@ -26,11 +26,10 @@ public class NPCBehavior : MonoBehaviour
     private Vector3 AgentOffset;
     private Vector3 DestinationOffset;
     private float turnSpeed = 2f;
-    
+
     public Transform myDestination;
     private Transform playerTransform;
-    [Header(" NPC Type:")] 
-    public bool Trigger;
+    [Header(" NPC Type:")] public bool Trigger;
     public bool Automatic;
     public bool Stationary;
 
@@ -40,7 +39,8 @@ public class NPCBehavior : MonoBehaviour
     {
         myAgent = GetComponent<NavMeshAgent>();
         myAnim = GetComponent<Animator>();
-        AgentOffset = transform.position;
+        AgentOffset = myAgent.transform.position;
+        // print("agent position =" + transform.position);
         DestinationOffset = myDestination.position;
         playerTransform = GameObject.Find("PlayerBase").transform;
 
@@ -60,6 +60,7 @@ public class NPCBehavior : MonoBehaviour
         }
         else if (Automatic)
         {
+            // print("agent position updated=" + transform.position);
             myAgent.SetDestination(goingForward ? DestinationOffset : AgentOffset);
             //walking back and forth two points
             if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
@@ -74,20 +75,19 @@ public class NPCBehavior : MonoBehaviour
             else
             {
                 //Quaternion rot;
-               // var rot = Quaternion.LookRotation(playerTransform.position, Vector3.up);
-                transform.LookAt(Vector3.MoveTowards(transform.forward,playerTransform.position, 0.2f)); 
+                // var rot = Quaternion.LookRotation(playerTransform.position, Vector3.up);
+                transform.LookAt(Vector3.MoveTowards(transform.forward, playerTransform.position, 0.2f));
             }
-
         }
-            
-        
+
 
         myAgent.updatePosition = false;
         myAgent.updateRotation = true;
+        
         float speed;
-        if (npcRotate)
-            speed = myAgent.desiredVelocity.magnitude;
-        else speed = 0;
+        //if (npcRotate)
+        speed = myAgent.desiredVelocity.magnitude;
+        //else speed = 0;
         //update animator 
         myAnim.SetFloat("Forward", speed);
         // look at walking dir    
@@ -114,7 +114,8 @@ public class NPCBehavior : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-        myAgent.isStopped = !npcRotate;
+        if(!npcRotate)myAgent.Stop(); 
+        else myAgent.Resume();
         transform.position = myAgent.nextPosition;
     }
 

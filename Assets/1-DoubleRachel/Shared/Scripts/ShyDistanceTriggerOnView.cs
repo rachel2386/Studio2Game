@@ -42,6 +42,7 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateTarget();
         SetShyEventParent();
         seePlayer = GetComponent<SeePlayer>();
         NPCBehavior = GetComponent<NPCBehavior>();
@@ -61,24 +62,29 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
         var curDis = Vector3.Distance(target.transform.position, transform.position);
 
         // Enter
+        if(Input.GetKeyUp(KeyCode.X))
+            leaveEvent.Invoke();
         
         if(seePlayer.PlayerSeen)    
         if (
             //lastDistance > distance &&
-                curDis <= distance && !eventTriggered)
+                curDis <= distance)
             {
-                NPCBehavior.NpcRotate = false;
-                enterEvent.Invoke();
-                eventTriggered = true;
+                if (!eventTriggered)
+                {
+                    NPCBehavior.NpcRotate = false;
+                    enterEvent.Invoke();
+                    eventTriggered = true;
+                }
             }
         
         // Leave
         else if(
            // lastDistance <= distance && 
-                curDis > distance)
+                curDis > distance )
         {
-            leaveEvent.Invoke();
-            eventTriggered = false;
+            //leaveEvent.Invoke();
+            //eventTriggered = false;
         }
         lastDistance = curDis;
     }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13981b66f67204744891820795ef4230, type: 3}
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
-  editedID: 4
-  timestamp: 6647.3071651132195
+  editedID: 2
+  timestamp: 6870.731263711106
   m_TreeElements:
   - m_ID: 0
     m_Name: Root
@@ -31,7 +31,7 @@ MonoBehaviour:
     nodeBody: 
     enabled: 1
     leafType: 1
-  - m_ID: 4
+  - m_ID: 2
     m_Name: NPC
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -42,34 +42,68 @@ MonoBehaviour:
 
       Hey! I am talking to you!
 
-'
-    enabled: 1
-    leafType: 0
-  - m_ID: 2
-    m_Name: NPC1
-    m_Depth: 1
-    nodePosition: {x: 0, y: 0}
-    nodeTags: 
-    nodeBody: 'Hey!
+      [[What|NPC1]]
 
-      // You can make comments with ''//'' and the player won''t see it.
-
-      Do you want to hang out?
-
-      // There''s two ways to do choices in Yarn. The most basic way is to link to
-      other nodes like this:
-
-      [[Yes|Start_MoreExamples]]
-
-      [[No way.|NPC1]]
-
-
-      // IMPORTANT: node options are only offered at the end of the passage
-
-'
+      [[No way.|NPC2]]'
     enabled: 1
     leafType: 0
   - m_ID: 3
+    m_Name: NPC1
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: '
+
+      Hey
+
+      Do you know:
+
+      A school is an educational institution designed to provide learning spaces and
+      learning environments for the teaching of students (or "pupils") under the direction
+      of teachers. Most countries have systems of formal education, which is commonly
+      compulsory.[citation needed] In these systems, students progress through a series
+      of schools. The names for these schools vary by country (discussed in the Regional
+      section below) but generally include primary school for young children and secondary
+      school for teenagers who have completed primary education. An institution where
+      higher education is taught, is commonly called a university college or university,
+      but these higher education institutions are usually not compulsory.
+
+'
+    enabled: 1
+    leafType: 0
+  - m_ID: 4
+    m_Name: NPC2
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: "Why I love Being Rejected. And You Should Too.\nTo pull my socks up
+      after a defeat isn\u2019t the only thing I\u2019ve learned from my Literature
+      teacher.\r\r\nShe also taught me to love being rejected.\r\r\nThat wasn\u2019t
+      her intention though. She was just doubtful about my potential.\r\r\nDuring
+      my High School senior year, in Argentina, I had to take some English exams.
+      The stakes were high.\r\r\nMonths later, when the results came back from England,
+      my teacher was surprised that I didn\u2019t fail. My scores were among the top
+      15% of the class.\r\r\nThat\u2019s how powerful rejection can be when I use
+      it as fuel.\n\n"
+    enabled: 1
+    leafType: 0
+  - m_ID: 5
+    m_Name: NPC3
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'There are also non-government schools, called private schools. Private
+      schools [1] may be required when the government does not supply adequate, or
+      special education. Other private schools can also be religious, such as Christian
+      schools, madrasa, hawzas (Shi''a schools), yeshivas (Jewish schools), and others;
+      or schools that have a higher standard of education or seek to foster other
+      personal achievements. Schools for adults include institutions of corporate
+      training, military education and training and business sc
+
+'
+    enabled: 1
+    leafType: 0
+  - m_ID: 6
     m_Name: Start_MoreExamples
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -89,13 +123,13 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 1ddde974b83a2e649a1834958e86d79d, type: 3}
   viewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 04000000
-    m_LastClickedID: 4
-    m_ExpandedIDs: 0000000001000000
+    m_SelectedIDs: 02000000
+    m_LastClickedID: 2
+    m_ExpandedIDs: 00000000010000000200000003000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: NPC
-      m_OriginalName: NPC
+      m_Name: NPC2
+      m_OriginalName: NPC2
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
