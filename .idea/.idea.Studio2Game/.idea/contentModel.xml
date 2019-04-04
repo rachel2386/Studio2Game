@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Rachel\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Rachel\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Studio2Game.-1209906424.00" t="ExcludeRecursive" />
-    <e p="D:\content\others\nyu\gradClasses\Game Studio 2\Studio2Game" t="IncludeRecursive">
+    <e p="$PROJECT_DIR$/../Library/Caches/Rider2018.3/extResources" t="IncludeRecursive" />
+    <e p="$PROJECT_DIR$/../Library/Caches/Rider2018.3/resharper-host/local/Transient/ReSharperHost/v183/SolutionCaches/_Studio2Game.-1391279197.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
@@ -374,6 +374,7 @@
           </e>
         </e>
         <e p="Editor" t="Include">
+          <e p="FMODMigrationUtil.cs" t="Include" />
           <e p="ImageEffects" t="Include">
             <e p="AntialiasingEditor.cs" t="Include" />
             <e p="BloomAndFlaresEditor.cs" t="Include" />
@@ -406,6 +407,27 @@
                 <e p="GameObjectGUIDsInspector.cs" t="Include" />
               </e>
             </e>
+          </e>
+        </e>
+        <e p="GoogleVR" t="Include">
+          <e p="Editor" t="Include">
+            <e p="FmodGvrAudioRoomEditor.cs" t="Include" />
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="Audio" t="Include">
+              <e p="FmodGvrAudio.cs" t="Include" />
+              <e p="FmodGvrAudioRoom.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="HolyShift" t="Include">
+          <e p="readme.txt" t="Include" />
+          <e p="Scripts" t="Include">
+            <e p="CheckForStandardAssets.cs" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="FXWaterLowpoly.shader" t="Include" />
+            <e p="WaterInclude.cginc" t="Include" />
           </e>
         </e>
         <e p="InControl" t="Include">
@@ -981,6 +1003,20 @@
           <e p="Test" t="Include">
             <e p="TestInputManager.cs" t="Include" />
           </e>
+        </e>
+        <e p="Koreographer" t="Include">
+          <e p="Demos" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="ColorAdjuster.cs" t="Include" />
+              <e p="CubeScaler.cs" t="Include" />
+              <e p="DemoControlsUI.cs" t="Include" />
+              <e p="EmitParticlesOnSpan.cs" t="Include" />
+              <e p="MusicalImpulse.cs" t="Include" />
+              <e p="TempoSwitch.cs" t="Include" />
+              <e p="UIMessageSetter.cs" t="Include" />
+            </e>
+          </e>
+          <e p="readme.txt" t="Include" />
         </e>
         <e p="Merino" t="Include">
           <e p="Editor" t="Include">
@@ -2165,6 +2201,69 @@
           <e p="UpdateHelper.cs" t="Include" />
         </e>
         <e p="Plugins" t="Include">
+          <e p="Editor" t="Include">
+            <e p="FMOD" t="Include">
+              <e p="BankRefDrawer.cs" t="Include" />
+              <e p="CreateEventPopup.cs" t="Include" />
+              <e p="EditorBankRef.cs" t="Include" />
+              <e p="EditorEventRef.cs" t="Include" />
+              <e p="EditorParamRef.cs" t="Include" />
+              <e p="EditorUtils.cs" t="Include" />
+              <e p="EventBrowser.cs" t="Include" />
+              <e p="EventCache.cs" t="Include" />
+              <e p="EventManager.cs" t="Include" />
+              <e p="EventRefDrawer.cs" t="Include" />
+              <e p="FindAndReplace.cs" t="Include" />
+              <e p="LogViewer.cs" t="Include" />
+              <e p="MigrationUtil.cs" t="Include" />
+              <e p="ParamRefDrawer.cs" t="Include" />
+              <e p="SettingsEditor.cs" t="Include" />
+              <e p="StudioBankLoaderEditor.cs" t="Include" />
+              <e p="StudioEventEmitterEditor.cs" t="Include" />
+              <e p="StudioEventEmitterGizmoDrawer.cs" t="Include" />
+              <e p="StudioListenerEditor.cs" t="Include" />
+              <e p="StudioParameterTriggerEditor.cs" t="Include" />
+              <e p="Timeline" t="Include">
+                <e p="FMODEventPlayableEditor.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Koreographer" t="Include">
+              <e p="SonicBloom.Koreo.EditorUI.xml" t="Include" />
+            </e>
+          </e>
+          <e p="FMOD" t="Include">
+            <e p="BankRefAttribute.cs" t="Include" />
+            <e p="EventRefAttribute.cs" t="Include" />
+            <e p="FMOD_Listener.cs" t="Include" />
+            <e p="FMOD_StudioEventEmitter.cs" t="Include" />
+            <e p="FMODAsset.cs" t="Include" />
+            <e p="OneshotList.cs" t="Include" />
+            <e p="ParamRef.cs" t="Include" />
+            <e p="RuntimeManager.cs" t="Include" />
+            <e p="RuntimeUtils.cs" t="Include" />
+            <e p="Settings.cs" t="Include" />
+            <e p="StudioBankLoader.cs" t="Include" />
+            <e p="StudioEventEmitter.cs" t="Include" />
+            <e p="StudioListener.cs" t="Include" />
+            <e p="StudioParameterTrigger.cs" t="Include" />
+            <e p="Timeline" t="Include">
+              <e p="FMODEventPlayable.cs" t="Include" />
+              <e p="FMODEventTrack.cs" t="Include" />
+            </e>
+            <e p="Wrapper" t="Include">
+              <e p="fmod.cs" t="Include" />
+              <e p="fmod_dsp.cs" t="Include" />
+              <e p="fmod_errors.cs" t="Include" />
+              <e p="fmod_studio.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Koreographer" t="Include">
+            <e p="SonicBloom.Koreo.xml" t="Include" />
+            <e p="SonicBloom.MIDI.xml" t="Include" />
+            <e p="Unity Editor" t="Include">
+              <e p="SonicBloom.Koreo.xml" t="Include" />
+            </e>
+          </e>
           <e p="Sirenix" t="Include">
             <e p="Assemblies" t="Include">
               <e p="link.xml" t="Include" />
@@ -2370,6 +2469,39 @@
           <e p="Scripts" t="Include">
             <e p="QHierarchyRuntime.asmdef" t="Include" />
             <e p="QObjectList.cs" t="Include" />
+          </e>
+        </e>
+        <e p="ResonanceAudio" t="Include">
+          <e p="Editor" t="Include">
+            <e p="FmodResonanceAudioRoomEditor.cs" t="Include" />
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="FmodResonanceAudio.cs" t="Include" />
+            <e p="FmodResonanceAudioRoom.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Gym" t="Include">
+            <e p="BallBounce.cs" t="Include" />
+            <e p="BallSpawner.cs" t="Include" />
+            <e p="Clock.cs" t="Include" />
+            <e p="ClockTester.cs" t="Include" />
+            <e p="ExtendedPlatformCreator.cs" t="Include" />
+            <e p="GateSoundTrigger.cs" t="Include" />
+            <e p="NPCSpawner.cs" t="Include" />
+            <e p="PlatformBounce.cs" t="Include" />
+            <e p="PlatformCreator.cs" t="Include" />
+            <e p="RhythmBounce.cs" t="Include" />
+            <e p="SynthBounce.cs" t="Include" />
+            <e p="TonePool.cs" t="Include" />
+            <e p="Uitility.cs" t="Include" />
+            <e p="UnitySynths" t="Include">
+              <e p="pxFemme.cs" t="Include" />
+              <e p="pxLFO.cs" t="Include" />
+              <e p="pxLope.cs" t="Include" />
+              <e p="pxSnarple.cs" t="Include" />
+              <e p="pxStrax.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="Standard Assets" t="Include">
