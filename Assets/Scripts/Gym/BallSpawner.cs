@@ -37,16 +37,8 @@ public class BallSpawner : MonoBehaviour
 
 		if (count == 10)
 		{
-			AudioSource audio = GetComponent<AudioSource>();
-			audio.clip = bell;
-			audio.Play();
+			gameObject.MySendEventToAll("PlayBell");
 		}
 
-		IEnumerator playSoundThenLoad()
-		{
-			yield return new WaitForSeconds(26);
-			SceneManager.LoadScene("DarkGym");
-			Debug.Log("print");
-		}
 	}
 }
