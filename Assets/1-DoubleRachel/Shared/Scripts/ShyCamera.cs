@@ -32,6 +32,8 @@ public class ShyCamera : MonoBehaviour
     private void Awake()
     {
         GetComponent<PostProcessingBehaviour>().profile = runtimeProfile;
+
+        InitPPE();
     }
 
     // Start is called before the first frame update
@@ -39,6 +41,14 @@ public class ShyCamera : MonoBehaviour
     {
         fpsController = FindObjectOfType<ShyFPSController>();
         InitEyes();
+        
+    }
+
+    void InitPPE()
+    {
+        runtimeProfile.grain.enabled = false;
+        runtimeProfile.depthOfField.enabled = false;
+        runtimeProfile.vignette.enabled = false;
     }
 
     void InitEyes()

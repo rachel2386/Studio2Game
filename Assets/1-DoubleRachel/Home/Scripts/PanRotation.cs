@@ -204,8 +204,7 @@ public class PanRotation : Pan
 
         SetPpeParam(PpeSetting.GRAIN_INTENSITY, grainIntensity);
         SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
-
-        ShyMiscTool.SetPpeActivate(postProcessingProfile, PpeSetting.DEPTH_OF_FIELD_APERTURE, false);
+        EnableGrainEffect(false);
     }
     
 
