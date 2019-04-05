@@ -563,6 +563,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRoot: {fileID: 1284270763}
   runtimeProfile: {fileID: 11400000, guid: 1fa6918413eb6364cbdbd4d733848ab8, type: 2}
+  useGrain: 1
+  minGrainSize: 0.3
+  maxGrainSize: 3
+  minGrainIntensity: 0
+  maxGrainIntensity: 1
+  grainLerpSpeed: 1.5
+  grainEffectDistance: 8
+  grainDistanceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5675307
+      value: 0.6651902
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  debug: 0
+  considerOccusion: 1
+  considerPlayerSeeNpc: 1
+  considerNpcSeePlayer: 0
+  npcViewAngle: 180
 --- !u!114 &1891604854
 MonoBehaviour:
   m_ObjectHideFlags: 0

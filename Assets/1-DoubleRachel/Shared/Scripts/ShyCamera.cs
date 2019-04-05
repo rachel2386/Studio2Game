@@ -205,6 +205,16 @@ public class ShyCamera : MonoBehaviour
            
 
         var grainDegree = grainDistanceCurve.Evaluate(normaledDistance);
+
+
         SetGrainDegree(grainDegree, Time.deltaTime * grainLerpSpeed);
+
+        if (grainDegree == 0)
+            SetPpeActivate(PpeSetting.GRAIN_INTENSITY, false);
+    }
+
+    void SetPpeActivate(PpeSetting st, bool enable)
+    {
+        ShyMiscTool.SetPpeActivate(runtimeProfile, st, enable);
     }
 }
