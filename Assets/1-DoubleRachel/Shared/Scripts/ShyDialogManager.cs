@@ -11,6 +11,7 @@ using InControl;
 public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
 {
     DialogueRunner dialogRunner;
+    ShyUI shyUI;
     ShyDialogUI dialogUI;
     ShyDialogTrigger curDialogTrigger;
     ShyFPSController fpsController;
@@ -62,8 +63,10 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
 
     private void Start()
     {
+        shyUI = FindObjectOfType<ShyUI>();
         dialogRunner = FindObjectOfType<DialogueRunner>();
-        dialogUI = FindObjectOfType<ShyDialogUI>();
+        dialogUI = Resources.FindObjectsOfTypeAll<ShyDialogUI>()[0];
+        dialogUI.gameObject.SetActive(true);
         fpsController = FindObjectOfType<ShyFPSController>();
         sis = FindObjectOfType<ShyInteractionSystem>();
         dialogFSM = GetComponent<PlayMakerFSM>();
@@ -109,6 +112,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     /// Show a line of dialogue, gradually
     public override IEnumerator RunLine(Yarn.Line line)
     {
+        Debug.Log("Rn");
         // Show the text
         lineText.gameObject.SetActive(true);
 
@@ -257,7 +261,15 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
             gameControlsContainer.gameObject.SetActive(false);
         }
 
+        // Show the top and bottom black curtain
+        shyUI.ShowCutain();
+
         yield break;
+    }
+
+    public bool IsInDialog()
+    {
+        return inDialog;
     }
 
     /// Called when the dialogue system has finished running.
@@ -285,6 +297,11 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         {
             gameControlsContainer.gameObject.SetActive(true);
         }
+
+
+        // Show the top and bottom black curtain
+        shyUI.HideCurtain();
+
 
         yield break;
     }  
