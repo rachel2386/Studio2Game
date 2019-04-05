@@ -9,10 +9,13 @@ public class ShyCamera : MonoBehaviour
 {
     public GameObject pickupRoot;
     public PostProcessingProfile runtimeProfile;
-    public ShyFPSController fpsController;
+
+   
    
 
     [Title("Grain")]
+    public bool useGrain = false;
+
     [Range(0.3f, 3)]
     public float minGrainSize;
     [Range(0.3f, 3)]
@@ -23,11 +26,30 @@ public class ShyCamera : MonoBehaviour
     [Range(0f, 1)]
     public float maxGrainIntensity;
 
-    public float maxGrainDistance = 5;
-    public AnimationCurve grainCurve = AnimationCurve.Linear(0, 1, 1, 0);
+    [Tooltip("The lerp speed when grain value is changed")]
+    public float grainLerpSpeed = 0.3f;
+   
+    [Tooltip("The max distance that make grain begin to work")]
+    public float grainEffectDistance = 5;
+    public AnimationCurve grainDistanceCurve = AnimationCurve.Linear(0, 1, 1, 0);
 
-    public bool useDistaceGrain = false;
+    
+    public bool debug = false;
+
+    [Tooltip("Whether disable the grain if it's blocked")]
+    public bool considerOccusion = true;
+    [Tooltip("Only grain when the npc is in the player's FOV")]
+    public bool considerPlayerSeeNpc = true;
+    [Tooltip("Only grain when the player is in the npc's view within an angle")]
+    public bool considerNpcSeePlayer = false;
+    [ShowIf("considerNpcSeePlayer"), Range(0, 360)]
+    public float npcViewAngle = 180;
+
     List<Eye> eyeList = new List<Eye>();
+
+
+    ShyFPSController fpsController;
+    Camera cam;
 
     private void Awake()
     {
@@ -40,6 +62,7 @@ public class ShyCamera : MonoBehaviour
     void Start()
     {
         fpsController = FindObjectOfType<ShyFPSController>();
+        cam = GetComponent<Camera>();
         InitEyes();
         
     }
@@ -68,24 +91,7 @@ public class ShyCamera : MonoBehaviour
         UpdateGrain();
     }
 
-    void UpdateGrain()
-    {
-        if (!useDistaceGrain)
-            return;
-        
-        // the closest eye that the player can see without occlusion
-        foreach (var eye in eyeList)
-        {
-            if (!eye.transform.parent.gameObject.activeSelf)
-                continue;
-
-            if (ShyMouseLook.IsLineOfSightBlocked(eye.transform, transform, fpsController.transform))
-                continue;
-
-
-        }
-    }
-
+ 
     int GetRandom1()
     {
         return Random.Range(0f, 1f) < 0.5f ? 1 : -1;
@@ -129,17 +135,76 @@ public class ShyCamera : MonoBehaviour
         return ShyMiscTool.GetPpeParam(runtimeProfile, ppes);
     }
 
-    void UpdateGrainOnDistance()
-    {
 
+
+    void UpdateGrain()
+    {
+        if (!useGrain)
+            return;
+
+        float closestDistance = float.MaxValue;
+        // the closest eye that the player can see without occlusion
+
+        var eyes = FindObjectsOfType<Eye>();
+        foreach (var eye in eyes)
+        {
+            var eyeTransform = eye.transform;
+            var npcTransform = eyeTransform.parent;
+            var playerTransform = fpsController.transform;
+            if (!npcTransform.gameObject.activeSelf)
+                continue;
+
+            if (considerOccusion && ShyMouseLook.IsLineOfSightBlocked(eyeTransform, transform, playerTransform))
+                continue;
+            
+           
+            if (considerPlayerSeeNpc)
+            {
+                var eyeInVp = cam.WorldToViewportPoint(eye.transform.position);
+                if (eyeInVp.x > 1 || eyeInVp.x < 0 || eyeInVp.z < 0)
+                    continue;
+            }
+
+            if (considerNpcSeePlayer)
+            {
+                var toPlayer = Quaternion.LookRotation(playerTransform.position - npcTransform.position);
+                var turnQ = Quaternion.Inverse(npcTransform.rotation) * toPlayer;
+
+                if (debug)
+                    Debug.Log("NPC View: " + turnQ.eulerAngles);
+
+                var turnE = turnQ.eulerAngles;
+                var halfAngle = turnE.y > 180 ? 360 - turnE.y : turnE.y;
+
+                if (halfAngle * 2 > npcViewAngle)
+                    continue;
+            }
+
+
+
+            var distance = ShyMiscTool.GetPlaneDistance(eyeTransform.position, transform.position);
+            if (distance < closestDistance)
+                closestDistance = distance;
+        }
+
+        UpdateGrainOnDistance(closestDistance);
     }
 
-    void UpdateGrainOnDistanceObject(GameObject target)
-    {
-        var distance = ShyMiscTool.GetPlaneDistance(transform.position, target.transform.position);
-        var normaledDistance = Mathf.InverseLerp(0, maxGrainDistance, distance);
-        normaledDistance = Mathf.Lerp(0, 1, normaledDistance);
-        var grainDegree = grainCurve.Evaluate(normaledDistance);
-        SetGrainDegree(grainDegree);
+
+
+    void UpdateGrainOnDistance(float distance)
+    {        
+        var normaledDistance = Mathf.InverseLerp(0, grainEffectDistance, distance);
+        normaledDistance = Mathf.Clamp(normaledDistance, 0f, 1f);
+
+        if (debug)
+        {
+            Debug.Log("Distance: " + distance);
+            Debug.Log("NormaledDistance: " + normaledDistance);
+        }
+           
+
+        var grainDegree = grainDistanceCurve.Evaluate(normaledDistance);
+        SetGrainDegree(grainDegree, Time.deltaTime * grainLerpSpeed);
     }
 }
