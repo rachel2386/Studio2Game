@@ -14,6 +14,7 @@ public class PanRotation : Pan
     public GameObject liftedAnchor;
 
     Camera cam;
+    ShyCamera shyCam;
     ShyInteractionSystem sis;
     ShyUI shyUI;
 
@@ -65,6 +66,7 @@ public class PanRotation : Pan
         dialogManager = FindObjectOfType<ShyDialogManager>();
 
         cam = Camera.main;
+        shyCam = cam.GetComponent<ShyCamera>();
         sis = GameObject.FindObjectOfType<ShyInteractionSystem>();
         shyUI = GameObject.FindObjectOfType<ShyUI>();
 
@@ -179,12 +181,12 @@ public class PanRotation : Pan
 
     void SetPpeParam(PpeSetting ppes, float value, float lerpFactor = 1)
     {
-        ShyMiscTool.SetPpeParam(postProcessingProfile, ppes, value, lerpFactor);
+        shyCam.SetPpeParam(ppes, value, lerpFactor);
     }
 
     float GetPpeParam(PpeSetting ppes)
     {
-        return ShyMiscTool.GetPpeParam(postProcessingProfile, ppes);
+        return shyCam.GetPpeParam(ppes);
     }
 
     float currentCurtainHeight = 0;
