@@ -30,7 +30,29 @@ MonoBehaviour:
   leaveEvent:
     unityEvent:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2661634962418239616}
+          m_MethodName: StopDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2661634961685561346}
+          m_MethodName: set_NpcRotate
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
       m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
     fsm: {fileID: 0}
@@ -107,7 +129,7 @@ PrefabInstance:
     - target: {fileID: 1503193919904251016, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1503193920060036639, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
         type: 3}
@@ -131,6 +153,11 @@ PrefabInstance:
       objectReference: {fileID: 2661634961685561346}
     - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
         type: 3}
+      propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
       propertyPath: completeEvent.component
       value: 
       objectReference: {fileID: 2661634962418239616}
@@ -138,6 +165,36 @@ PrefabInstance:
         type: 3}
       propertyPath: lockMouseLook
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2661634961685561346}
+    - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_NpcRotate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1503193919293283993, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
         type: 3}

@@ -62,28 +62,35 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
         var curDis = Vector3.Distance(target.transform.position, transform.position);
 
         // Enter
-        if(Input.GetKeyUp(KeyCode.X))
+        if (Input.GetKeyUp(KeyCode.X))
             leaveEvent.Invoke();
-        
-        if(seePlayer.PlayerSeen)    
-        if (
-            //lastDistance > distance &&
-                curDis <= distance)
+
+        if (seePlayer.PlayerSeen)
+            if (curDis <= distance)
             {
-                if (!eventTriggered)
+               if(!NPCBehavior.GreetedPlayer)
+                   NPCBehavior.FollowPlayer();
+                else
                 {
-                    NPCBehavior.NpcRotate = false;
-                    enterEvent.Invoke();
-                    eventTriggered = true;
+                    if (!eventTriggered)
+                    {
+                        //NPCBehavior.NpcRotate = false;
+                        enterEvent.Invoke();
+                        eventTriggered = true;
+                        //lock movement
+                    }
                 }
             }
         
         // Leave
         else if(
-           // lastDistance <= distance && 
-                curDis > distance )
+           lastDistance <= distance && 
+                curDis > distance)
         {
-            //leaveEvent.Invoke();
+            print("player left");
+            leaveEvent.Invoke();
+            //NPCBehavior.NpcRotate = true;
+            
             //eventTriggered = false;
         }
         lastDistance = curDis;

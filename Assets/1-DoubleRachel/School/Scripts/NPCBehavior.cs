@@ -5,7 +5,15 @@ using HutongGames.PlayMaker.Actions;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.Utility;
 
+
+//To-do:
+
+//Change speed of npc when approaching player
+//add waving animation 
+//turning animation
+//sound
 public class NPCBehavior : MonoBehaviour
 {
     private NavMeshAgent myAgent;
@@ -14,11 +22,18 @@ public class NPCBehavior : MonoBehaviour
 
     private bool goingForward = true;
     private bool npcRotate = true;
+    private bool greetedPlayer = false;
 
     public bool NpcRotate
     {
         get => npcRotate;
         set => npcRotate = value;
+    }
+
+    public bool GreetedPlayer
+    {
+        get => greetedPlayer;
+        set => greetedPlayer = value;
     }
 
     public bool PlayerTriggered { get; set; } = false;
@@ -53,43 +68,42 @@ public class NPCBehavior : MonoBehaviour
 
     void Update()
     {
-        if (Trigger)
-        {
-            if (PlayerTriggered)
-                myAgent.SetDestination(myDestination.position);
-        }
-        else if (Automatic)
-        {
-            // print("agent position updated=" + transform.position);
-            myAgent.SetDestination(goingForward ? DestinationOffset : AgentOffset);
-            //walking back and forth two points
-            if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
+        
+            if (Trigger)
             {
-                goingForward = !goingForward;
+                if (PlayerTriggered)
+                {
+                    if(NpcRotate)
+                    myAgent.SetDestination(myDestination.position);
+                }
+
+                
             }
-        }
-        else if (Stationary)
-        {
-            if (npcRotate)
-                AutoRotate();
-            else
+            else if (Automatic)
             {
-                //Quaternion rot;
-                // var rot = Quaternion.LookRotation(playerTransform.position, Vector3.up);
-                transform.LookAt(Vector3.MoveTowards(transform.forward, playerTransform.position, 0.2f));
+                // print("agent position updated=" + transform.position);
+                if(npcRotate)
+                 myAgent.SetDestination(goingForward ? DestinationOffset : AgentOffset);
+                //walking back and forth two points
+                if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
+                {
+                    goingForward = !goingForward;
+                }
             }
-        }
-
-
+            else if (Stationary)
+            {
+                if (npcRotate)
+                    AutoRotate();
+                else
+                    transform.LookAt(playerTransform.position);
+            }
+    
         myAgent.updatePosition = false;
         myAgent.updateRotation = true;
-        
-        float speed;
-        //if (npcRotate)
-        speed = myAgent.desiredVelocity.magnitude;
-        //else speed = 0;
-        //update animator 
-        myAnim.SetFloat("Forward", speed);
+       
+        var speed = myAgent.desiredVelocity.magnitude;
+       //update animator 
+        myAnim.SetFloat(Forward, speed);
         // look at walking dir    
         //transform.LookAt(myAgent.steeringTarget + transform.forward);
     }
@@ -103,24 +117,54 @@ public class NPCBehavior : MonoBehaviour
             transform.eulerAngles.x);
 
         float angleToTurn = randomRot - transform.eulerAngles.y;
-        if (angleToTurn >= 5)
+        //if (Mathf.Abs(angleToTurn) >= 5)
+       // {
+           //myAnim.SetFloat("Turn", angleToTurn/180);
+           // myAnim.PlayInFixedTime("Grounded", 0, degreesTurned / turnSpeed);
+       //}
+       // else
+       //     myAnim.SetFloat("Turn", 0);
+    }
+
+    public void FollowPlayer()
+    {
+        NpcRotate = false;
+        if (!GreetedPlayer)
         {
-            myAnim.SetFloat("Turn", 0.8f);
-            myAnim.PlayInFixedTime("Grounded", 0, degreesTurned / turnSpeed);
+          //  myDestination.position = playerTransform.position;
+            //myAgent.CalculatePath(myDestination.position,myAgent.path);
+            if(!myAgent.pathPending && myAgent.destination != playerTransform.position)
+                myAgent.ResetPath();
+                
+            myAgent.SetDestination(playerTransform.position);
+           if (!myAgent.pathPending && myAgent.remainingDistance <= 1f)
+            {
+                myAgent.ResetPath();
+                myAgent.SetDestination(myDestination.position);
+                GreetedPlayer = true;
+            }
         }
         else
-            myAnim.SetFloat("Turn", 0);
+        {
+           // myDestination.position = DestinationOffset;
+            //myAgent.CalculatePath(myDestination.position,myAgent.path);
+        }
+        // 
+
     }
+
 
     private void OnAnimatorMove()
     {
-        if(!npcRotate)myAgent.Stop(); 
+        if (!npcRotate && GreetedPlayer) 
+            myAgent.Stop();
         else myAgent.Resume();
         transform.position = myAgent.nextPosition;
     }
 
     private float randomRot;
     private float degreesTurned;
+    private static readonly int Forward = Animator.StringToHash("Forward");
 
     void generateRandomNum()
     {
@@ -129,5 +173,10 @@ public class NPCBehavior : MonoBehaviour
             degreesTurned = Random.Range(30, 89);
             randomRot = transform.eulerAngles.y + degreesTurned;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        
     }
 }
