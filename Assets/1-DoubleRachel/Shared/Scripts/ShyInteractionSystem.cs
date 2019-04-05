@@ -41,6 +41,8 @@ public class ShyInteractionSystem : MonoBehaviour
         IsWorking = true;
     }
 
+   
+
     // Update is called once per frame
     void Update()
     {

@@ -61,6 +61,13 @@ public static class ShyMiscTool
                 setting.intensity, value, lerpFactor);
             profile.vignette.settings = setting;
         }
+        else if (st == PpeSetting.GRAIN_INTENSITY)
+        {
+            var setting = profile.grain.settings;
+            setting.intensity = Mathf.Lerp(
+                setting.intensity, value, lerpFactor);
+            profile.grain.settings = setting;
+        }
     }
 
 
@@ -80,6 +87,11 @@ public static class ShyMiscTool
         else if (st == PpeSetting.VIGNETTE_INTENSITY)
         {
             var setting = profile.vignette.settings;
+            return setting.intensity;
+        }
+        else if (st == PpeSetting.GRAIN_INTENSITY)
+        {
+            var setting = profile.grain.settings;
             return setting.intensity;
         }
         else

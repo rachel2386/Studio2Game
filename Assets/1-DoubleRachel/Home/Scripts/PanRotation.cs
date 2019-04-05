@@ -26,6 +26,12 @@ public class PanRotation : Pan
     public float finalVignetteIntensity = 0.4f;
     public float oriDepthParam;
     public float finalDepthParam = 14f;
+    public float oriGrainSize = 0.3f;
+    public float finalGrainSize = 2;
+    public float oriGrainIntensity = 0;
+    public float finalGrainIntensity = 3;
+
+
     public float finalCurtainHeight = 180f;
     public float curtainIntoTime = 3.0f;
     public float curtainOutTime = 1.5f;
@@ -35,6 +41,11 @@ public class PanRotation : Pan
 
     public float intoLerpFactor;
     public float outLerpFactor;
+
+
+    [Header("Progress")]
+    public float timeToFinish = 30;
+    public float knockDecrease = 0.05f;
 
     public AudioSource bgm;
 
@@ -50,8 +61,7 @@ public class PanRotation : Pan
         sis = GameObject.FindObjectOfType<ShyInteractionSystem>();
         shyUI = GameObject.FindObjectOfType<ShyUI>();
 
-        InitPostProcessingParams();
-        SetCurtainHeight(0);
+        InitPostProcessingParams();        
     }
     
     public float rotateSpeedY = 1;
@@ -104,6 +114,10 @@ public class PanRotation : Pan
             SetCurtainHeight(neededCurtainHeight);
             // BGM
             bgm.volume = finalBgmVolume;
+
+            //Add Progress
+            shyUI.ShowProgress(true);
+            AddProgress();
         }
         // Out
         else
@@ -125,10 +139,32 @@ public class PanRotation : Pan
             SetCurtainHeight(neededCurtainHeight);
             // BGM
             bgm.volume = oriBgmVolume;
+
+            // Progress
+            shyUI.ShowProgress(false);
         }
 
         // Debug.Log(shyUI.topCurtain.GetComponent<RectTransform>().sizeDelta.y);
+        // RefreshGrainEffect();
+    }
 
+    void AddProgress()
+    {
+        shyUI.AddProgress(Time.deltaTime * 1 / timeToFinish);
+    }
+
+    public void EnableGrainEffect(bool enabled)
+    {
+        postProcessingProfile.grain.enabled = enabled;
+    }
+
+    void RefreshGrainEffect()
+    {
+        // 1 - > 0
+        float perc = 1 - (float)foodList.Count / (float)oriFoodCount;
+
+        SetPpeParam(PpeSetting.GRAIN_SIZE, oriGrainSize + (finalGrainSize - oriGrainSize) * perc);
+        SetPpeParam(PpeSetting.GRAIN_INTENSITY, oriGrainIntensity + (finalGrainIntensity - oriGrainIntensity) * perc);
     }
 
     void SetPpeParam(PpeSetting ppes, float value, float lerpFactor = 1)
@@ -145,16 +181,7 @@ public class PanRotation : Pan
     void SetCurtainHeight(float height)
     {
         currentCurtainHeight = height;
-        //var rectH = shyUI.topCurtain.GetComponent<RectTransform>().rect;
-        //rectH.height = height;
-
-        var sizeH = shyUI.topCurtain.GetComponent<RectTransform>().sizeDelta;
-        sizeH.y = height;
-        shyUI.topCurtain.GetComponent<RectTransform>().sizeDelta = sizeH;
-
-        var sizeB = shyUI.bottomCurtain.GetComponent<RectTransform>().sizeDelta;
-        sizeB.y = height;
-        shyUI.bottomCurtain.GetComponent<RectTransform>().sizeDelta = sizeB;
+        shyUI.SetCurtainHeight(height);
     }
 
 
@@ -167,6 +194,7 @@ public class PanRotation : Pan
 
     public void KnockDoor(int index)
     {
+        shyUI.SuddenDecreaseProgress(knockDecrease);
         if(index == 0 || index == 1)
         {
             SendEventGoodMode();

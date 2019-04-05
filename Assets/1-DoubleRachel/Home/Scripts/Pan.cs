@@ -13,6 +13,7 @@ public class Pan : MonoBehaviour
     protected List<GameObject> foodList = new List<GameObject>();
 
     float radius;
+    protected int oriFoodCount = 1;
     public float Radius
     {
         get { return radius; }
@@ -37,6 +38,8 @@ public class Pan : MonoBehaviour
         var foodCompenents = foodRoot.GetComponentsInChildren<Food>();
         foreach (var com in foodCompenents)
             foodList.Add(com.gameObject);
+
+        oriFoodCount = foodList.Count;
     }
 
     // Update is called once per frame
@@ -88,4 +91,6 @@ public class Pan : MonoBehaviour
         }
 
     }
+
+    
 }
