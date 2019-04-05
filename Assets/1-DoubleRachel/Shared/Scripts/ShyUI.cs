@@ -8,6 +8,8 @@ public class ShyUI : MonoBehaviour
 {
     public GameObject centerDot;
     public GameObject centerText;
+
+    public GameObject curtainRoot;
     public GameObject topCurtain;
     public GameObject bottomCurtain;
 
@@ -38,8 +40,25 @@ public class ShyUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetCurtainHeight(0);
+        InitCurtain();
         InitProgress();
+    }
+
+    void InitCurtain()
+    {
+        curtainRoot.SetActive(true);
+        SetCurtainHeight(0);
+    }
+
+    public void ShowCutain()
+    {
+        curtainRoot.SetActive(true);
+        SetCurtainHeight(180);
+    }
+
+    public void HideCurtain()
+    {
+        curtainRoot.SetActive(false);
     }
 
     void InitProgress()

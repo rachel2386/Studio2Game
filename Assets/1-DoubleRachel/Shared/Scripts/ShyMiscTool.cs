@@ -7,7 +7,7 @@ public static class ShyMiscTool
 {   
 
     // Send FSM event to all FSMs that is in the same game object with the input fsm / monobehavior
-    public static void MySendEventToAll(this MonoBehaviour mb,  string name)
+    public static void MySendEventToAll(this Behaviour mb,  string name)
     {
         if (!mb)
             return;
@@ -96,5 +96,15 @@ public static class ShyMiscTool
         }
         else
             return 0;
+    }
+
+    public static void SetPpeActivate(PostProcessingProfile profile, PpeSetting st, bool enable)
+    {
+        if(st == PpeSetting.DEPTH_OF_FIELD_APERTURE)
+        {
+            profile.depthOfField.enabled = enable;
+        }
+
+        return;
     }
 }

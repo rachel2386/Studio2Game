@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
@@ -26,10 +27,13 @@ public class PanRotation : Pan
     public float finalVignetteIntensity = 0.4f;
     public float oriDepthParam;
     public float finalDepthParam = 14f;
-    public float oriGrainSize = 0.3f;
-    public float finalGrainSize = 2;
-    public float oriGrainIntensity = 0;
-    public float finalGrainIntensity = 3;
+
+    //public float oriGrainSize = 0.3f;
+    //public float finalGrainSize = 2;
+    //public float oriGrainIntensity = 0;
+    //public float finalGrainIntensity = 3;
+    public float grainSize = 1.6f;
+    public float grainIntensity = 1;
 
 
     public float finalCurtainHeight = 180f;
@@ -48,6 +52,7 @@ public class PanRotation : Pan
     public float knockDecrease = 0.05f;
 
     public AudioSource bgm;
+    ShyDialogManager dialogManager;
 
     // Start is called before the first frame update
     new void Start()
@@ -56,6 +61,8 @@ public class PanRotation : Pan
 
         oriPanPosition = pan.transform.position;
         oriPanRotation = pan.transform.rotation;
+
+        dialogManager = FindObjectOfType<ShyDialogManager>();
 
         cam = Camera.main;
         sis = GameObject.FindObjectOfType<ShyInteractionSystem>();
@@ -110,8 +117,9 @@ public class PanRotation : Pan
             SetPpeParam(PpeSetting.DEPTH_OF_FIELD_APERTURE, finalDepthParam, lerpFactor);
             // Curtain
             var neededCurtainHeight = Mathf.MoveTowards(currentCurtainHeight, finalCurtainHeight, finalCurtainHeight / curtainIntoTime * Time.deltaTime);
-            
-            SetCurtainHeight(neededCurtainHeight);
+
+            if (!dialogManager.IsInDialog())
+                SetCurtainHeight(neededCurtainHeight);
             // BGM
             bgm.volume = finalBgmVolume;
 
@@ -136,7 +144,9 @@ public class PanRotation : Pan
 
             // Curtain
             var neededCurtainHeight = Mathf.MoveTowards(currentCurtainHeight, 0, finalCurtainHeight / curtainOutTime * Time.deltaTime);
-            SetCurtainHeight(neededCurtainHeight);
+
+            if(!dialogManager.IsInDialog())
+                SetCurtainHeight(neededCurtainHeight);
             // BGM
             bgm.volume = oriBgmVolume;
 
@@ -158,14 +168,14 @@ public class PanRotation : Pan
         postProcessingProfile.grain.enabled = enabled;
     }
 
-    void RefreshGrainEffect()
-    {
-        // 1 - > 0
-        float perc = 1 - (float)foodList.Count / (float)oriFoodCount;
+    //void RefreshGrainEffect()
+    //{
+    //    // 1 - > 0
+    //    float perc = 1 - (float)foodList.Count / (float)oriFoodCount;
 
-        SetPpeParam(PpeSetting.GRAIN_SIZE, oriGrainSize + (finalGrainSize - oriGrainSize) * perc);
-        SetPpeParam(PpeSetting.GRAIN_INTENSITY, oriGrainIntensity + (finalGrainIntensity - oriGrainIntensity) * perc);
-    }
+    //    SetPpeParam(PpeSetting.GRAIN_SIZE, oriGrainSize + (finalGrainSize - oriGrainSize) * perc);
+    //    SetPpeParam(PpeSetting.GRAIN_INTENSITY, oriGrainIntensity + (finalGrainIntensity - oriGrainIntensity) * perc);
+    //}
 
     void SetPpeParam(PpeSetting ppes, float value, float lerpFactor = 1)
     {
@@ -189,19 +199,55 @@ public class PanRotation : Pan
     {
         SetPpeParam(PpeSetting.VIGNETTE_INTENSITY, oriVignetteIntensity);
         SetPpeParam(PpeSetting.DEPTH_OF_FIELD_APERTURE, oriDepthParam);
+
+        SetPpeParam(PpeSetting.GRAIN_INTENSITY, grainIntensity);
+        SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
+
+        ShyMiscTool.SetPpeActivate(postProcessingProfile, PpeSetting.DEPTH_OF_FIELD_APERTURE, false);
     }
     
 
-    public void KnockDoor(int index)
+    public void KnockDoorStart(int index)
+    {
+        
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(0.05f);
+        seq.AppendCallback(() =>
+        {
+            cam.MySendEventToAll("SHAKE");
+            EnableGrainEffect(true);
+        });
+
+        ShyMiscTool.SetPpeActivate(postProcessingProfile, PpeSetting.DEPTH_OF_FIELD_APERTURE, false);
+    }
+
+    public void KnockDoorEnd(int index)
     {
         shyUI.SuddenDecreaseProgress(knockDecrease);
         if(index == 0 || index == 1)
         {
+            
+            var seq = DOTween.Sequence();
+            seq.AppendInterval(0.15f);
+            seq.AppendCallback(() =>
+            {
+                EnableGrainEffect(false);
+                
+            });
+
             SendEventGoodMode();
         }
         else
         {
             SendEventBadMode();
+
+            var seq = DOTween.Sequence();
+            seq.AppendInterval(0.25f);
+            seq.AppendCallback(() => {
+                EnableGrainEffect(false);           
+                ShyMiscTool.SetPpeActivate(postProcessingProfile, PpeSetting.DEPTH_OF_FIELD_APERTURE, true);
+            });
+            
         }
     }
 }
