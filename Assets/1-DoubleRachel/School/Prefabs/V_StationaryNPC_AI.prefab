@@ -20,7 +20,18 @@ MonoBehaviour:
   enterEvent:
     unityEvent:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2661634962418239616}
+          m_MethodName: StartDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
     fsm: {fileID: 0}
@@ -53,9 +64,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
       m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-    fsm: {fileID: 0}
+    fsm: {fileID: 5948701616493540479}
     fsmEventSelect: 
     fsmEventAdd: 
     component: {fileID: 398200086}
@@ -151,6 +173,11 @@ PrefabInstance:
       propertyPath: fsm.states.Array.data[1].actionData.fsmPropertyParams.Array.data[0].TargetObject.value
       value: 
       objectReference: {fileID: 2661634961685561346}
+    - target: {fileID: 7107353770124665448, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
         type: 3}
       propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.size
@@ -647,6 +674,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43c6868851fbb9c4e8908866fd058787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5948701616493540479 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7107353770124665448, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3471268171807446551}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2661634961685561352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1384774831, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2661634962418239616 stripped

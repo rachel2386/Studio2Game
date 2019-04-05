@@ -37,11 +37,13 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
 
 
     float lastDistance = 10000;
+    private Animator _animator;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        _animator = GetComponent<Animator>();
         UpdateTarget();
         SetShyEventParent();
         seePlayer = GetComponent<SeePlayer>();
@@ -68,18 +70,17 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
         if (seePlayer.PlayerSeen)
             if (curDis <= distance)
             {
-               if(!NPCBehavior.GreetedPlayer)
-                   NPCBehavior.FollowPlayer();
-                else
+                if (!eventTriggered)
                 {
-                    if (!eventTriggered)
+                    NPCBehavior.NpcRotate = false;
+                    if (NPCBehavior.GreetedPlayer)
                     {
-                        //NPCBehavior.NpcRotate = false;
+                        print("Start Dialogue");
                         enterEvent.Invoke();
                         eventTriggered = true;
-                        //lock movement
                     }
                 }
+                
             }
         
         // Leave
@@ -89,8 +90,7 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
         {
             print("player left");
             leaveEvent.Invoke();
-            //NPCBehavior.NpcRotate = true;
-            
+            NPCBehavior.NpcRotate = true;
             //eventTriggered = false;
         }
         lastDistance = curDis;
