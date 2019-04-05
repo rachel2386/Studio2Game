@@ -67,6 +67,7 @@ public class ShyDialogTrigger : MonoBehaviour
     // So that the others won't disturb the current session
     public void StartDialogWithMatch(bool needMatch = true)
     {
+       if(!FindObjectOfType<ShyDialogManager>().InDialog) 
         FindObjectOfType<ShyDialogManager>().StartDialog(this, talkToNode, needMatch);
     }
 
