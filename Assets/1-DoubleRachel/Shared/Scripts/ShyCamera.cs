@@ -9,35 +9,8 @@ public class ShyCamera : MonoBehaviour
 {
     public GameObject pickupRoot;
     public PostProcessingProfile runtimeProfile;
-
-    private void Awake()
-    {
-        GetComponent<PostProcessingBehaviour>().profile = runtimeProfile;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    int GetRandom1()
-    {
-        return Random.Range(0f, 1f) < 0.5f ? 1 : -1;
-    }
-
-    public Vector3 GetRandomVec3()
-    {
-        return new Vector3(Random.Range(5, 9) * GetRandom1(), Random.Range(0, 9) * GetRandom1(), 0);
-    }
-
-    
+    public ShyFPSController fpsController;
+   
 
     [Title("Grain")]
     [Range(0.3f, 3)]
@@ -53,7 +26,66 @@ public class ShyCamera : MonoBehaviour
     public float maxGrainDistance = 5;
     public AnimationCurve grainCurve = AnimationCurve.Linear(0, 1, 1, 0);
 
-    bool distaceGrain = false;
+    public bool useDistaceGrain = false;
+    List<Eye> eyeList = new List<Eye>();
+
+    private void Awake()
+    {
+        GetComponent<PostProcessingBehaviour>().profile = runtimeProfile;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        fpsController = FindObjectOfType<ShyFPSController>();
+        InitEyes();
+    }
+
+    void InitEyes()
+    {
+        var eyes = Resources.FindObjectsOfTypeAll<Eye>();
+        if (eyes != null)
+        {
+            foreach (var eye in eyes)
+                eyeList.Add(eye);
+        }
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        UpdateGrain();
+    }
+
+    void UpdateGrain()
+    {
+        if (!useDistaceGrain)
+            return;
+        
+        // the closest eye that the player can see without occlusion
+        foreach (var eye in eyeList)
+        {
+            if (!eye.transform.parent.gameObject.activeSelf)
+                continue;
+
+            if (ShyMouseLook.IsLineOfSightBlocked(eye.transform, transform, fpsController.transform))
+                continue;
+
+
+        }
+    }
+
+    int GetRandom1()
+    {
+        return Random.Range(0f, 1f) < 0.5f ? 1 : -1;
+    }
+
+    public Vector3 GetRandomVec3()
+    {
+        return new Vector3(Random.Range(5, 9) * GetRandom1(), Random.Range(0, 9) * GetRandom1(), 0);
+    }
+
 
     // Input Degree from 0 -> 1
     // 0 means min grain
