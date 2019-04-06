@@ -179,13 +179,16 @@ public class NPCBehavior : MonoBehaviour
     private void AnimatorUpdate()
     {
        
+       if(!myAgent.pathPending)
         myAnim.SetFloat(Forward, myAgent.desiredVelocity.magnitude);
+       else
+           myAnim.SetFloat(Forward, 0.1f);
        
     }
 
     private void OnAnimatorMove()
     {
-       if (!NpcRotate && GreetedPlayer || myAgent.pathPending)
+       if (!NpcRotate && GreetedPlayer)
             myAgent.isStopped = true;
         else
             myAgent.isStopped = false;
