@@ -39,6 +39,7 @@ public static class ShyMiscTool
     
     public static void SetPpeParam(PostProcessingProfile profile, PpeSetting st, float value, float lerpFactor = 1)
     {
+       
         if (st == PpeSetting.DEPTH_OF_FIELD_APERTURE)
         {
             var setting = profile.depthOfField.settings;
@@ -68,6 +69,9 @@ public static class ShyMiscTool
                 setting.intensity, value, lerpFactor);
             profile.grain.settings = setting;
         }
+
+
+        SetPpeActivate(profile, st, true);
     }
 
 
@@ -100,10 +104,23 @@ public static class ShyMiscTool
 
     public static void SetPpeActivate(PostProcessingProfile profile, PpeSetting st, bool enable)
     {
-        if(st == PpeSetting.DEPTH_OF_FIELD_APERTURE)
+        if (st == PpeSetting.DEPTH_OF_FIELD_APERTURE)
         {
             profile.depthOfField.enabled = enable;
         }
+        else if (st == PpeSetting.GRAIN_SIZE)
+        {
+            profile.grain.enabled = enable;
+        }
+        else if (st == PpeSetting.VIGNETTE_INTENSITY)
+        {
+            profile.vignette.enabled = enable;
+        }
+        else if (st == PpeSetting.GRAIN_INTENSITY)
+        {
+            profile.grain.enabled = enable;
+        }
+
 
         return;
     }
