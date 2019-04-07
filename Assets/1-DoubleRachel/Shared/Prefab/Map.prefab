@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8830846941959295830}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.0000001872535}
+  m_LocalRotation: {x: 0, y: 1, z: -0, w: -0.0000001872535}
   m_LocalPosition: {x: 0.2, y: -0.20000005, z: 0.2}
   m_LocalScale: {x: 0.118723415, y: 0.116963066, z: 0.06467122}
   m_Children: []
@@ -134,6 +134,7 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
+        - HutongGames.PlayMaker.Actions.GetMainCamera
         - HutongGames.PlayMaker.Actions.SetPosition
         - HutongGames.PlayMaker.Actions.SetRotation
         - HutongGames.PlayMaker.Actions.GetMouseButtonDown
@@ -145,12 +146,19 @@ MonoBehaviour:
         - 
         - 
         - 
-        actionEnabled: 0101000101
-        actionIsOpen: 0101010101
-        actionStartIndex: 000000000800000011000000150000001d000000
-        actionHashCodes: f6e5be03979e410434b46c046ab449041bcdca04
+        - 
+        actionEnabled: 010101000101
+        actionIsOpen: 010101010101
+        actionStartIndex: 00000000010000000900000012000000160000001e000000
+        actionHashCodes: 5c004505f6e5be03979e410434b46c046ab449041bcdca04
         unityObjectParams: []
-        fsmGameObjectParams: []
+        fsmGameObjectParams:
+        - useVariable: 1
+          name: cam
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {fileID: 0}
         fsmOwnerDefaultParams:
         - ownerOption: 0
           gameObject:
@@ -170,8 +178,8 @@ MonoBehaviour:
             value: {fileID: 0}
         - ownerOption: 1
           gameObject:
-            useVariable: 0
-            name: 
+            useVariable: 1
+            name: cam
             tooltip: 
             showInInspector: 0
             networkSync: 0
@@ -248,12 +256,12 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 0
-        - useVariable: 0
-          name: 
+        - useVariable: 1
+          name: threshold
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 65
+          value: 55
         - useVariable: 0
           name: 
           tooltip: 
@@ -313,8 +321,9 @@ MonoBehaviour:
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000001c0000000f0000000f0000000f00000007000000010000000100000014000000230000001c0000000f0000000f0000000f0000000700000001000000010000000700000017000000110000000100000014000000230000001c0000000f0000000f0000000f00000007000000010000000f0000000f0000000f00000017000000170000001700000001000000
+        paramDataType: 13000000140000001c0000000f0000000f0000000f00000007000000010000000100000014000000230000001c0000000f0000000f0000000f0000000700000001000000010000000700000017000000110000000100000014000000230000001c0000000f0000000f0000000f00000007000000010000000f0000000f0000000f00000017000000170000001700000001000000
         paramName:
+        - storeGameObject
         - gameObject
         - vector
         - x
@@ -351,8 +360,8 @@ MonoBehaviour:
         - lessThan
         - greaterThan
         - everyFrame
-        paramDataPos: 0000000000000000000000000100000002000000000000000400000005000000010000000000000001000000030000000400000005000000060000000a0000000b0000000c0000000000000000000000100000000200000001000000020000000600000007000000080000001100000015000000090000000a0000000b00000001000000020000000300000016000000
-        paramByteDataSize: 000000000000000000000000000000000000000004000000010000000100000000000000000000000000000000000000000000000000000004000000010000000100000004000000000000000000000001000000000000000000000000000000000000000000000000000000040000000100000000000000000000000000000000000000000000000000000001000000
+        paramDataPos: 000000000000000000000000000000000100000002000000000000000400000005000000010000000000000001000000030000000400000005000000060000000a0000000b0000000c0000000000000000000000100000000200000001000000020000000600000007000000080000001100000015000000090000000a0000000b00000001000000020000000300000016000000
+        paramByteDataSize: 00000000000000000000000000000000000000000000000004000000010000000100000000000000000000000000000000000000000000000000000004000000010000000100000004000000000000000000000001000000000000000000000000000000000000000000000000000000040000000100000000000000000000000000000000000000000000000000000001000000
     - name: ZoomInMap
       description: 
       colorIndex: 0
@@ -382,7 +391,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 0101
-        actionIsOpen: 0001
+        actionIsOpen: 0000
         actionStartIndex: 000000001d000000
         actionHashCodes: c240110111a91304
         unityObjectParams: []
@@ -742,7 +751,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 000101
-        actionIsOpen: 010101
+        actionIsOpen: 010001
         actionStartIndex: 00000000040000000c000000
         actionHashCodes: 34b46c046ab449041bcdca04
         unityObjectParams: []
@@ -750,8 +759,8 @@ MonoBehaviour:
         fsmOwnerDefaultParams:
         - ownerOption: 1
           gameObject:
-            useVariable: 0
-            name: 
+            useVariable: 1
+            name: cam
             tooltip: 
             showInInspector: 0
             networkSync: 0
@@ -792,12 +801,12 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 0
-        - useVariable: 0
-          name: 
+        - useVariable: 1
+          name: threshold
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 65
+          value: 55
         - useVariable: 0
           name: 
           tooltip: 
@@ -1637,8 +1646,8 @@ MonoBehaviour:
             value: {fileID: 0}
         - ownerOption: 1
           gameObject:
-            useVariable: 0
-            name: 
+            useVariable: 1
+            name: cam
             tooltip: 
             showInInspector: 0
             networkSync: 0
@@ -1715,12 +1724,12 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 0
-        - useVariable: 0
-          name: 
+        - useVariable: 1
+          name: threshold
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 65
+          value: 55
         - useVariable: 0
           name: 
           tooltip: 
@@ -1846,6 +1855,12 @@ MonoBehaviour:
     variables:
       floatVariables:
       - useVariable: 1
+        name: threshold
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 55
+      - useVariable: 1
         name: yRot
         tooltip: 
         showInInspector: 0
@@ -1895,7 +1910,13 @@ MonoBehaviour:
       colorVariables: []
       rectVariables: []
       quaternionVariables: []
-      gameObjectVariables: []
+      gameObjectVariables:
+      - useVariable: 1
+        name: cam
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: {fileID: 0}
       objectVariables: []
       materialVariables: []
       textureVariables: []
@@ -1903,7 +1924,7 @@ MonoBehaviour:
       enumVariables: []
       categories:
       - 
-      variableCategoryIDs: 00000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -1913,14 +1934,14 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
     editorFlags: 1
     activeStateName: 
-    mouseEvents: 0
+    mouseEvents: 1
     handleLevelLoaded: 0
     handleTriggerEnter2D: 0
     handleTriggerExit2D: 0
