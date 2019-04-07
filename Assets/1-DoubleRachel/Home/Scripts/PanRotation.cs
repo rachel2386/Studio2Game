@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,8 @@ public class PanRotation : Pan
 
     public GameObject pan;
     public GameObject panModel;
-
     public GameObject liftedAnchor;
+    public GameObject knockGizmo;
 
     Camera cam;
     ShyCamera shyCam;
@@ -22,7 +23,7 @@ public class PanRotation : Pan
     Vector3 oriPanPosition;
     Quaternion oriPanRotation;
 
-
+    [Title("Post Processing")]
     public PostProcessingProfile postProcessingProfile;
     public float oriVignetteIntensity;
     public float finalVignetteIntensity = 0.4f;
@@ -48,7 +49,7 @@ public class PanRotation : Pan
     public float outLerpFactor;
 
 
-    [Header("Progress")]
+    [Title("Progress")]
     public float timeToFinish = 30;
     public float knockDecrease = 0.05f;
 
@@ -69,6 +70,8 @@ public class PanRotation : Pan
         shyCam = cam.GetComponent<ShyCamera>();
         sis = GameObject.FindObjectOfType<ShyInteractionSystem>();
         shyUI = GameObject.FindObjectOfType<ShyUI>();
+
+        knockGizmo.SetActive(false);
 
         InitPostProcessingParams();        
     }
@@ -124,6 +127,12 @@ public class PanRotation : Pan
                 SetCurtainHeight(neededCurtainHeight);
             // BGM
             bgm.volume = finalBgmVolume;
+            
+            if(!bgm.isPlaying)
+            {
+                
+                bgm.Play();
+            }
 
             //Add Progress
             shyUI.ShowProgress(true);
@@ -150,6 +159,7 @@ public class PanRotation : Pan
             if(!dialogManager.IsInDialog())
                 SetCurtainHeight(neededCurtainHeight);
             // BGM
+            bgm.Pause();
             bgm.volume = oriBgmVolume;
 
             // Progress
@@ -210,7 +220,10 @@ public class PanRotation : Pan
 
     public void KnockDoorStart(int index)
     {
-        
+        knockGizmo.SetActive(true);
+        knockGizmo.MySendEventToAll("SHAKE");
+
+
         var seq = DOTween.Sequence();
         seq.AppendInterval(0.05f);
         seq.AppendCallback(() =>
@@ -240,6 +253,8 @@ public class PanRotation : Pan
         }
         else
         {
+            knockGizmo.MySendEventToAll("END");
+
             SendEventBadMode();
 
             var seq = DOTween.Sequence();

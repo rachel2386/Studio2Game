@@ -43,13 +43,13 @@ MonoBehaviour:
   ambientOcclusion:
     m_Enabled: 1
     m_Settings:
-      intensity: 0.31
-      radius: 0.15
+      intensity: 0.39
+      radius: 0.97
       sampleCount: 16
       downsampling: 1
-      forceForwardCompatibility: 0
+      forceForwardCompatibility: 1
       ambientOnly: 0
-      highPrecision: 0
+      highPrecision: 1
   screenSpaceReflection:
     m_Enabled: 0
     m_Settings:
@@ -311,11 +311,11 @@ MonoBehaviour:
       spectralTexture: {fileID: 0}
       intensity: 0.1
   grain:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       colored: 1
-      intensity: 0.015211724
-      size: 0.3410717
+      intensity: 7.1452566e-12
+      size: 0.30000016
       luminanceContribution: 0
   vignette:
     m_Enabled: 1
