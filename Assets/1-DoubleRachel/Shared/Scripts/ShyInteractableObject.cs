@@ -142,7 +142,7 @@ public class ShyInteractableObject : MonoBehaviour
 
     public virtual string GetNeedEmptyHandTooltip()
     {
-        return "There is already something in hand!";
+        return ">_<";
     } 
     
     public virtual void Clicked()

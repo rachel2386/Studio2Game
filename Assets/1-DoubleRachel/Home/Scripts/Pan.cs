@@ -11,6 +11,7 @@ public class Pan : MonoBehaviour
     public GameObject foodRoot;
 
     protected List<GameObject> foodList = new List<GameObject>();
+    protected List<GameObject> allFoodList = new List<GameObject>();
 
     float radius;
     protected int oriFoodCount = 1;
@@ -37,7 +38,11 @@ public class Pan : MonoBehaviour
     {
         var foodCompenents = foodRoot.GetComponentsInChildren<Food>();
         foreach (var com in foodCompenents)
+        {
             foodList.Add(com.gameObject);
+            allFoodList.Add(com.gameObject);
+        }
+           
 
         oriFoodCount = foodList.Count;
     }
@@ -57,6 +62,8 @@ public class Pan : MonoBehaviour
         }
     }
 
+
+    bool firstFoundFoodListEmpty = true;
     public void SendEventBadMode()
     {
         SpiltFood();
@@ -65,6 +72,17 @@ public class Pan : MonoBehaviour
         {
             food.MySendEventToAll("FOOD_TOSS");
         }
+
+        if(foodList.Count == 0 && firstFoundFoodListEmpty)
+        {
+            firstFoundFoodListEmpty = false;
+            FoodListEmpty();
+        }
+    }
+
+    public void FoodListEmpty()
+    {
+
     }
 
     // Return and remove the food from the list
