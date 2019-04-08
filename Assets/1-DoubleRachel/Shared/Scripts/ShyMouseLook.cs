@@ -103,13 +103,10 @@ public class ShyMouseLook
         // MinimumX = eyeLimitationAngle;
     }
 
-    
+
 
     public void LookRotation(Transform character, Transform camera)
     {
-        
-
-
         float sensitivityFactorX = 1;
         float sensitivityFactorY = 1;
         var inputClass = InControl.InputManager.ActiveDevice.DeviceClass;
@@ -197,7 +194,7 @@ public class ShyMouseLook
         UpdateCursorLock();
     }
 
-    public static bool IsLineOfSightBlocked(Transform eye, Transform camera, Transform character)
+    bool IsLineOfSightBlocked(Transform eye, Transform camera, Transform character)
     {
         bool ret = false;
 
