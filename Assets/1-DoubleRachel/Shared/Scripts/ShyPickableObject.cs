@@ -5,7 +5,8 @@ using UnityEngine;
 public class ShyPickableObject : ShyInteractableObject
 {
     public Vector3 pickupRotaion;
-    public Vector3 pickupScale;
+    public Vector3 pickupScale = new Vector3(1, 1, 1);
+    public bool canThrow = true;
 
     Vector3 oriRotation;
     public Vector3 OriRotation

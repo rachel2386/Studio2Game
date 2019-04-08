@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,12 @@ public class PanRotation : Pan
 
     public GameObject pan;
     public GameObject panModel;
-
     public GameObject liftedAnchor;
+    public GameObject knockGizmo;
+
+    public PlayMakerFSM mainFSM;
+    public AudioSource doorBell;
+    public AudioClip doubleBellRing;
 
     Camera cam;
     ShyCamera shyCam;
@@ -19,10 +24,12 @@ public class PanRotation : Pan
     ShyUI shyUI;
 
 
+    
+
     Vector3 oriPanPosition;
     Quaternion oriPanRotation;
 
-
+    [Title("Post Processing")]
     public PostProcessingProfile postProcessingProfile;
     public float oriVignetteIntensity;
     public float finalVignetteIntensity = 0.4f;
@@ -48,7 +55,7 @@ public class PanRotation : Pan
     public float outLerpFactor;
 
 
-    [Header("Progress")]
+    [Title("Progress")]
     public float timeToFinish = 30;
     public float knockDecrease = 0.05f;
 
@@ -70,7 +77,23 @@ public class PanRotation : Pan
         sis = GameObject.FindObjectOfType<ShyInteractionSystem>();
         shyUI = GameObject.FindObjectOfType<ShyUI>();
 
-        InitPostProcessingParams();        
+        knockGizmo.SetActive(false);
+
+        InitPostProcessingParams();
+        InitFoodStatus();
+    }
+
+    public bool showAllPanFoodAtStart = true;
+    void InitFoodStatus()
+    {
+        if(!showAllPanFoodAtStart)
+        {
+            foreach(var go in allFoodList)
+            {
+                go.SetActive(false);
+            }
+        }
+
     }
     
     public float rotateSpeedY = 1;
@@ -85,12 +108,47 @@ public class PanRotation : Pan
     float zRotationTime = 0;
     void Update()
     {
+        UpdatePan();
+
+        // Debug.Log(shyUI.topCurtain.GetComponent<RectTransform>().sizeDelta.y);
+        // RefreshGrainEffect();
+        CheckIfProgressReachedDoorBellCondition();
+  
+
+    }
+    
+
+    bool firstTimeReachDoorBellCondition = true;
+    void CheckIfProgressReachedDoorBellCondition()
+    {
+        var prog = shyUI.GetProgress();
+        if(prog > 0.75 && firstTimeReachDoorBellCondition)
+        {
+            firstTimeReachDoorBellCondition = false;
+            mainFSM.MySendEventToAll("BEGIN_BELL");
+
+        }
+    }
+
+    bool canCook = false;
+
+    public void SetCanCook(bool b)
+    {
+        canCook = b;
+    }
+
+    void UpdatePan()
+    {
+        if (!canCook)
+            return;
+
+
         bool aimedPan = false;
         var ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 1));
         RaycastHit[] hits = Physics.RaycastAll(ray, 1000f);
-        foreach(var hit in hits)
+        foreach (var hit in hits)
         {
-            if(hit.collider.gameObject == gameObject)
+            if (hit.collider.gameObject == gameObject)
             {
                 aimedPan = true;
                 break;
@@ -98,7 +156,7 @@ public class PanRotation : Pan
         }
 
         // Into
-        if(aimedPan && LevelManager.Instance.PlayerActions.Fire.IsPressed)
+        if (aimedPan && LevelManager.Instance.PlayerActions.Fire.IsPressed)
         {
             var ori = pan.transform.eulerAngles;
             yRotationTime += Time.deltaTime;
@@ -125,6 +183,12 @@ public class PanRotation : Pan
             // BGM
             bgm.volume = finalBgmVolume;
 
+            if (!bgm.isPlaying)
+            {
+
+                bgm.Play();
+            }
+
             //Add Progress
             shyUI.ShowProgress(true);
             AddProgress();
@@ -147,17 +211,15 @@ public class PanRotation : Pan
             // Curtain
             var neededCurtainHeight = Mathf.MoveTowards(currentCurtainHeight, 0, finalCurtainHeight / curtainOutTime * Time.deltaTime);
 
-            if(!dialogManager.IsInDialog())
+            if (!dialogManager.IsInDialog())
                 SetCurtainHeight(neededCurtainHeight);
             // BGM
+            bgm.Pause();
             bgm.volume = oriBgmVolume;
 
             // Progress
             shyUI.ShowProgress(false);
         }
-
-        // Debug.Log(shyUI.topCurtain.GetComponent<RectTransform>().sizeDelta.y);
-        // RefreshGrainEffect();
     }
 
     void AddProgress()
@@ -206,16 +268,31 @@ public class PanRotation : Pan
         SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
         EnableGrainEffect(false);
     }
-    
 
+
+    int knockTime = -1;
     public void KnockDoorStart(int index)
     {
-        
+        if (index == 0)
+            knockTime++;
+
+        if(knockTime == 2)
+        {
+            doorBell.clip = doubleBellRing;
+        }
+
+        knockGizmo.SetActive(true);
+        knockGizmo.MySendEventToAll("SHAKE");
+
+
         var seq = DOTween.Sequence();
         seq.AppendInterval(0.05f);
         seq.AppendCallback(() =>
         {
             cam.MySendEventToAll("SHAKE");
+
+            SetPpeParam(PpeSetting.GRAIN_INTENSITY, grainIntensity);
+            SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
             EnableGrainEffect(true);
         });
 
@@ -224,7 +301,9 @@ public class PanRotation : Pan
 
     public void KnockDoorEnd(int index)
     {
+        // if(!GetGoodOrBadFromIndex(index))
         shyUI.SuddenDecreaseProgress(knockDecrease);
+        
         if(index == 0 || index == 1)
         {
             
@@ -236,12 +315,11 @@ public class PanRotation : Pan
                 
             });
 
-            SendEventGoodMode();
         }
         else
         {
-            SendEventBadMode();
-
+            knockGizmo.MySendEventToAll("END");
+        
             var seq = DOTween.Sequence();
             seq.AppendInterval(0.25f);
             seq.AppendCallback(() => {
@@ -250,5 +328,66 @@ public class PanRotation : Pan
             });
             
         }
+
+        SendShakeGoodOrBadEvent(index);
+
     }
+
+    // true -> good
+    bool GetGoodOrBadFromIndex(int index)
+    {
+        bool isBad = false;
+        if (knockTime < 3)
+        {
+            if (index > 1)
+                isBad = true;
+        }
+        else
+        {
+            if (index > 0)
+                isBad = true;
+        }
+
+        return !isBad;
+    }
+
+    void SendShakeGoodOrBadEvent(int index)
+    {
+        bool isGood = GetGoodOrBadFromIndex(index);
+
+        if (isGood)
+            SendEventGoodMode();
+        else
+            SendEventBadMode();
+    }
+
+    new void FoodListEmpty()
+    {
+
+    }
+
+    
+    public void PanClicked()
+    {
+        sis.ClearHand();
+        int i = 0;
+        for (; i < allFoodList.Count; i++)
+        {
+            var go = allFoodList[i];
+            if(!go.activeSelf)
+            {
+                go.SetActive(true);
+                break;
+            }
+        }
+
+        // Means all food are put in
+        if(i == allFoodList.Count - 1)
+        {
+            Debug.Log("All_PUT");
+            gameObject.MySendEventToAll("ALL_PUT");
+        }
+    }
+
+
 }
