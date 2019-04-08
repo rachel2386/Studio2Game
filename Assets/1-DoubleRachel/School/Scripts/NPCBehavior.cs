@@ -9,11 +9,8 @@ using UnityStandardAssets.Utility;
 
 
 //To-do:
-
-//Change speed of npc when approaching player
-//add waving animation 
 //turning animation
-//sound
+
 public class NPCBehavior : MonoBehaviour
 {
     #region Navmesh Agent Properties
@@ -46,7 +43,8 @@ public class NPCBehavior : MonoBehaviour
     private bool goingForward = true;
     private bool _greetedPlayer = false;
     private bool _npcRotate = true;
-    
+    private float agentMoveSpeed = 0;
+    public float approachPlayerSpeed = 0.5f;
     public bool NpcRotate
     {
         private get { return _npcRotate; }
@@ -111,9 +109,6 @@ public class NPCBehavior : MonoBehaviour
                 myAgent.SetDestination(myDestination.position);
             }
 
-            
-//            else
-//                transform.LookAt(playerTransform.position);
         }
 
         myAgent.updatePosition = false;
@@ -179,10 +174,14 @@ public class NPCBehavior : MonoBehaviour
     private void AnimatorUpdate()
     {
        
-       if(!myAgent.pathPending)
-        myAnim.SetFloat(Forward, myAgent.desiredVelocity.magnitude);
-       else
-           myAnim.SetFloat(Forward, 0.1f);
+       if(NpcRotate)
+        agentMoveSpeed = myAgent.desiredVelocity.magnitude;
+       else if (!NpcRotate && !GreetedPlayer)
+           agentMoveSpeed = approachPlayerSpeed;
+       else if(myAgent.pathPending)
+           agentMoveSpeed = 0.05f;
+       
+       myAnim.SetFloat(Forward, agentMoveSpeed);
        
     }
 
