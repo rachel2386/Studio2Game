@@ -16,8 +16,13 @@ public class PanRotation : Pan
     public GameObject pickableTofuRoot;
 
     public PlayMakerFSM mainFSM;
+
+    [Title("Sound Effects")]
     public AudioSource doorBell;
     public AudioClip doubleBellRing;
+    public AudioClip foodPickClip;
+    public AudioClip foodPutClip;
+    public AudioSource panAudioSource;
 
     Camera cam;
     ShyCamera shyCam;
@@ -115,10 +120,17 @@ public class PanRotation : Pan
         // RefreshGrainEffect();
         CheckIfProgressReachedDoorBellCondition();
 
-        if(inEnd)
+
+        CheckUpdateEndGrain();
+        
+    }
+
+    void CheckUpdateEndGrain()
+    {
+        if (inEnd)
         {
-            SetPpeParam(PpeSetting.GRAIN_INTENSITY, 1, 1f * Time.deltaTime);
-            SetPpeParam(PpeSetting.GRAIN_SIZE, 3, 1f * Time.deltaTime);
+            SetPpeParam(PpeSetting.GRAIN_INTENSITY, 1, 0.7f * Time.deltaTime);
+            SetPpeParam(PpeSetting.GRAIN_SIZE, 3, 0.7f * Time.deltaTime);
         }
     }
 
@@ -403,6 +415,10 @@ public class PanRotation : Pan
     void GotoEnd()
     {
         inEnd = true;
+
+        SetPpeParam(PpeSetting.GRAIN_INTENSITY, 0, 1);
+        SetPpeParam(PpeSetting.GRAIN_SIZE, 0.3f, 1);
+
         mainFSM.MySendEventToAll("TO_END");        
     }
 
@@ -416,10 +432,10 @@ public class PanRotation : Pan
     {
         sis.ClearHand();
         int i = 0;
-
-
+               
         if(allAlreadyIn)
         {
+            // Fuck my life process
             if(HomeSceneManager.IntoIndex == 1)
             {
                 GetComponent<ShyInteractableObject>().canInteract = false;
@@ -451,6 +467,8 @@ public class PanRotation : Pan
             gameObject.MySendEventToAll("ALL_PUT");
 
             allAlreadyIn = true;
+
+            panAudioSource.PlayOneShot(foodPutClip);
         }
         // Put one
         else
@@ -471,6 +489,9 @@ public class PanRotation : Pan
                 Debug.Log("All_PUT");
                 gameObject.MySendEventToAll("ALL_PUT");
             }
+            
+            if(i <= allFoodList.Count - 1)
+                panAudioSource.PlayOneShot(foodPutClip);
         }
         
     }
@@ -500,6 +521,8 @@ public class PanRotation : Pan
     bool needAllIn = false;
     public void PickableTofuClicked(PickableTofu tofu)
     {
+        panAudioSource.PlayOneShot(foodPickClip);
+
         pickableTofuClickedCount++;
         if(pickableTofuClickedCount == beginOrganizeIndex)
         {
