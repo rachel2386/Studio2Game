@@ -115,7 +115,11 @@ public class PanRotation : Pan
         // RefreshGrainEffect();
         CheckIfProgressReachedDoorBellCondition();
 
-
+        if(inEnd)
+        {
+            SetPpeParam(PpeSetting.GRAIN_INTENSITY, 1, 1f * Time.deltaTime);
+            SetPpeParam(PpeSetting.GRAIN_SIZE, 3, 1f * Time.deltaTime);
+        }
     }
 
 
@@ -157,7 +161,7 @@ public class PanRotation : Pan
         }
 
         // Into
-        if (aimedPan && LevelManager.Instance.PlayerActions.Fire.IsPressed)
+        if (!inEnd && aimedPan && LevelManager.Instance.PlayerActions.Fire.IsPressed)
         {
             var ori = pan.transform.eulerAngles;
             yRotationTime += Time.deltaTime;
@@ -206,8 +210,11 @@ public class PanRotation : Pan
             // Post Processing Effects
             // SetProcessingParams(false, false, oriVignetteIntensity, oriDepthParam);
             var lerpFactor = outLerpFactor * Time.deltaTime;
+
+
             SetPpeParam(PpeSetting.VIGNETTE_INTENSITY, oriVignetteIntensity, lerpFactor);
             SetPpeParam(PpeSetting.DEPTH_OF_FIELD_APERTURE, oriDepthParam, lerpFactor);
+
 
             // Curtain
             var neededCurtainHeight = Mathf.MoveTowards(currentCurtainHeight, 0, finalCurtainHeight / curtainOutTime * Time.deltaTime);
@@ -284,6 +291,11 @@ public class PanRotation : Pan
             doorBell.clip = doubleBellRing;
         }
 
+        if(knockTime == 3)
+        {
+            mainFSM.Fsm.GetFsmFloat("doorBellWait").Value = 4.5f;
+        }
+
         knockGizmo.SetActive(true);
         knockGizmo.MySendEventToAll("SHAKE");
 
@@ -294,9 +306,14 @@ public class PanRotation : Pan
         {
             cam.MySendEventToAll("SHAKE");
 
-            SetPpeParam(PpeSetting.GRAIN_INTENSITY, grainIntensity);
-            SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
-            EnableGrainEffect(true);
+            if(!inEnd)
+            {
+                SetPpeParam(PpeSetting.GRAIN_INTENSITY, grainIntensity);
+                SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
+                EnableGrainEffect(true);
+            }
+            
+            
         });
 
         ShyMiscTool.SetPpeActivate(postProcessingProfile, PpeSetting.DEPTH_OF_FIELD_APERTURE, false);
@@ -314,8 +331,10 @@ public class PanRotation : Pan
             seq.AppendInterval(0.15f);
             seq.AppendCallback(() =>
             {
-                EnableGrainEffect(false);
-
+                if (!inEnd)
+                {
+                    EnableGrainEffect(false);
+                }
             });
 
         }
@@ -367,9 +386,21 @@ public class PanRotation : Pan
             SendEventBadMode();
     }
 
-    new void FoodListEmpty()
+    // In End
+    bool inEnd = false;
+    public override void FoodListEmpty()
     {
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(2);
+        seq.AppendCallback(() => {
+            GotoEnd();
+        }); 
+    }
 
+    void GotoEnd()
+    {
+        inEnd = true;
+        mainFSM.MySendEventToAll("TO_END");        
     }
 
 
@@ -459,6 +490,5 @@ public class PanRotation : Pan
             SetAllTofuPickState(true);
             isAllIn = true;
         }
-
     }
 }

@@ -115,6 +115,7 @@ public class ShyUI : MonoBehaviour
 
         var image = progressChange.GetComponent<Image>();
         progressChange.SetActive(true);
+        image.fillAmount = value;
 
 
         var c = image.color;
