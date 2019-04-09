@@ -78,8 +78,11 @@ public class ShyInteractionSystem : MonoBehaviour
     {
         bool wasThrowPressed = LevelManager.Instance.PlayerActions.Fire.WasPressed;
         if (wasThrowPressed && curHeldObject && !curAimedObject)
-        {
+        {            
             var po = curHeldObject.GetComponent<ShyPickableObject>();
+            if (!po.canThrow)
+                return;
+
             var body = curHeldObject.GetComponent<Rigidbody>();
 
             curHeldObject.transform.SetParent(null);
@@ -166,5 +169,12 @@ public class ShyInteractionSystem : MonoBehaviour
     public bool IsEmptyHand()
     {
         return curHeldObject == null;
+    }
+
+    public void ClearHand()
+    {
+        var go = curHeldObject;
+        Destroy(go);
+        curHeldObject = null;
     }
 }
