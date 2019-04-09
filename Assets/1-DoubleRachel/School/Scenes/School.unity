@@ -4204,7 +4204,7 @@ PrefabInstance:
     - target: {fileID: 2661634962411062813, guid: 0f7b5e9d39d21fd48ad16678b09d2bd3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.32
+      value: -0.113
       objectReference: {fileID: 0}
     - target: {fileID: 2661634962411062813, guid: 0f7b5e9d39d21fd48ad16678b09d2bd3,
         type: 3}
@@ -4214,7 +4214,7 @@ PrefabInstance:
     - target: {fileID: 2661634962411062813, guid: 0f7b5e9d39d21fd48ad16678b09d2bd3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.91
+      value: 10.468
       objectReference: {fileID: 0}
     - target: {fileID: 2661634962411062813, guid: 0f7b5e9d39d21fd48ad16678b09d2bd3,
         type: 3}
@@ -21778,6 +21778,11 @@ PrefabInstance:
       propertyPath: distance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8594618854081400109, guid: 0f7b5e9d39d21fd48ad16678b09d2bd3,
+        type: 3}
+      propertyPath: fsm.states.Array.data[2].actionData.fsmPropertyParams.Array.data[0].FloatParameter.name
+      value: npcSpeed
+      objectReference: {fileID: 0}
     - target: {fileID: 2661634962418239631, guid: 0f7b5e9d39d21fd48ad16678b09d2bd3,
         type: 3}
       propertyPath: enterEvent.unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -21802,11 +21807,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8594618854081400109, guid: 0f7b5e9d39d21fd48ad16678b09d2bd3,
-        type: 3}
-      propertyPath: fsm.states.Array.data[2].actionData.fsmPropertyParams.Array.data[0].FloatParameter.name
-      value: npcSpeed
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f7b5e9d39d21fd48ad16678b09d2bd3, type: 3}
