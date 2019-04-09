@@ -1,0 +1,32 @@
+title: HomeNpcStart
+tags: 
+colorID: 0
+position: 0,0
+parent: 
+---
+This is the Start node. Write the beginning of your Yarn story here.
+// You can make comments with '//' and the player won't see it.
+TronTron: Hi, nihao
+Wenhaolian: Nishuoshenme?
+->This is option 1
+	You selected option 1.
+->This is option 2
+	You selected option 2.
+
+// IMPORTANT: node options are only offered at the end of the passage
+Do you want to read more about Yarn features?
+===
+title: Wechat
+tags: 
+colorID: 0
+position: 0,0
+parent: 
+---
+TronTron: 在吗
+Wenhaolian: 什么事
+TronTron: 最近还好吗？
+<<SAD>>
+Wenhaolian: 还好，我去洗澡了
+TronTron: >_<
+
+===
