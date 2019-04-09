@@ -27,8 +27,6 @@ public class ShyInteractionSystem : MonoBehaviour
     // used when the dialog or the other GUI is on
     bool IsWorking { get; set; }
 
-    public bool forceHideCenterText = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -40,8 +38,6 @@ public class ShyInteractionSystem : MonoBehaviour
 
         IsWorking = true;
     }
-
-   
 
     // Update is called once per frame
     void Update()
@@ -75,9 +71,6 @@ public class ShyInteractionSystem : MonoBehaviour
     void ApplyUI()
     {
         centerText.text = needToRefreshCenterText;
-
-        if (forceHideCenterText)
-            centerText.text = "";
     }
 
 
