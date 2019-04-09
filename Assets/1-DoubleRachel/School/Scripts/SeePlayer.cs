@@ -26,6 +26,7 @@ public class SeePlayer : MonoBehaviour
         float angle = Vector3.Angle(playerDir, transform.forward);
         PlayerSeen = angle <= 90;
     }
+    
 
     private void OnDrawGizmos()
     {

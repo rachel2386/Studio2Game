@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,17 @@ using UnityEngine.PostProcessing;
 
 public class PanRotation : Pan
 {
-   
+
 
     public GameObject pan;
     public GameObject panModel;
-
     public GameObject liftedAnchor;
+    public GameObject knockGizmo;
+    public GameObject pickableTofuRoot;
+
+    public PlayMakerFSM mainFSM;
+    public AudioSource doorBell;
+    public AudioClip doubleBellRing;
 
     Camera cam;
     ShyCamera shyCam;
@@ -19,10 +25,12 @@ public class PanRotation : Pan
     ShyUI shyUI;
 
 
+
+
     Vector3 oriPanPosition;
     Quaternion oriPanRotation;
 
-
+    [Title("Post Processing")]
     public PostProcessingProfile postProcessingProfile;
     public float oriVignetteIntensity;
     public float finalVignetteIntensity = 0.4f;
@@ -48,7 +56,7 @@ public class PanRotation : Pan
     public float outLerpFactor;
 
 
-    [Header("Progress")]
+    [Title("Progress")]
     public float timeToFinish = 30;
     public float knockDecrease = 0.05f;
 
@@ -70,9 +78,25 @@ public class PanRotation : Pan
         sis = GameObject.FindObjectOfType<ShyInteractionSystem>();
         shyUI = GameObject.FindObjectOfType<ShyUI>();
 
-        InitPostProcessingParams();        
+        knockGizmo.SetActive(false);
+
+        InitPostProcessingParams();
+        InitFoodStatus();
     }
-    
+
+    public bool showAllPanFoodAtStart = true;
+    void InitFoodStatus()
+    {
+        if (!showAllPanFoodAtStart)
+        {
+            foreach (var go in allFoodList)
+            {
+                go.SetActive(false);
+            }
+        }
+
+    }
+
     public float rotateSpeedY = 1;
     public float rotateSpeedZ = 1;
 
@@ -85,12 +109,54 @@ public class PanRotation : Pan
     float zRotationTime = 0;
     void Update()
     {
+        UpdatePan();
+
+        // Debug.Log(shyUI.topCurtain.GetComponent<RectTransform>().sizeDelta.y);
+        // RefreshGrainEffect();
+        CheckIfProgressReachedDoorBellCondition();
+
+        if(inEnd)
+        {
+            SetPpeParam(PpeSetting.GRAIN_INTENSITY, 1, 1f * Time.deltaTime);
+            SetPpeParam(PpeSetting.GRAIN_SIZE, 3, 1f * Time.deltaTime);
+        }
+    }
+
+
+    bool firstTimeReachDoorBellCondition = true;
+    void CheckIfProgressReachedDoorBellCondition()
+    {
+        var prog = shyUI.GetProgress();
+        if (prog > 0.75 && firstTimeReachDoorBellCondition)
+        {
+            firstTimeReachDoorBellCondition = false;
+            mainFSM.MySendEventToAll("BEGIN_BELL");
+
+        }
+    }
+
+    bool canCook = false;
+
+    public void SetCanCook(bool b)
+    {
+        canCook = b;
+    }
+
+    void UpdatePan()
+    {
+        if (!canCook)
+            return;
+
+        if (HomeSceneManager.IntoIndex == 1)
+            return;
+
+
         bool aimedPan = false;
         var ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 1));
         RaycastHit[] hits = Physics.RaycastAll(ray, 1000f);
-        foreach(var hit in hits)
+        foreach (var hit in hits)
         {
-            if(hit.collider.gameObject == gameObject)
+            if (hit.collider.gameObject == gameObject)
             {
                 aimedPan = true;
                 break;
@@ -98,7 +164,7 @@ public class PanRotation : Pan
         }
 
         // Into
-        if(aimedPan && LevelManager.Instance.PlayerActions.Fire.IsPressed)
+        if (!inEnd && aimedPan && LevelManager.Instance.PlayerActions.Fire.IsPressed)
         {
             var ori = pan.transform.eulerAngles;
             yRotationTime += Time.deltaTime;
@@ -125,6 +191,12 @@ public class PanRotation : Pan
             // BGM
             bgm.volume = finalBgmVolume;
 
+            if (!bgm.isPlaying)
+            {
+
+                bgm.Play();
+            }
+
             //Add Progress
             shyUI.ShowProgress(true);
             AddProgress();
@@ -141,23 +213,24 @@ public class PanRotation : Pan
             // Post Processing Effects
             // SetProcessingParams(false, false, oriVignetteIntensity, oriDepthParam);
             var lerpFactor = outLerpFactor * Time.deltaTime;
+
+
             SetPpeParam(PpeSetting.VIGNETTE_INTENSITY, oriVignetteIntensity, lerpFactor);
             SetPpeParam(PpeSetting.DEPTH_OF_FIELD_APERTURE, oriDepthParam, lerpFactor);
+
 
             // Curtain
             var neededCurtainHeight = Mathf.MoveTowards(currentCurtainHeight, 0, finalCurtainHeight / curtainOutTime * Time.deltaTime);
 
-            if(!dialogManager.IsInDialog())
+            if (!dialogManager.IsInDialog())
                 SetCurtainHeight(neededCurtainHeight);
             // BGM
+            bgm.Pause();
             bgm.volume = oriBgmVolume;
 
             // Progress
             shyUI.ShowProgress(false);
         }
-
-        // Debug.Log(shyUI.topCurtain.GetComponent<RectTransform>().sizeDelta.y);
-        // RefreshGrainEffect();
     }
 
     void AddProgress()
@@ -206,17 +279,44 @@ public class PanRotation : Pan
         SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
         EnableGrainEffect(false);
     }
-    
 
+
+    int knockTime = -1;
     public void KnockDoorStart(int index)
     {
-        
+        if (index == 0)
+            knockTime++;
+
+        // door bell ring before we got to KnockDoorStart()
+        // so everything we changed here will only effect after this knock loop
+        if (knockTime == 1)
+        {            
+            doorBell.clip = doubleBellRing;
+        }
+
+        if(knockTime == 3)
+        {
+            mainFSM.Fsm.GetFsmFloat("doorBellWait").Value = 4.5f;
+        }
+
+        knockGizmo.SetActive(true);
+        knockGizmo.MySendEventToAll("SHAKE");
+
+
         var seq = DOTween.Sequence();
         seq.AppendInterval(0.05f);
         seq.AppendCallback(() =>
         {
             cam.MySendEventToAll("SHAKE");
-            EnableGrainEffect(true);
+
+            if(!inEnd)
+            {
+                SetPpeParam(PpeSetting.GRAIN_INTENSITY, grainIntensity);
+                SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
+                EnableGrainEffect(true);
+            }
+            
+            
         });
 
         ShyMiscTool.SetPpeActivate(postProcessingProfile, PpeSetting.DEPTH_OF_FIELD_APERTURE, false);
@@ -224,31 +324,198 @@ public class PanRotation : Pan
 
     public void KnockDoorEnd(int index)
     {
+        // if(!GetGoodOrBadFromIndex(index))
         shyUI.SuddenDecreaseProgress(knockDecrease);
-        if(index == 0 || index == 1)
+
+        if (index == 0 || index == 1)
         {
-            
+
             var seq = DOTween.Sequence();
             seq.AppendInterval(0.15f);
             seq.AppendCallback(() =>
             {
-                EnableGrainEffect(false);
-                
+                if (!inEnd)
+                {
+                    EnableGrainEffect(false);
+                }
             });
 
-            SendEventGoodMode();
         }
         else
         {
-            SendEventBadMode();
+            knockGizmo.MySendEventToAll("END");
 
             var seq = DOTween.Sequence();
             seq.AppendInterval(0.25f);
             seq.AppendCallback(() => {
-                EnableGrainEffect(false);           
+                EnableGrainEffect(false);
                 ShyMiscTool.SetPpeActivate(postProcessingProfile, PpeSetting.DEPTH_OF_FIELD_APERTURE, true);
             });
-            
+
+        }
+
+        SendShakeGoodOrBadEvent(index);
+
+    }
+
+    // true -> good
+    bool GetGoodOrBadFromIndex(int index)
+    {
+        bool isBad = false;
+        if (knockTime < 2)
+        {
+            if (index > 1)
+                isBad = true;
+        }
+        else if (knockTime < 3)
+        {
+            if (index > 0)
+                isBad = true;
+        }
+        else
+            isBad = true;
+
+        return !isBad;
+    }
+
+    // index from 0 - 2
+    void SendShakeGoodOrBadEvent(int index)
+    {
+        bool isGood = GetGoodOrBadFromIndex(index);
+
+        if (isGood)
+            SendEventGoodMode();
+        else
+            SendEventBadMode();
+    }
+
+    // In End
+    bool inEnd = false;
+    public override void FoodListEmpty()
+    {
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(2);
+        seq.AppendCallback(() => {
+            GotoEnd();
+        }); 
+    }
+
+    void GotoEnd()
+    {
+        inEnd = true;
+        mainFSM.MySendEventToAll("TO_END");        
+    }
+
+
+    // once needAllIn = true, we set allAlreadyIn = true
+    bool allAlreadyIn = false;
+
+
+    // This is called when we have a tofu in hand and we click on the pan
+    public void PanClicked()
+    {
+        sis.ClearHand();
+        int i = 0;
+
+
+        if(allAlreadyIn)
+        {
+            if(HomeSceneManager.IntoIndex == 1)
+            {
+                GetComponent<ShyInteractableObject>().canInteract = false;
+                gameObject.MySendEventToAll("FUCK_MY_LIFE");
+                doorBell.Play();
+
+
+                var seq = DOTween.Sequence();
+                seq.AppendInterval(2);
+                seq.AppendCallback(() =>
+                {
+                    GotoEnd();
+                });
+            }
+        }
+
+        // Put all remained
+        if(needAllIn && !allAlreadyIn)
+        {
+            for (; i < allFoodList.Count; i++)
+            {
+                var go = allFoodList[i];
+                if (!go.activeSelf)
+                {
+                    go.SetActive(true);                    
+                }
+            }
+            Debug.Log("All_PUT");
+            gameObject.MySendEventToAll("ALL_PUT");
+
+            allAlreadyIn = true;
+        }
+        // Put one
+        else
+        {
+            for (; i < allFoodList.Count; i++)
+            {
+                var go = allFoodList[i];
+                if (!go.activeSelf)
+                {
+                    go.SetActive(true);
+                    break;
+                }
+            }
+
+            // Means all food are put in
+            if (i == allFoodList.Count - 1)
+            {
+                Debug.Log("All_PUT");
+                gameObject.MySendEventToAll("ALL_PUT");
+            }
+        }
+        
+    }
+
+    public void SetAllTofuPickState(bool can)
+    {
+        var tofus = pickableTofuRoot.GetComponentsInChildren<PickableTofu>();
+        foreach(var tofu in tofus)
+        {
+            tofu.GetComponent<ShyPickableObject>().canPickUp = can;
+        }
+    }
+
+    public void SetAllTofuPickParent(bool pickParent)
+    {
+        var tofus = pickableTofuRoot.GetComponentsInChildren<PickableTofu>();
+        foreach (var tofu in tofus)
+        {
+            tofu.GetComponent<ShyPickableObject>().pickParent = pickParent;
+        }
+    }
+
+    // This is called when a tofu on the cutting board is clicked
+    int pickableTofuClickedCount = 0;
+
+    int beginOrganizeIndex = 6;
+    bool needAllIn = false;
+    public void PickableTofuClicked(PickableTofu tofu)
+    {
+        pickableTofuClickedCount++;
+        if(pickableTofuClickedCount == beginOrganizeIndex)
+        {
+            gameObject.MySendEventToAll("ORGANIZE_TOFU_1");
+            SetAllTofuPickState(false);
+        }
+        else if(pickableTofuClickedCount == beginOrganizeIndex + 1)
+        {
+            gameObject.MySendEventToAll("ORGANIZE_TOFU_2");
+            SetAllTofuPickState(false);           
+        }
+        else if (pickableTofuClickedCount == beginOrganizeIndex + 2)
+        {
+            SetAllTofuPickParent(true);
+            SetAllTofuPickState(true);
+            needAllIn = true;
         }
     }
 }

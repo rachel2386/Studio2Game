@@ -9,11 +9,8 @@ using UnityStandardAssets.Utility;
 
 
 //To-do:
-
-//Change speed of npc when approaching player
-//add waving animation 
 //turning animation
-//sound
+
 public class NPCBehavior : MonoBehaviour
 {
     #region Navmesh Agent Properties
@@ -24,6 +21,7 @@ public class NPCBehavior : MonoBehaviour
     private Vector3 AgentOffset;
     private Vector3 DestinationOffset;
     private Transform playerTransform;
+    private float AgentinitSpeed;
 
     #endregion
 
@@ -46,7 +44,7 @@ public class NPCBehavior : MonoBehaviour
     private bool goingForward = true;
     private bool _greetedPlayer = false;
     private bool _npcRotate = true;
-    
+    private float approachPlayerSpeed = 1f;
     public bool NpcRotate
     {
         private get { return _npcRotate; }
@@ -74,7 +72,7 @@ public class NPCBehavior : MonoBehaviour
         // print("agent position =" + transform.position);
         DestinationOffset = myDestination.position;
         playerTransform = GameObject.Find("PlayerBase").transform;
-
+        AgentinitSpeed = myAgent.speed;
         if (!Stationary) return;
         randomRot = transform.eulerAngles.y;
         InvokeRepeating(nameof(generateRandomNum), 6, 7);
@@ -111,9 +109,6 @@ public class NPCBehavior : MonoBehaviour
                 myAgent.SetDestination(myDestination.position);
             }
 
-            
-//            else
-//                transform.LookAt(playerTransform.position);
         }
 
         myAgent.updatePosition = false;
@@ -167,6 +162,7 @@ public class NPCBehavior : MonoBehaviour
             if (!myAgent.pathPending && myAgent.remainingDistance <= 1f)
             {
                     myAnim.SetBool(HandWave, false);
+                    myAgent.isStopped = true;
                     myAgent.SetDestination(myDestination.position);
                     GreetedPlayer = true;
             }
@@ -179,18 +175,22 @@ public class NPCBehavior : MonoBehaviour
     private void AnimatorUpdate()
     {
        
-       if(!myAgent.pathPending)
-        myAnim.SetFloat(Forward, myAgent.desiredVelocity.magnitude);
-       else
-           myAnim.SetFloat(Forward, 0.1f);
+        if (!NpcRotate && !GreetedPlayer)
+            myAgent.speed = approachPlayerSpeed;
+        else
+            myAgent.speed = AgentinitSpeed;
+       //else if (myAgent.pathPending)
+          // myAgent.speed = 0.05f;
+      
+       myAnim.SetFloat(Forward, myAgent.desiredVelocity.magnitude);
        
     }
 
     private void OnAnimatorMove()
     {
-       if (!NpcRotate && GreetedPlayer)
+       if (!NpcRotate && GreetedPlayer || myAgent.pathPending)
             myAgent.isStopped = true;
-        else
+        if(NpcRotate)
             myAgent.isStopped = false;
         
         transform.position = myAgent.nextPosition;

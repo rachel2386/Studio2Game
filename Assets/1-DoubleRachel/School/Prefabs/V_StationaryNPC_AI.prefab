@@ -178,6 +178,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5146018216024628026, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: fsm.states.Array.data[0].actionData.fsmPropertyParams.Array.data[0].TargetObject.value
+      value: 
+      objectReference: {fileID: 2661634961685561358}
+    - target: {fileID: 5146018216024628026, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: fsm.states.Array.data[2].actionData.fsmPropertyParams.Array.data[0].TargetObject.value
+      value: 
+      objectReference: {fileID: 2661634961685561358}
     - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
         type: 3}
       propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.size
@@ -222,6 +232,11 @@ PrefabInstance:
         type: 3}
       propertyPath: completeEvent.unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503193919293283991, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+        type: 3}
+      propertyPath: talkToNode
+      value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: 1503193919293283993, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
         type: 3}
@@ -664,6 +679,12 @@ PrefabInstance:
     - {fileID: 6409191127773142307, guid: 9f22ee15d4820df4da2781e7d21f9d1a, type: 3}
     - {fileID: 7202126302668941714, guid: 9f22ee15d4820df4da2781e7d21f9d1a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9f22ee15d4820df4da2781e7d21f9d1a, type: 3}
+--- !u!195 &2661634961685561358 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 1503193920060036633, guid: 9f22ee15d4820df4da2781e7d21f9d1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3471268171807446551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2661634961685561346 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1503193920060036629, guid: 9f22ee15d4820df4da2781e7d21f9d1a,

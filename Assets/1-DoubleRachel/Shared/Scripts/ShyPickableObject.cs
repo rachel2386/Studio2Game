@@ -5,7 +5,14 @@ using UnityEngine;
 public class ShyPickableObject : ShyInteractableObject
 {
     public Vector3 pickupRotaion;
-    public Vector3 pickupScale;
+    public Vector3 pickupScale = new Vector3(1, 1, 1);
+    public bool canThrow = true;
+
+    // Sometimes we want to use the pickable object just as an interactableObject
+    // to evoke clicked event
+    // but we don't want to pick up it
+    public bool canPickUp = true;
+    public bool pickParent = false;
 
     Vector3 oriRotation;
     public Vector3 OriRotation
@@ -47,7 +54,7 @@ public class ShyPickableObject : ShyInteractableObject
         base.HandleInteraction();
 
         bool wasPressed = LevelManager.Instance.PlayerActions.Fire.WasPressed;
-        if(wasPressed)
+        if(wasPressed && canPickUp)
             PickUp();
     }
 
@@ -61,15 +68,37 @@ public class ShyPickableObject : ShyInteractableObject
         var po = GetComponent<ShyPickableObject>();
         var body = GetComponent<Rigidbody>();
 
-        transform.SetParent(sis.pickupRoot.transform);
-        transform.localPosition = Vector3.zero;
-        transform.localEulerAngles = po.pickupRotaion;
-        transform.localScale = po.pickupScale;
+
+        var dealTarget = transform;
+        var oriParent = transform.parent;
+        var parentOriLocalScale = transform.parent.localScale;
+        if(pickParent)
+        {
+            dealTarget = transform.parent;
+        }
+
+        dealTarget.SetParent(sis.pickupRoot.transform);
+        dealTarget.localPosition = Vector3.zero;
+        dealTarget.localEulerAngles = po.pickupRotaion;
+
+        if (pickParent)
+            dealTarget.localScale = parentOriLocalScale;
+        else
+            transform.localScale = po.pickupScale;
+
 
         if (body)
             body.isKinematic = true;
 
-        sis.curHeldObject = gameObject;
+        if(pickParent)
+        {
+            foreach(var rb in oriParent.GetComponentsInChildren<Rigidbody>())
+            {
+                rb.isKinematic = true;
+            }
+        }
+
+        sis.curHeldObject = dealTarget.gameObject;
     }
 
 

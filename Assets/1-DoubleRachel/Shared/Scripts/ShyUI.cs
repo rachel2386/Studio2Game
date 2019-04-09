@@ -76,6 +76,11 @@ public class ShyUI : MonoBehaviour
         UpdateProgressUI();
     }
 
+    public float GetProgress()
+    {
+        return curProgress;
+    }
+
     public void ShowProgress(bool show)
     {
         centerProgress.SetActive(show);
@@ -110,6 +115,7 @@ public class ShyUI : MonoBehaviour
 
         var image = progressChange.GetComponent<Image>();
         progressChange.SetActive(true);
+        image.fillAmount = value;
 
 
         var c = image.color;
