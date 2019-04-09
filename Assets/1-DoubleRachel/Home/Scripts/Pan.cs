@@ -80,9 +80,10 @@ public class Pan : MonoBehaviour
         }
     }
 
-    public void FoodListEmpty()
+    // In End
+    public virtual void FoodListEmpty()
     {
-
+        
     }
 
     // Return and remove the food from the list

@@ -87,7 +87,7 @@ public class ShyInteractionSystem : MonoBehaviour
         if (wasThrowPressed && curHeldObject && !curAimedObject)
         {            
             var po = curHeldObject.GetComponent<ShyPickableObject>();
-            if (!po.canThrow)
+            if (!po || !po.canThrow)
                 return;
 
             var body = curHeldObject.GetComponent<Rigidbody>();
