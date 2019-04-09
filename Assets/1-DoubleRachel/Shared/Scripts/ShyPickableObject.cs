@@ -8,6 +8,11 @@ public class ShyPickableObject : ShyInteractableObject
     public Vector3 pickupScale = new Vector3(1, 1, 1);
     public bool canThrow = true;
 
+    // Sometimes we want to use the pickable object just as an interactableObject
+    // to evoke clicked event
+    // but we don't want to pick up it
+    public bool canPickUp = true;
+
     Vector3 oriRotation;
     public Vector3 OriRotation
     {
@@ -48,7 +53,7 @@ public class ShyPickableObject : ShyInteractableObject
         base.HandleInteraction();
 
         bool wasPressed = LevelManager.Instance.PlayerActions.Fire.WasPressed;
-        if(wasPressed)
+        if(wasPressed && canPickUp)
             PickUp();
     }
 

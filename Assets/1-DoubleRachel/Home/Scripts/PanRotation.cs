@@ -7,12 +7,13 @@ using UnityEngine.PostProcessing;
 
 public class PanRotation : Pan
 {
-   
+
 
     public GameObject pan;
     public GameObject panModel;
     public GameObject liftedAnchor;
     public GameObject knockGizmo;
+    public GameObject pickableTofuRoot;
 
     public PlayMakerFSM mainFSM;
     public AudioSource doorBell;
@@ -24,7 +25,7 @@ public class PanRotation : Pan
     ShyUI shyUI;
 
 
-    
+
 
     Vector3 oriPanPosition;
     Quaternion oriPanRotation;
@@ -86,16 +87,16 @@ public class PanRotation : Pan
     public bool showAllPanFoodAtStart = true;
     void InitFoodStatus()
     {
-        if(!showAllPanFoodAtStart)
+        if (!showAllPanFoodAtStart)
         {
-            foreach(var go in allFoodList)
+            foreach (var go in allFoodList)
             {
                 go.SetActive(false);
             }
         }
 
     }
-    
+
     public float rotateSpeedY = 1;
     public float rotateSpeedZ = 1;
 
@@ -113,16 +114,16 @@ public class PanRotation : Pan
         // Debug.Log(shyUI.topCurtain.GetComponent<RectTransform>().sizeDelta.y);
         // RefreshGrainEffect();
         CheckIfProgressReachedDoorBellCondition();
-  
+
 
     }
-    
+
 
     bool firstTimeReachDoorBellCondition = true;
     void CheckIfProgressReachedDoorBellCondition()
     {
         var prog = shyUI.GetProgress();
-        if(prog > 0.75 && firstTimeReachDoorBellCondition)
+        if (prog > 0.75 && firstTimeReachDoorBellCondition)
         {
             firstTimeReachDoorBellCondition = false;
             mainFSM.MySendEventToAll("BEGIN_BELL");
@@ -276,7 +277,7 @@ public class PanRotation : Pan
         if (index == 0)
             knockTime++;
 
-        if(knockTime == 2)
+        if (knockTime == 2)
         {
             doorBell.clip = doubleBellRing;
         }
@@ -303,30 +304,30 @@ public class PanRotation : Pan
     {
         // if(!GetGoodOrBadFromIndex(index))
         shyUI.SuddenDecreaseProgress(knockDecrease);
-        
-        if(index == 0 || index == 1)
+
+        if (index == 0 || index == 1)
         {
-            
+
             var seq = DOTween.Sequence();
             seq.AppendInterval(0.15f);
             seq.AppendCallback(() =>
             {
                 EnableGrainEffect(false);
-                
+
             });
 
         }
         else
         {
             knockGizmo.MySendEventToAll("END");
-        
+
             var seq = DOTween.Sequence();
             seq.AppendInterval(0.25f);
             seq.AppendCallback(() => {
-                EnableGrainEffect(false);           
+                EnableGrainEffect(false);
                 ShyMiscTool.SetPpeActivate(postProcessingProfile, PpeSetting.DEPTH_OF_FIELD_APERTURE, true);
             });
-            
+
         }
 
         SendShakeGoodOrBadEvent(index);
@@ -366,7 +367,8 @@ public class PanRotation : Pan
 
     }
 
-    
+
+    // This is called when we have a tofu in hand and we click on the pan
     public void PanClicked()
     {
         sis.ClearHand();
@@ -374,20 +376,46 @@ public class PanRotation : Pan
         for (; i < allFoodList.Count; i++)
         {
             var go = allFoodList[i];
-            if(!go.activeSelf)
+            if (!go.activeSelf)
             {
                 go.SetActive(true);
                 break;
             }
         }
 
+
+
         // Means all food are put in
-        if(i == allFoodList.Count - 1)
+        if (i == allFoodList.Count - 1)
         {
             Debug.Log("All_PUT");
             gameObject.MySendEventToAll("ALL_PUT");
         }
     }
 
+    public void SetAllTofuPickState(bool can)
+    {
+        var tofus = pickableTofuRoot.GetComponentsInChildren<PickableTofu>();
+        foreach(var tofu in tofus)
+        {
+            tofu.GetComponent<ShyPickableObject>().canPickUp = can;
+        }
+    }
 
+    // This is called when a tofu on the cutting board is clicked
+    int pickableTofuClickedCount = 0;
+    public void PickableTofuClicked(PickableTofu tofu)
+    {
+        pickableTofuClickedCount++;
+        if(pickableTofuClickedCount == 4)
+        {
+            gameObject.MySendEventToAll("ORGANIZE_TOFU_1");
+            SetAllTofuPickState(false);
+        }
+        else if(pickableTofuClickedCount == 5)
+        {
+            gameObject.MySendEventToAll("ORGANIZE_TOFU_2");
+            SetAllTofuPickState(false);
+        }
+    }
 }
