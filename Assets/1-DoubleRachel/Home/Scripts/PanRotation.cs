@@ -277,8 +277,10 @@ public class PanRotation : Pan
         if (index == 0)
             knockTime++;
 
-        if (knockTime == 2)
-        {
+        // door bell ring before we got to KnockDoorStart()
+        // so everything we changed here will only effect after this knock loop
+        if (knockTime == 1)
+        {            
             doorBell.clip = doubleBellRing;
         }
 
@@ -338,20 +340,23 @@ public class PanRotation : Pan
     bool GetGoodOrBadFromIndex(int index)
     {
         bool isBad = false;
-        if (knockTime < 3)
+        if (knockTime < 2)
         {
             if (index > 1)
                 isBad = true;
         }
-        else
+        else if (knockTime < 3)
         {
             if (index > 0)
                 isBad = true;
         }
+        else
+            isBad = true;
 
         return !isBad;
     }
 
+    // index from 0 - 2
     void SendShakeGoodOrBadEvent(int index)
     {
         bool isGood = GetGoodOrBadFromIndex(index);
@@ -373,24 +378,43 @@ public class PanRotation : Pan
     {
         sis.ClearHand();
         int i = 0;
-        for (; i < allFoodList.Count; i++)
+
+
+        // Put all remained
+        if(isAllIn)
         {
-            var go = allFoodList[i];
-            if (!go.activeSelf)
+            for (; i < allFoodList.Count; i++)
             {
-                go.SetActive(true);
-                break;
+                var go = allFoodList[i];
+                if (!go.activeSelf)
+                {
+                    go.SetActive(true);                    
+                }
             }
-        }
-
-
-
-        // Means all food are put in
-        if (i == allFoodList.Count - 1)
-        {
             Debug.Log("All_PUT");
             gameObject.MySendEventToAll("ALL_PUT");
         }
+        // Put one
+        else
+        {
+            for (; i < allFoodList.Count; i++)
+            {
+                var go = allFoodList[i];
+                if (!go.activeSelf)
+                {
+                    go.SetActive(true);
+                    break;
+                }
+            }
+
+            // Means all food are put in
+            if (i == allFoodList.Count - 1)
+            {
+                Debug.Log("All_PUT");
+                gameObject.MySendEventToAll("ALL_PUT");
+            }
+        }
+        
     }
 
     public void SetAllTofuPickState(bool can)
@@ -402,20 +426,39 @@ public class PanRotation : Pan
         }
     }
 
+    public void SetAllTofuPickParent(bool pickParent)
+    {
+        var tofus = pickableTofuRoot.GetComponentsInChildren<PickableTofu>();
+        foreach (var tofu in tofus)
+        {
+            tofu.GetComponent<ShyPickableObject>().pickParent = pickParent;
+        }
+    }
+
     // This is called when a tofu on the cutting board is clicked
     int pickableTofuClickedCount = 0;
+
+    int beginOrganizeIndex = 6;
+    bool isAllIn = false;
     public void PickableTofuClicked(PickableTofu tofu)
     {
         pickableTofuClickedCount++;
-        if(pickableTofuClickedCount == 4)
+        if(pickableTofuClickedCount == beginOrganizeIndex)
         {
             gameObject.MySendEventToAll("ORGANIZE_TOFU_1");
             SetAllTofuPickState(false);
         }
-        else if(pickableTofuClickedCount == 5)
+        else if(pickableTofuClickedCount == beginOrganizeIndex + 1)
         {
             gameObject.MySendEventToAll("ORGANIZE_TOFU_2");
-            SetAllTofuPickState(false);
+            SetAllTofuPickState(false);           
         }
+        else if (pickableTofuClickedCount == beginOrganizeIndex + 2)
+        {
+            SetAllTofuPickParent(true);
+            SetAllTofuPickState(true);
+            isAllIn = true;
+        }
+
     }
 }
