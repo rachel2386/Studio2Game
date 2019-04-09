@@ -717,7 +717,6 @@ MonoBehaviour:
   Trigger: 0
   Automatic: 0
   Stationary: 1
-  approachPlayerSpeed: 0.5
 --- !u!114 &8050423715638227374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,11 +768,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac27ac111b3c03b428c5dfd4a6a32daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talkToNode: NPC
+  talkToNode: 
   lockMove: 1
   lockMouseLook: 0
   canStillInteract: 0
-  scriptToLoad: {fileID: 0}
+  scriptToLoad: {fileID: 4900000, guid: 1ddde974b83a2e649a1834958e86d79d, type: 3}
   completeEvent:
     unityEvent:
       m_PersistentCalls:
