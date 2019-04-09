@@ -25,14 +25,14 @@ public class SwitchScenes : MonoBehaviour
     {
         switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
         timerText = GetComponent<Text>();
-        timerText.color = Color.black;
+        timerText.color = new Color(0.2f,0.3f,0.35f);
 
         myAS = GetComponent<AudioSource>();
-        for (int i = 0; i < 5; i++)
-        {
-            clockTicks[i] = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/1-DoubleRachel/School/Audio/SFX/clocktick1.mp3" , typeof(AudioClip));//+ (i + 1) + ".mp3");
-            print(clockTicks[i].name);
-        }
+//        for (int i = 0; i < 5; i++)
+//        {
+//            clockTicks[i] = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/1-DoubleRachel/School/Audio/SFX/clocktick1.mp3" , typeof(AudioClip));//+ (i + 1) + ".mp3");
+//            print(clockTicks[i].name);
+//        }
         
         
     }
@@ -49,11 +49,17 @@ public class SwitchScenes : MonoBehaviour
         {
             RaycastHit hit = new RaycastHit();
             Physics.SphereCast(switchSceneNPC.position, 1.6f, switchSceneNPC.forward, out hit);
-            if (hit.transform.CompareTag("Player"))
+            if (hit.transform != null)
             {
-               print("seePlayer");
-                SwitchSceneTimerStarts = true;
+                if (hit.transform.CompareTag("Player"))
+                {
+                    print("seePlayer");
+                    SwitchSceneTimerStarts = true;
+                }
             }
+            
+
+           
 
             if (SwitchSceneTimerStarts)
                 StartCoroutine(SceneSwitch(3));
