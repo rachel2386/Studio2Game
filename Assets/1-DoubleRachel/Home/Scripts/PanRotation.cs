@@ -147,6 +147,9 @@ public class PanRotation : Pan
         if (!canCook)
             return;
 
+        if (HomeSceneManager.IntoIndex == 1)
+            return;
+
 
         bool aimedPan = false;
         var ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 1));
@@ -404,6 +407,10 @@ public class PanRotation : Pan
     }
 
 
+    // once needAllIn = true, we set allAlreadyIn = true
+    bool allAlreadyIn = false;
+
+
     // This is called when we have a tofu in hand and we click on the pan
     public void PanClicked()
     {
@@ -411,8 +418,26 @@ public class PanRotation : Pan
         int i = 0;
 
 
+        if(allAlreadyIn)
+        {
+            if(HomeSceneManager.IntoIndex == 1)
+            {
+                GetComponent<ShyInteractableObject>().canInteract = false;
+                gameObject.MySendEventToAll("FUCK_MY_LIFE");
+                doorBell.Play();
+
+
+                var seq = DOTween.Sequence();
+                seq.AppendInterval(2);
+                seq.AppendCallback(() =>
+                {
+                    GotoEnd();
+                });
+            }
+        }
+
         // Put all remained
-        if(isAllIn)
+        if(needAllIn && !allAlreadyIn)
         {
             for (; i < allFoodList.Count; i++)
             {
@@ -424,6 +449,8 @@ public class PanRotation : Pan
             }
             Debug.Log("All_PUT");
             gameObject.MySendEventToAll("ALL_PUT");
+
+            allAlreadyIn = true;
         }
         // Put one
         else
@@ -470,7 +497,7 @@ public class PanRotation : Pan
     int pickableTofuClickedCount = 0;
 
     int beginOrganizeIndex = 6;
-    bool isAllIn = false;
+    bool needAllIn = false;
     public void PickableTofuClicked(PickableTofu tofu)
     {
         pickableTofuClickedCount++;
@@ -488,7 +515,7 @@ public class PanRotation : Pan
         {
             SetAllTofuPickParent(true);
             SetAllTofuPickState(true);
-            isAllIn = true;
+            needAllIn = true;
         }
     }
 }
