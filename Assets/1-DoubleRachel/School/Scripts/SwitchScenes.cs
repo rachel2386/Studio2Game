@@ -75,7 +75,7 @@ public class SwitchScenes : MonoBehaviour
         if (timer <= totalTimeInSeconds)
         {
 
-            timer += Time.deltaTime * 10;
+            timer += Time.deltaTime;
             int seconds =  Mathf.RoundToInt(timer % 60);
             int minutes =  (int)MinutesOnClock + Mathf.FloorToInt(timer / 60f);
             int hour=8;
