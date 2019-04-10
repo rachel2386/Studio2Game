@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using HutongGames.PlayMaker;
 using UnityEditor;
 using UnityEngine;
@@ -11,10 +12,10 @@ public class SwitchScenes : MonoBehaviour
     public bool doorOpened;
     private Transform switchSceneNPC;
     // Start is called before the first frame update
-    private bool SwitchSceneTimerStarts = false;
-    
-    public float time = 180;
-
+   
+    public int totalTimeInSeconds = 180;
+    private float MinutesOnClock;
+    private float timer = 0;
     private Text timerText;
     private float LastSecond;
 
@@ -24,6 +25,11 @@ public class SwitchScenes : MonoBehaviour
     void Start()
     {
         switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
+        
+        float secondsOnClock = Mathf.FloorToInt((int)3600 - totalTimeInSeconds);
+        MinutesOnClock = Mathf.RoundToInt(secondsOnClock/60);
+        print(MinutesOnClock);
+        
         timerText = GetComponent<Text>();
         timerText.color = new Color(0.2f,0.3f,0.35f);
 
@@ -54,46 +60,48 @@ public class SwitchScenes : MonoBehaviour
                 if (hit.transform.CompareTag("Player"))
                 {
                     print("seePlayer");
-                    SwitchSceneTimerStarts = true;
+                    StartCoroutine(SceneSwitch(3));
                 }
             }
-            
-
-           
-
-            if (SwitchSceneTimerStarts)
-                StartCoroutine(SceneSwitch(3));
+        
         }
+          
             
     }
 
     void TimerCountDown()
     {
 
-        if (time >= 0)
+        if (timer <= totalTimeInSeconds)
         {
-            time -= Time.deltaTime;
-            int minutes = Mathf.RoundToInt(time / 60f);
-            float seconds = Mathf.Floor(time % 60);
-            timerText.text = "TIME LEFT:" + minutes + "M" + seconds + "S"; 
+
+            timer += Time.deltaTime * 10;
+            int seconds =  Mathf.RoundToInt(timer % 60);
+            int minutes =  (int)MinutesOnClock + Mathf.FloorToInt(timer / 60f);
+            int hour=8;
+
+            string secTxt;
+            if (seconds < 10)
+                secTxt = '0' + seconds.ToString();
+            else
+                secTxt = seconds.ToString();
+            timerText.text = '0' + hour.ToString() + ':' + minutes + ':' +  secTxt;
+            //"TIME LEFT:" + minutes + "M" + seconds + "S"; 
             
-            if(LastSecond -seconds >= 0.9f || seconds-LastSecond >= 58)
+            if(seconds-LastSecond>= 0.9f || LastSecond-seconds >= 58)
                 if(!myAS.isPlaying)
                     myAS.Play();
-           
-                
-                
-      
+        
         }
         else
         {
-            time = time;
+            timer = timer;
             timerText.color = Color.red;
-            timerText.text = "YOU ARE LATE...AGAIN.";
+            timerText.text = "09:00:00";
             StartCoroutine(SceneSwitch(2));
         }
 
-        LastSecond = Mathf.Floor(time % 60);;
+        LastSecond = Mathf.RoundToInt(timer % 60);
     }
 
     public IEnumerator SceneSwitch(int seconds)

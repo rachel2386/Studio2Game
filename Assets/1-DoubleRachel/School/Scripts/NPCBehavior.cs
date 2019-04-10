@@ -87,7 +87,13 @@ public class NPCBehavior : MonoBehaviour
             if (PlayerTriggered)
             {
                 if (NpcRotate)
+                {
                     myAgent.SetDestination(myDestination.position);
+                    if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
+                        myAgent.isStopped = true;
+                }
+
+                
             }
         }
         else if (Automatic)
@@ -114,6 +120,7 @@ public class NPCBehavior : MonoBehaviour
         myAgent.updatePosition = false;
         myAgent.updateRotation = true;
 
+        NPCSpeed();
         AnimatorUpdate();
 
         if (!NpcRotate)
@@ -145,8 +152,15 @@ public class NPCBehavior : MonoBehaviour
         // else
         //     myAnim.SetFloat("Turn", 0);
     }
-    
-    
+
+    void NPCSpeed()
+    {
+        if (!myAgent.pathPending && !NpcRotate && !GreetedPlayer)
+            myAgent.speed = approachPlayerSpeed;
+        else
+            myAgent.speed = AgentinitSpeed;
+    }
+
     public void FollowPlayer()
     {
        
@@ -174,11 +188,7 @@ public class NPCBehavior : MonoBehaviour
  
     private void AnimatorUpdate()
     {
-       
-        if (!NpcRotate && !GreetedPlayer)
-            myAgent.speed = approachPlayerSpeed;
-        else
-            myAgent.speed = AgentinitSpeed;
+      
        //else if (myAgent.pathPending)
           // myAgent.speed = 0.05f;
       

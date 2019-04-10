@@ -33,7 +33,7 @@ public class PlayerMove : MonoBehaviour
         //A & D
         Vector3 rightMovement = transform.right * horizInput;
 
-        //SimpleMove applies time.deltatime
+        //SimpleMove applies totalTimeInSeconds.deltatime
         charController.SimpleMove(forwardMovement + rightMovement);
     }
 }
