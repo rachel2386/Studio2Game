@@ -21,7 +21,7 @@ public class ContrastStretchEffect : MonoBehaviour
 	public float limitMaximum = 0.6f;
 	
 	
-	// To maintain adaptation levels over time, we need two 1x1 render textures
+	// To maintain adaptation levels over totalTimeInSeconds, we need two 1x1 render textures
 	// and ping-pong between them.
 	private RenderTexture[] adaptRenderTex = new RenderTexture[2];
 	private int curAdaptIndex = 0;

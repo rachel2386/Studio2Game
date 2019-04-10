@@ -228,7 +228,7 @@ public class ExtendedPlatformCreator : MonoBehaviour {
             startPosition = position;
             
             //instantiate the prefab, and set it as our "currentPlatform" so we
-            //don't make more than one at a time
+            //don't make more than one at a totalTimeInSeconds
             
             currentPlatform = Instantiate(platformModel) as Transform;
 

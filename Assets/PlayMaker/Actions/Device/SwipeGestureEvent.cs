@@ -88,7 +88,7 @@ namespace HutongGames.PlayMaker.Actions
 					
 /*					if (touchStarted)
 					{
-						// don't want idle time to count towards swipe
+						// don't want idle totalTimeInSeconds to count towards swipe
 						
 						touchStartPos = touch.position;
 						touchStartTime = FsmTime.RealtimeSinceStartup;

@@ -33,7 +33,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("Sets the rotational weight of an IK goal (0 = rotation before IK, 1 = rotation at the IK goal)")]
 		public FsmFloat rotationWeight;
 		
-		[Tooltip("Repeat every frame. Useful when changing over time.")]
+		[Tooltip("Repeat every frame. Useful when changing over totalTimeInSeconds.")]
 		public bool everyFrame;
 
 		private Animator _animator;

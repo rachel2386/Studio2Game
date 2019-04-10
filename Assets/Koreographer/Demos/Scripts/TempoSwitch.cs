@@ -31,7 +31,7 @@ namespace SonicBloom.Koreo.Demos
 				lastQuarterNote = curQuarterNote;
 			}
 
-			// The 'null' value asks Koreographer to look at the beat time of what it considers
+			// The 'null' value asks Koreographer to look at the beat totalTimeInSeconds of what it considers
 			//  the current "Main" song.  These demos use a basic player with a single song and
 			//  define that as the Main song.  Therefore there is no need to specify it.  The
 			//  '2' parameter, tells Koreographer to divide each beat into 2 equal parts.  As the

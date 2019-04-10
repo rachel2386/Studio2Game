@@ -14,7 +14,7 @@ namespace HutongGames.PlayMaker.Actions
 		[UIHint(UIHint.Variable)]
 		public FsmInt clickCount;
 
-	    [Tooltip("The last time a click event was sent.")]
+	    [Tooltip("The last totalTimeInSeconds a click event was sent.")]
 		[UIHint(UIHint.Variable)]
 		public FsmFloat clickTime;
 

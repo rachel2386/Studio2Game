@@ -39,7 +39,7 @@ public class PanRhythm : Pan
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log(radio.GetComponent<AudioSource>().time);
+        // Debug.Log(radio.GetComponent<AudioSource>().totalTimeInSeconds);
         CheckMusicProgress();
 
         UpdateFoodMat();
@@ -78,7 +78,7 @@ public class PanRhythm : Pan
         var refNext = lastTriggerTime + span;
 
         var dt = Mathf.Min(Mathf.Abs(Time.time - refLast), Mathf.Abs(Time.time - refNext));
-        //Debug.Log("Now: " + Time.time);
+        //Debug.Log("Now: " + Time.totalTimeInSeconds);
         //Debug.Log("Deviation: " + dt);
 
         // 0 best    dt = 0

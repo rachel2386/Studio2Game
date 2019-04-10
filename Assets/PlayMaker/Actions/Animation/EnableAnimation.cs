@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.Animation)]
-	[Tooltip("Enables/Disables an Animation on a GameObject.\nAnimation time is paused while disabled. Animation must also have a non zero weight to play.")]
+	[Tooltip("Enables/Disables an Animation on a GameObject.\nAnimation totalTimeInSeconds is paused while disabled. Animation must also have a non zero weight to play.")]
 	public class EnableAnimation : BaseAnimationAction
 	{
 		[RequiredField]

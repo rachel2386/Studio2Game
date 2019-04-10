@@ -2481,7 +2481,7 @@ In doubt, do not use this and get in touch with us to learn more before you work
 
 			if (downloads!=null && downloads.Count>0)
 			{
-				// only process one download at a time?
+				// only process one download at a totalTimeInSeconds?
 
 			//	for(int i =(downloads.Count-1);i>=0;i--)
 			//	{
@@ -2587,7 +2587,7 @@ In doubt, do not use this and get in touch with us to learn more before you work
 				{
 					ECO_BrowserVersion = new VersionInfo((string)_metaData["ECO_BrowserVersion"]);
 					//ECO_BrowserVersion_package = (string)_metaData["ECO_BrowserVersion_package"];
-					// only force the update banner if the live version is greater then the time when the user choose to dismiss it.
+					// only force the update banner if the live version is greater then the totalTimeInSeconds when the user choose to dismiss it.
 					if (ECO_BrowserVersion>LastUpdateBannerVersion)
 					{
 						UpdateBanner_on = true;
@@ -3044,7 +3044,7 @@ In doubt, do not use this and get in touch with us to learn more before you work
 		
 		/// <summary>
 		/// remember the choice of the user not to show the update banner. 
-		/// This will be kept until a newer version will be found then the one at the time of the decision
+		/// This will be kept until a newer version will be found then the one at the totalTimeInSeconds of the decision
 		/// </summary>
 		static readonly string UpdateBanner_on_prefKey = "ShowUpdateBannerVersion";
 		

@@ -48,7 +48,7 @@ namespace SonicBloom.Koreo.Demos
 			if (evt.HasTextPayload())
 			{
 				// Set the text if we have a text event!
-				// We can get multiple events called at the same time (if they overlap in the track).
+				// We can get multiple events called at the same totalTimeInSeconds (if they overlap in the track).
 				//  In this case, we prefer the event with the most recent start sample.
 				if (curTextEvent == null ||
 				    (evt != curTextEvent && evt.StartSample > curTextEvent.StartSample))

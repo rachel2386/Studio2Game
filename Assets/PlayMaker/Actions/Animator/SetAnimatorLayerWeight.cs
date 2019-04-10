@@ -21,7 +21,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("Sets the layer's current weight")]
 		public FsmFloat layerWeight;
 		
-		[Tooltip("Repeat every frame. Useful for changing over time.")]
+		[Tooltip("Repeat every frame. Useful for changing over totalTimeInSeconds.")]
 		public bool everyFrame;
 		
 		private Animator _animator;

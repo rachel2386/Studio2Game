@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
     [ActionCategory(ActionCategory.Time)]
-    [Tooltip("Delays a State from finishing by the specified time. NOTE: Other actions continue, but FINISHED can't happen before Time.")]
+    [Tooltip("Delays a State from finishing by the specified totalTimeInSeconds. NOTE: Other actions continue, but FINISHED can't happen before Time.")]
     public class Wait : FsmStateAction
     {
         [RequiredField]
@@ -38,7 +38,7 @@ namespace HutongGames.PlayMaker.Actions
 
         public override void OnUpdate()
         {
-            // update time
+            // update totalTimeInSeconds
 
             if (realTime)
             {

@@ -195,7 +195,7 @@ namespace Yarn
 			}
         }
 
-        // exiting the body of the node, time for last minute work
+        // exiting the body of the node, totalTimeInSeconds for last minute work
         // before moving onto the next node
         // Does this node end after emitting AddOptions codes
         // without calling ShowOptions?

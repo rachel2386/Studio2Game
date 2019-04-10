@@ -8,7 +8,7 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.Application)]
-    [Tooltip("Saves a Screenshot. NOTE: Does nothing in Web Player. On Android, the resulting screenshot is available some time later.")]
+    [Tooltip("Saves a Screenshot. NOTE: Does nothing in Web Player. On Android, the resulting screenshot is available some totalTimeInSeconds later.")]
 	public class TakeScreenshot : FsmStateAction
 	{
 	    public enum Destination

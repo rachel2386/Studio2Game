@@ -32,7 +32,7 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmInt userNameHash;
 
 		[UIHint(UIHint.Variable)]
-		[Tooltip("Normalized time of the Transition")]
+		[Tooltip("Normalized totalTimeInSeconds of the Transition")]
 		public FsmFloat normalizedTime;
 
 		private Animator _animator;

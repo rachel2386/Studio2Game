@@ -8,7 +8,7 @@ namespace HutongGames.PlayMaker.Actions
 	[Tooltip("Starts location service updates. Last location coordinates can be retrieved with GetLocationInfo.")]
 	public class StartLocationServiceUpdates : FsmStateAction
 	{
-		[Tooltip("Maximum time to wait in seconds before failing.")]
+		[Tooltip("Maximum totalTimeInSeconds to wait in seconds before failing.")]
 		public FsmFloat maxWait;
 		public FsmFloat desiredAccuracy;
 		public FsmFloat updateDistance;

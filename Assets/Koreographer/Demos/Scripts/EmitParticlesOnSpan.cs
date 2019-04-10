@@ -42,7 +42,7 @@ namespace SonicBloom.Koreo.Demos
 			//  This check ensures that we only ask the particle system to emit once for any frame.
 			if (Time.frameCount != lastEmitFrame)
 			{
-				// Spans get called over a specified amount of music time.  Use Koreographer's beat delta
+				// Spans get called over a specified amount of music totalTimeInSeconds.  Use Koreographer's beat delta
 				//  to calculate the number of particles to emit this frame based on the "particlesPerBeat"
 				//  rate configured in the Inspector.
 				int particleCount = (int)(particlesPerBeat * Koreographer.GetBeatTimeDelta());

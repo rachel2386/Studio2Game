@@ -26,11 +26,11 @@ namespace HutongGames.PlayMaker.Actions
         [ActionSection("Set Capacity")]
 
         [UIHint(UIHint.FsmInt)]
-        [Tooltip("Directly sets the current max capacity of Tweeners (meaning how many Tweeners can be running at the same time) so that DOTween doesn't need to automatically increase them in case the max is reached (which might lead to hiccups when that happens).")]
+        [Tooltip("Directly sets the current max capacity of Tweeners (meaning how many Tweeners can be running at the same totalTimeInSeconds) so that DOTween doesn't need to automatically increase them in case the max is reached (which might lead to hiccups when that happens).")]
         public FsmInt tweenersCapacity = 200;
 
         [UIHint(UIHint.FsmInt)]
-        [Tooltip("Directly sets the current max capacity of Sequences (meaning how many Sequences can be running at the same time) so that DOTween doesn't need to automatically increase them in case the max is reached (which might lead to hiccups when that happens). Sequences capacity must be less or equal to Tweeners capacity (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's). Beware: use this method only when there are no tweens running.")]
+        [Tooltip("Directly sets the current max capacity of Sequences (meaning how many Sequences can be running at the same totalTimeInSeconds) so that DOTween doesn't need to automatically increase them in case the max is reached (which might lead to hiccups when that happens). Sequences capacity must be less or equal to Tweeners capacity (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's). Beware: use this method only when there are no tweens running.")]
         public FsmInt sequencesCapacity = 10;
 
         [ActionSection("Debug Options")]

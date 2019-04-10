@@ -22,7 +22,7 @@ namespace HutongGames.PlayMaker.Actions
         [Tooltip("Reset the game objects when exiting this state. Useful if you want an object to be active only while this state is active.\nNote: Only applies to the last Game Object activated/deactivated (won't work if Game Object changes).")]
 		public bool resetOnExit;
 		
-        [Tooltip("Repeat this action every frame. Useful if Activate changes over time.")]
+        [Tooltip("Repeat this action every frame. Useful if Activate changes over totalTimeInSeconds.")]
 		public bool everyFrame;
 		
 		// store the game object that we activated on enter

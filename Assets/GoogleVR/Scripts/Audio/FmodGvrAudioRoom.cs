@@ -73,7 +73,7 @@ public class FmodGvrAudioRoom : MonoBehaviour {
   /// Reverb brightness modifier.
   public float reverbBrightness = 0.0f;
 
-  /// Reverb time modifier.
+  /// Reverb totalTimeInSeconds modifier.
   public float reverbTime = 1.0f;
 
   /// Size of the room (normalized with respect to scale of the game object).

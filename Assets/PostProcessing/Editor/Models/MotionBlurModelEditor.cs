@@ -76,7 +76,7 @@ namespace UnityEditor.PostProcessing
                 else if (Mathf.Approximately(angle, 360f))
                     GUI.Label(labelRect, "Full", m_MiddleCenterStyle);
 
-                // Exposure time bar graph
+                // Exposure totalTimeInSeconds bar graph
                 var outerBarSize = new Vector2(4.75f, 0.5f) * k_Height;
                 var innerBarSize = outerBarSize;
                 innerBarSize.x *= angle / 360f;
@@ -87,7 +87,7 @@ namespace UnityEditor.PostProcessing
                 DrawRect(barOrigin, outerBarSize, m_ColorDark);
                 DrawRect(barOrigin, innerBarSize, m_ColorGray);
 
-                var barText = "Exposure time = " + (angle / 3.6f).ToString("0") + "% of ΔT";
+                var barText = "Exposure totalTimeInSeconds = " + (angle / 3.6f).ToString("0") + "% of ΔT";
                 GUI.Label(new Rect(barOrigin, outerBarSize), barText, m_MiddleCenterStyle);
             }
 

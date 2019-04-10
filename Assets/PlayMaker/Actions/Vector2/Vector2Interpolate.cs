@@ -20,7 +20,7 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmVector2 toVector;
 		
 		[RequiredField]
-		[Tooltip("the interpolate time")]
+		[Tooltip("the interpolate totalTimeInSeconds")]
 		public FsmFloat time;
 		
 		[RequiredField]
@@ -61,7 +61,7 @@ namespace HutongGames.PlayMaker.Actions
 		
 		public override void OnUpdate()
 		{
-			// update time
+			// update totalTimeInSeconds
 			
 			if (realTime)
 			{

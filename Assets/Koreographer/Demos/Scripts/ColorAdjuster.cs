@@ -44,7 +44,7 @@ namespace SonicBloom.Koreo.Demos
 			}
 			else if (!evt.IsOneOff() && evt.HasGradientPayload())
 			{
-				// Access the color specified at the current music-time.  This is what
+				// Access the color specified at the current music-totalTimeInSeconds.  This is what
 				//  drives musical color animations from gradients!
 				Color targetColor = evt.GetColorOfGradientAtTime(sampleTime);
 				ApplyColorToObjects(ref targetColor);

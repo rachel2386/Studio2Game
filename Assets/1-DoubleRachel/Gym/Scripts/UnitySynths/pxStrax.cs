@@ -134,7 +134,7 @@ public class pxStrax : MonoBehaviour {
     }
 
     /// <summary>
-    /// plays a key at a scheduled time; useful in conjunction with a sequencer/musical clock
+    /// plays a key at a scheduled totalTimeInSeconds; useful in conjunction with a sequencer/musical clock
     /// </summary>
     /// <param name="midinote"></param>
     /// <param name="time"></param>
@@ -162,7 +162,7 @@ public class pxStrax : MonoBehaviour {
     void OnAudioFilterRead(float[] data, int channels)
     {
         if (noteScheduled && AudioSettings.dspTime >= scheduledTime) {
-            //Debug.Log("playing time " + AudioSettings.dspTime);
+            //Debug.Log("playing totalTimeInSeconds " + AudioSettings.dspTime);
             
             lope.KeyOn();
             noteScheduled = false;

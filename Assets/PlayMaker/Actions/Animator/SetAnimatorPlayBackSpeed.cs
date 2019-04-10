@@ -16,7 +16,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("If true, automatically stabilize feet during transition and blending")]
 		public FsmFloat playBackSpeed;
 		
-		[Tooltip("Repeat every frame. Useful for changing over time.")]
+		[Tooltip("Repeat every frame. Useful for changing over totalTimeInSeconds.")]
 		public bool everyFrame;
 		
 		private Animator _animator;

@@ -5,15 +5,15 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.Time)]
-	[Tooltip("Scales time: 1 = normal, 0.5 = half speed, 2 = double speed.")]
+	[Tooltip("Scales totalTimeInSeconds: 1 = normal, 0.5 = half speed, 2 = double speed.")]
 	public class ScaleTime : FsmStateAction
 	{
 		[RequiredField]
 		[HasFloatSlider(0,4)]
-		[Tooltip("Scales time: 1 = normal, 0.5 = half speed, 2 = double speed.")]
+		[Tooltip("Scales totalTimeInSeconds: 1 = normal, 0.5 = half speed, 2 = double speed.")]
 		public FsmFloat timeScale;
 
-		[Tooltip("Adjust the fixed physics time step to match the time scale.")]
+		[Tooltip("Adjust the fixed physics totalTimeInSeconds step to match the totalTimeInSeconds scale.")]
 		public FsmBool adjustFixedDeltaTime;
 
 		[Tooltip("Repeat every frame. Useful when animating the value.")]
