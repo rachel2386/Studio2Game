@@ -198,7 +198,7 @@ public class NPCBehavior : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-       if (!NpcRotate && GreetedPlayer || myAgent.pathPending)
+       if (!NpcRotate && GreetedPlayer ) // pathPending
             myAgent.isStopped = true;
         if(NpcRotate)
             myAgent.isStopped = false;

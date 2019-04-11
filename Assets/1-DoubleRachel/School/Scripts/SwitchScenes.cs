@@ -55,6 +55,7 @@ public class SwitchScenes : MonoBehaviour
         {
             RaycastHit hit = new RaycastHit();
             Physics.SphereCast(switchSceneNPC.position, 1.6f, switchSceneNPC.forward, out hit);
+            Debug.DrawRay(switchSceneNPC.position,switchSceneNPC.forward,Color.red);
             if (hit.transform != null)
             {
                 if (hit.transform.CompareTag("Player"))
