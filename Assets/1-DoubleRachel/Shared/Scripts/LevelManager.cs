@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
-
+            
             playerActions = DoubleRachelPlayerActions.CreateWithDefaultBindings();
         }
     }
