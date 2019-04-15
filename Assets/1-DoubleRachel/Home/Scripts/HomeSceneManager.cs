@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HomeSceneManager : MonoBehaviour
 {
-    public static int IntoIndex = 1;
+    public static int IntoIndex = 0;
 
     ShyFPSController fpsController;
     ShyCamera shyCam;

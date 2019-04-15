@@ -2337,18 +2337,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1891604855, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
-      propertyPath: fsm.states.Array.data[1].actionData.actionIsOpen.Array.data[2]
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891604855, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
-      propertyPath: fsm.states.Array.data[1].actionData.actionIsOpen.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891604855, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1575361868, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2372,6 +2360,18 @@ PrefabInstance:
     - target: {fileID: 1891604854, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891604855, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
+      propertyPath: fsm.states.Array.data[1].actionData.actionIsOpen.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891604855, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
+      propertyPath: fsm.states.Array.data[1].actionData.actionIsOpen.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891604855, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
@@ -5946,7 +5946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845e8bd83609e3549af5a311ad811681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockedObjects: []
+  lockedObjects:
+  - {fileID: 1953810077}
   editModeVisibileObjects: []
   editModeInvisibleObjects: []
   wireframeHiddenObjects: []
@@ -10148,7 +10149,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 1
+          value: 2.5
         - useVariable: 0
           name: 
           tooltip: 
@@ -10229,7 +10230,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        value: 1
+        value: 1.5
       intVariables: []
       boolVariables: []
       stringVariables: []
@@ -12152,6 +12153,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 432351226674235489, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 432351226674235903, guid: 43a1443653851dd4fa972fd357c47c73,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -12161,6 +12167,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 432351226674235903, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 432351226674235901, guid: 43a1443653851dd4fa972fd357c47c73,
         type: 3}
@@ -12186,6 +12197,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 432351226674235813, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 432351225559425164, guid: 43a1443653851dd4fa972fd357c47c73,
         type: 3}
