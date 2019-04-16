@@ -12,6 +12,10 @@ namespace HutongGames.PlayMaker.Actions
         public bool lockMouseLook;
         public bool lockMove;
 
+        public bool tmpShowCursor;
+
+        public bool centerDot = true;
+
         // Code that runs on entering the state.
         public override void OnEnter()
 		{
@@ -19,6 +23,10 @@ namespace HutongGames.PlayMaker.Actions
             sfc.lockMouseLook = lockMouseLook;
             sfc.lockMove = lockMove;
 
+            sfc.SetTempShowCursor(tmpShowCursor);
+
+            var shyUI = GameObject.FindObjectOfType<ShyUI>();
+            shyUI.ShowCenerDot(centerDot);
             Finish();
 		}
 

@@ -61,6 +61,10 @@ public class ShyFPSController : MonoBehaviour
         m_MouseLook.Init(transform, m_Camera.transform);
     }
 
+    public ShyMouseLook GetMouseLook()
+    {
+        return m_MouseLook;
+    }
 
     // Update is called once per frame
     private void Update()

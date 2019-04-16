@@ -195,6 +195,44 @@ public class ShyMouseLook
 
         InControl.InputManager.ActiveDevice.Vibrate(vibIntensity);
         UpdateCursorLock();
+
+        UpdateMouseLookInMenu();
+    }
+
+    public bool menuMode = false;
+    public void SetMenuMode(bool mode)
+    {
+        menuMode = mode;
+    }
+
+
+    public float leftAng;    
+    public float rightAng;
+    public float topAng;
+    public float bottomAng;
+
+    void UpdateMouseLookInMenu()
+    {
+        var mousePosi = Input.mousePosition;
+        var cam = Camera.main;
+        var vp = cam.ScreenToViewportPoint(mousePosi);
+
+        var horAng = Mathf.Lerp(leftAng, rightAng, vp.x);
+        var verAng = Mathf.Lerp(bottomAng, topAng, vp.y);
+
+        var charE = new Vector3(0, horAng, 0);
+        var camE = new Vector3(verAng, 0, 0);
+
+        controller.transform.localEulerAngles = charE;
+        Camera.main.transform.localEulerAngles = camE;
+
+        ForceSetRotationFromCurrentGameObject();
+    }
+
+    public void ForceSetRotationFromCurrentGameObject()
+    {       
+        m_CharacterTargetRot = controller.transform.localRotation;
+        m_CameraTargetRot = Camera.main.transform.localRotation;
     }
 
     public static bool IsLineOfSightBlocked(Transform eye, Transform camera, Transform character)
