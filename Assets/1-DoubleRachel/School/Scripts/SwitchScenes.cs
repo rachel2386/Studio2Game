@@ -89,7 +89,7 @@ public class SwitchScenes : MonoBehaviour
             timerText.text = '0' + hour.ToString() + ':' + minutes + ':' +  secTxt;
             //"TIME LEFT:" + minutes + "M" + seconds + "S"; 
             
-            if(seconds-LastSecond>= 0.9f || LastSecond-seconds >= 58)
+            if(seconds-LastSecond>= 0.9f || LastSecond-seconds >= 59)
                 if(!myAS.isPlaying)
                     myAS.Play();
         
