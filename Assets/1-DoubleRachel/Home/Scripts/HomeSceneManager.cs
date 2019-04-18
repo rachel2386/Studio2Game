@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HomeSceneManager : MonoBehaviour
 {
-    public static int IntoIndex = 1;
+    public static int IntoIndex = 0;
 
     ShyFPSController fpsController;
     ShyCamera shyCam;
@@ -14,6 +14,9 @@ public class HomeSceneManager : MonoBehaviour
 
     public Transform[] playerBornPosis;
 
+    PanRotation panRotation;
+
+    public GameObject screwDriver;
     
 
     public int GetIntoIndex()
@@ -26,7 +29,7 @@ public class HomeSceneManager : MonoBehaviour
         fpsController = FindObjectOfType<ShyFPSController>();
         shyCam = FindObjectOfType<ShyCamera>();
 
-        
+        panRotation = FindObjectOfType<PanRotation>();
     }
 
     // Start is called before the first frame update
@@ -42,6 +45,8 @@ public class HomeSceneManager : MonoBehaviour
 
             InitPosition(fpsController, playerBornPosis[0].position);
             fpsController.transform.rotation = playerBornPosis[0].rotation;
+
+            screwDriver.SetActive(false);
         }
         else if (IntoIndex == 1)
         {
@@ -53,6 +58,10 @@ public class HomeSceneManager : MonoBehaviour
 
             InitPosition(fpsController, playerBornPosis[1].position);
             fpsController.transform.rotation = playerBornPosis[1].rotation;
+
+            screwDriver.SetActive(true);
+
+            
         }
 
     }
@@ -68,5 +77,6 @@ public class HomeSceneManager : MonoBehaviour
     void Update()
     {
         // fpsController.transform.position = playerBornPosis[1].position;
+        // panRotation.PanRotationUpdateStateByLevel(IntoIndex);
     }
 }

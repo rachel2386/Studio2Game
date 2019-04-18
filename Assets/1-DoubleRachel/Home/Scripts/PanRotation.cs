@@ -14,6 +14,8 @@ public class PanRotation : Pan
     public GameObject liftedAnchor;
     public GameObject knockGizmo;
     public GameObject pickableTofuRoot;
+    public GameObject bellGizmo;
+    public GameObject switchModel;
 
     public PlayMakerFSM mainFSM;
 
@@ -87,6 +89,8 @@ public class PanRotation : Pan
 
         InitPostProcessingParams();
         InitFoodStatus();
+
+        InitStateByLevel();
     }
 
     public bool showAllPanFoodAtStart = true;
@@ -122,7 +126,10 @@ public class PanRotation : Pan
 
 
         CheckUpdateEndGrain();
-        
+
+        PanRotationUpdateStateByLevel();
+
+
     }
 
     void CheckUpdateEndGrain()
@@ -269,6 +276,11 @@ public class PanRotation : Pan
         shyCam.SetPpeParam(ppes, value, lerpFactor);
     }
 
+    void EnablePpeSetting(PpeSetting ppes, bool val)
+    {
+        shyCam.SetPpeActivate(ppes, val);
+    }
+
     float GetPpeParam(PpeSetting ppes)
     {
         return shyCam.GetPpeParam(ppes);
@@ -289,7 +301,9 @@ public class PanRotation : Pan
 
         SetPpeParam(PpeSetting.GRAIN_INTENSITY, grainIntensity);
         SetPpeParam(PpeSetting.GRAIN_SIZE, grainSize);
+
         EnableGrainEffect(false);
+        EnablePpeSetting(PpeSetting.DEPTH_OF_FIELD_APERTURE, false);
     }
 
 
@@ -366,6 +380,7 @@ public class PanRotation : Pan
 
         }
 
+        
         SendShakeGoodOrBadEvent(index);
 
     }
@@ -393,12 +408,27 @@ public class PanRotation : Pan
     // index from 0 - 2
     void SendShakeGoodOrBadEvent(int index)
     {
-        bool isGood = GetGoodOrBadFromIndex(index);
+        // shake the food inside
+        if(HomeSceneManager.IntoIndex == 0)
+        {
+            bool isGood = GetGoodOrBadFromIndex(index);
 
-        if (isGood)
-            SendEventGoodMode();
-        else
-            SendEventBadMode();
+            if (isGood)
+                SendEventGoodMode();
+            else
+                SendEventBadMode();
+        }
+        // only shake the pan
+        else if (HomeSceneManager.IntoIndex == 1)
+        {
+            SendEventPanShake();
+        }
+        
+    }
+
+    void SendEventPanShake()
+    {
+        gameObject.MySendEventToAll("PAN_SHAKE");
     }
 
     // In End
@@ -425,26 +455,27 @@ public class PanRotation : Pan
 
     // once needAllIn = true, we set allAlreadyIn = true
     bool allAlreadyIn = false;
-
-
+    
     // This is called when we have a tofu in hand and we click on the pan
     public void PanClicked()
     {
         sis.ClearHand();
         int i = 0;
                
-        if(allAlreadyIn)
+        // can cook is set to true when the stove switch gets turned on
+        if(allAlreadyIn && canCook)
         {
             // Fuck my life process
             if(HomeSceneManager.IntoIndex == 1)
             {
                 GetComponent<ShyInteractableObject>().canInteract = false;
                 gameObject.MySendEventToAll("FUCK_MY_LIFE");
-                doorBell.Play();
+                // doorBell.Play();
+                mainFSM.MySendEventToAll("BEGIN_BELL");
 
 
                 var seq = DOTween.Sequence();
-                seq.AppendInterval(2);
+                seq.AppendInterval(5);
                 seq.AppendCallback(() =>
                 {
                     GotoEnd();
@@ -496,6 +527,18 @@ public class PanRotation : Pan
         
     }
 
+
+    public void SetAllTofuValidState(ShyInteractableObject.ValidationMode md, string invalidTooltip)
+    {
+        var tofus = pickableTofuRoot.GetComponentsInChildren<PickableTofu>();
+        foreach (var tofu in tofus)
+        {
+            tofu.GetComponent<ShyPickableObject>().validationMode = md;
+            tofu.GetComponent<ShyPickableObject>().invalidTooltip = invalidTooltip;
+        }
+    }
+    
+    // if canpickup = false, we still receive click event
     public void SetAllTofuPickState(bool can)
     {
         var tofus = pickableTofuRoot.GetComponentsInChildren<PickableTofu>();
@@ -541,4 +584,29 @@ public class PanRotation : Pan
             needAllIn = true;
         }
     }
+
+    public void InitStateByLevel()
+    {
+        int level = HomeSceneManager.IntoIndex;
+
+        bellGizmo.SetActive(level == 1);
+        switchModel.GetComponent<AudioSource>().enabled = level == 1;
+
+
+        if (level == 1)
+        {
+            SetAllTofuValidState(ShyInteractableObject.ValidationMode.INVALID, "?");
+        }
+    }
+
+
+    public void DoorBellThrowed()
+    {
+        SetAllTofuValidState(ShyInteractableObject.ValidationMode.NEED_EMPTY, "");
+    }
+
+    public void PanRotationUpdateStateByLevel()
+    {
+      
+    }      
 }
