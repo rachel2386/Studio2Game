@@ -107,7 +107,13 @@ public class ShyMouseLook
 
     public void LookRotation(Transform character, Transform camera)
     {
-        
+        UpdateCursorLock();
+
+        if (menuMode)
+        {
+            UpdateMouseLookInMenu();
+            return;
+        }
 
 
         float sensitivityFactorX = 1;
@@ -194,15 +200,21 @@ public class ShyMouseLook
 
 
         InControl.InputManager.ActiveDevice.Vibrate(vibIntensity);
-        UpdateCursorLock();
+     
 
-        UpdateMouseLookInMenu();
+        
     }
 
     public bool menuMode = false;
     public void SetMenuMode(bool mode)
     {
         menuMode = mode;
+    }
+
+    bool allowMicroMv = true;
+    public void SetAllowMicroMv(bool value)
+    {
+        allowMicroMv = value;
     }
 
 
@@ -213,6 +225,12 @@ public class ShyMouseLook
 
     void UpdateMouseLookInMenu()
     {
+        if (!menuMode)
+            return;
+
+        if (!allowMicroMv)
+            return;
+
         var mousePosi = Input.mousePosition;
         var cam = Camera.main;
         var vp = cam.ScreenToViewportPoint(mousePosi);

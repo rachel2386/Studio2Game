@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ShyMouseEvent : MonoBehaviour
 {
-
+    public bool inUse = true;
     public GameObject target;
     public string enterEvent;
     public string exitEvent;
+    public string clickedEvent;
 
     Camera cam;
     // Start is called before the first frame update
@@ -55,6 +56,12 @@ public class ShyMouseEvent : MonoBehaviour
             DoEnter();
         }
 
+
+        if(currentIsOn && LevelManager.Instance.PlayerActions.Fire.WasPressed)
+        {
+            DoClicked();
+        }
+
         lastMouseOn = currentIsOn;
     }
 
@@ -62,11 +69,30 @@ public class ShyMouseEvent : MonoBehaviour
 
     void DoExit()
     {
+        if (!inUse)
+            return;
+
         target.MySendEventToAll(exitEvent);
     }
 
     void DoEnter()
     {
+        if (!inUse)
+            return;
+
         target.MySendEventToAll(enterEvent);
+    }
+
+    void DoClicked()
+    {
+        if (!inUse)
+            return;
+
+        target.MySendEventToAll(clickedEvent);
+    }
+
+    public void TestHaha()
+    {
+        Debug.Log("Haha");
     }
 }

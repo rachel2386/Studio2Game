@@ -9,24 +9,47 @@ namespace HutongGames.PlayMaker.Actions
         ShyFPSController sfc;
 
 
-        public bool lockMouseLook;
-        public bool lockMove;
+        public FsmBool lockMouseLook = new FsmBool { UseVariable = true };
+        public FsmBool lockMove = new FsmBool { UseVariable = true };
 
-        public bool tmpShowCursor;
+        public FsmBool tmpShowCursor = new FsmBool { UseVariable = true };
 
-        public bool centerDot = true;
+        public FsmBool centerDot = new FsmBool { UseVariable = true };
+
+        public FsmBool menuMode = new FsmBool { UseVariable = true };
+
+        public FsmBool allowMicroMv = new FsmBool { UseVariable = true };
 
         // Code that runs on entering the state.
         public override void OnEnter()
 		{
             var sfc = GameObject.FindObjectOfType<ShyFPSController>();
-            sfc.lockMouseLook = lockMouseLook;
-            sfc.lockMove = lockMove;
+            if(!lockMouseLook.IsNone)
+                sfc.lockMouseLook = lockMouseLook.Value;
 
-            sfc.SetTempShowCursor(tmpShowCursor);
+            if (!lockMove.IsNone)
+                sfc.lockMove = lockMove.Value;
 
-            var shyUI = GameObject.FindObjectOfType<ShyUI>();
-            shyUI.ShowCenerDot(centerDot);
+            if(!tmpShowCursor.IsNone)
+                sfc.SetTempShowCursor(tmpShowCursor.Value);
+
+
+            if(!centerDot.IsNone)
+            {
+                var shyUI = GameObject.FindObjectOfType<ShyUI>();
+                shyUI.ShowCenerDot(centerDot.Value);
+            }
+
+            if(!menuMode.IsNone)
+            {
+                sfc.GetMouseLook().SetMenuMode(menuMode.Value);
+            }
+
+            if(!allowMicroMv.IsNone)
+            {
+                sfc.GetMouseLook().SetAllowMicroMv(allowMicroMv.Value);
+            }
+
             Finish();
 		}
 
