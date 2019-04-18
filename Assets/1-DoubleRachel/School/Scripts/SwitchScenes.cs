@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using HutongGames.PlayMaker;
@@ -17,7 +18,7 @@ public class SwitchScenes : MonoBehaviour
     private float MinutesOnClock;
     private float timer = 0;
     private Text timerText;
-    private float LastSecond;
+    private int LastSecond;
 
     private AudioSource myAS;
     private AudioClip[] clockTicks;
@@ -89,7 +90,7 @@ public class SwitchScenes : MonoBehaviour
             timerText.text = '0' + hour.ToString() + ':' + minutes + ':' +  secTxt;
             //"TIME LEFT:" + minutes + "M" + seconds + "S"; 
             
-            if(seconds-LastSecond>= 0.9f || LastSecond-seconds >= 59)
+            if(seconds-LastSecond>= 0.9f || LastSecond == 59 && seconds == 0)
                 if(!myAS.isPlaying)
                     myAS.Play();
         

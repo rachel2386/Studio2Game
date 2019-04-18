@@ -80,136 +80,144 @@ public class NPCBehavior : MonoBehaviour
 
     // Update is called once per frame
 
+    
+    
     void Update()
     {
+        if (NpcRotate)
+        {
+            AgentBehavior();
+        }
+        else
+        {
+            FollowPlayer();   
+        }
+        
+       AnimatorUpdate();
+ 
+    }
+
+    void AgentBehavior()
+    {
+        myAgent.updatePosition = false;
+        myAgent.updateRotation = true;
+        
         if (Trigger)
         {
             if (PlayerTriggered)
             {
-                if (NpcRotate)
-                {
-                    myAgent.SetDestination(myDestination.position);
-                    if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
-                        myAgent.isStopped = true;
-                }
-
-                
-            }
+                myAgent.SetDestination(myDestination.position);
+                if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
+                    myAgent.isStopped = true;
+             }
+           
         }
-        else if (Automatic)
+
+        if (Automatic)
         {
-            // print("agent position updated=" + transform.position);
-            if (NpcRotate)
-                myAgent.SetDestination(goingForward ? DestinationOffset : AgentOffset);
+            myAgent.SetDestination(goingForward ? DestinationOffset : AgentOffset);
             //walking back and forth two points
             if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
             {
                 goingForward = !goingForward;
             }
         }
-        else if (Stationary)
+
+        if (Stationary)
         {
-            if (NpcRotate)
-            {
-                AutoRotate();
+          
                 myAgent.SetDestination(myDestination.position);
-            }
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x,
+                    Mathf.MoveTowardsAngle(transform.eulerAngles.y, randomRot, turnSpeed),
+                    transform.eulerAngles.x);
 
+                float angleToTurn = randomRot - transform.eulerAngles.y;
+                //if (Mathf.Abs(angleToTurn) >= 5)
+                // {
+                //myAnim.SetFloat("Turn", angleToTurn/180);
+                // myAnim.PlayInFixedTime("Grounded", 0, degreesTurned / turnSpeed);
+                //}
+                // else
+                //     myAnim.SetFloat("Turn", 0);
+        
         }
 
-        myAgent.updatePosition = false;
-        myAgent.updateRotation = true;
-
-        NPCSpeed();
-        AnimatorUpdate();
-
-        if (!NpcRotate)
-        {
-            transform.LookAt(playerTransform);
-            FollowPlayer();   
-        }
-        else
-            myAnim.SetBool(HandWave, false);
        
-        // look at walking dir    
-        //transform.LookAt(myAgent.steeringTarget + transform.forward);
-    }
-
-    void AutoRotate()
-    {
-        // if(Rotating)
-
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x,
-            Mathf.MoveTowardsAngle(transform.eulerAngles.y, randomRot, turnSpeed),
-            transform.eulerAngles.x);
-
-        float angleToTurn = randomRot - transform.eulerAngles.y;
-        //if (Mathf.Abs(angleToTurn) >= 5)
-        // {
-        //myAnim.SetFloat("Turn", angleToTurn/180);
-        // myAnim.PlayInFixedTime("Grounded", 0, degreesTurned / turnSpeed);
-        //}
-        // else
-        //     myAnim.SetFloat("Turn", 0);
     }
 
     void NPCSpeed()
     {
-        if (!myAgent.pathPending && !NpcRotate && !GreetedPlayer)
-            myAgent.speed = approachPlayerSpeed;
-        else
-            myAgent.speed = AgentinitSpeed;
-    }
 
-    public void FollowPlayer()
-    {
-       
-        if (!GreetedPlayer)
+//        if (!NpcRotate && GreetedPlayer || myAgent.pathPending ) // pathPending
+//            myAgent.isStopped = true;
+
+        if (!myAgent.pathPending)
         {
-            if (myAgent.destination != playerTransform.position)
+            if (NpcRotate)
             {
-                myAgent.ResetPath();
-                myAgent.SetDestination(playerTransform.position);
+                myAgent.isStopped = false;
+                myAgent.speed = AgentinitSpeed;
             }
-            myAnim.SetBool(HandWave, true);
-            
-            if (!myAgent.pathPending && myAgent.remainingDistance <= 1f)
+            else
             {
-                    myAnim.SetBool(HandWave, false);
+                if ( !GreetedPlayer)
+                {
+                   myAgent.speed = approachPlayerSpeed;
+                }
+                else
                     myAgent.isStopped = true;
-                    myAgent.SetDestination(myDestination.position);
-                    GreetedPlayer = true;
+           
             }
         }
+        else
+            myAgent.isStopped = true;
+
+
+
+
+    }
+
+    private void FollowPlayer()
+    {
        
-       
-      
+        transform.rotation = Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up);
+        if (GreetedPlayer) return;
+        if (myAgent.destination != playerTransform.position)
+        {
+            myAgent.ResetPath();
+            myAgent.SetDestination(playerTransform.position);
+        }
+       if (Vector3.Distance(playerTransform.position,transform.position) <= 1.3f)
+        {
+            GreetedPlayer = true;
+        }
+
+
+
     }
  
     private void AnimatorUpdate()
     {
-      
-       //else if (myAgent.pathPending)
-          // myAgent.speed = 0.05f;
-      
-       myAnim.SetFloat(Forward, myAgent.desiredVelocity.magnitude);
-       
+        myAnim.SetFloat(Forward, myAgent.desiredVelocity.magnitude);
+        
+        if(!NpcRotate && !GreetedPlayer)
+            myAnim.SetBool(HandWave, true);
+        else
+            myAnim.SetBool(HandWave,false);
+            
+        
+            
     }
 
     private void OnAnimatorMove()
     {
-       if (!NpcRotate && GreetedPlayer ) // pathPending
-            myAgent.isStopped = true;
-        if(NpcRotate)
-            myAgent.isStopped = false;
-        
+        NPCSpeed();
         transform.position = myAgent.nextPosition;
+       
     }
 
     private float randomRot;
     private float degreesTurned;
-
-
 
     void generateRandomNum()
     {
