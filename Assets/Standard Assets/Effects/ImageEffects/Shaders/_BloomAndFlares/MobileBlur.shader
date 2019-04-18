@@ -39,7 +39,7 @@ Shader "Hidden/FastBlur" {
 			return o; 
 		}					
 		
-		fixed4 fragDownsample ( v2f_tap i ) : COLOR
+		fixed4 fragDownsample ( v2f_tap i ) : SV_Target
 		{				
 			fixed4 color = tex2D (_MainTex, i.uv20);
 			color += tex2D (_MainTex, i.uv21);
@@ -91,7 +91,7 @@ Shader "Hidden/FastBlur" {
 			return o; 
 		}	
 
-		half4 fragBlur8 ( v2f_withBlurCoords8 i ) : COLOR
+		half4 fragBlur8 ( v2f_withBlurCoords8 i ) : SV_Target
 		{
 			half2 uv = i.uv.xy; 
 			half2 netFilterWidth = i.offs;  
@@ -144,7 +144,7 @@ Shader "Hidden/FastBlur" {
 			return o; 
 		}	
 
-		half4 fragBlurSGX ( v2f_withBlurCoordsSGX i ) : COLOR
+		half4 fragBlurSGX ( v2f_withBlurCoordsSGX i ) : SV_Target
 		{
 			half2 uv = i.uv.xy;
 			
@@ -165,7 +165,6 @@ Shader "Hidden/FastBlur" {
 	
 	SubShader {
 	  ZTest Off Cull Off ZWrite Off Blend Off
-	  Fog { Mode off }  
 
 	// 0
 	Pass { 
@@ -174,7 +173,6 @@ Shader "Hidden/FastBlur" {
 		
 		#pragma vertex vert4Tap
 		#pragma fragment fragDownsample
-		#pragma fragmentoption ARB_precision_hint_fastest 
 		
 		ENDCG
 		 
@@ -189,7 +187,6 @@ Shader "Hidden/FastBlur" {
 		
 		#pragma vertex vertBlurVertical
 		#pragma fragment fragBlur8
-		#pragma fragmentoption ARB_precision_hint_fastest 
 		
 		ENDCG 
 		}	
@@ -203,7 +200,6 @@ Shader "Hidden/FastBlur" {
 		
 		#pragma vertex vertBlurHorizontal
 		#pragma fragment fragBlur8
-		#pragma fragmentoption ARB_precision_hint_fastest 
 		
 		ENDCG
 		}	
@@ -218,7 +214,6 @@ Shader "Hidden/FastBlur" {
 		
 		#pragma vertex vertBlurVerticalSGX
 		#pragma fragment fragBlurSGX
-		#pragma fragmentoption ARB_precision_hint_fastest 
 		
 		ENDCG
 		}	
@@ -232,7 +227,6 @@ Shader "Hidden/FastBlur" {
 		
 		#pragma vertex vertBlurHorizontalSGX
 		#pragma fragment fragBlurSGX
-		#pragma fragmentoption ARB_precision_hint_fastest 
 		
 		ENDCG
 		}	
