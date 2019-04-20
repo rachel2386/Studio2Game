@@ -31,13 +31,24 @@ public class Locker : MonoBehaviour
 
     public void Clicked()
     {
+        if (!active)
+            gameObject.MySendEventToAll("LOCKER_CLICKED");
+
+        if (active)
+            gameObject.MySendEventToAll("ACTIVE_CLICKED");
+
         active = true;
         menu.LockerClicked(this);
+
+       
     }
 
     public void OthersClicked()
     {
-        active = false;
+        if (active)
+            gameObject.MySendEventToAll("LOCKER_OTHER_CLICKED");
+
+        active = false;        
     }
     
     

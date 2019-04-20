@@ -408,7 +408,7 @@ public class SimpleHelvetica : MonoBehaviour {
 	public void ApplyMeshRenderer(){
 		
 		MeshRenderer selfMeshRenderer=GetComponent<MeshRenderer>();
-		bool selfMesherRendererCastShadows = selfMeshRenderer.castShadows;
+		var selfMesherRendererCastShadows = selfMeshRenderer.shadowCastingMode;
 		bool selfMesherRendererReceiveShadows = selfMeshRenderer.receiveShadows;
 		Material[] selfMesherRendererSharedMaterials = selfMeshRenderer.sharedMaterials;
 		bool selfMesherRendererUseLightProbes = selfMeshRenderer.useLightProbes;
@@ -420,7 +420,7 @@ public class SimpleHelvetica : MonoBehaviour {
 			MeshRenderer thisMeshRenderer = child.gameObject.GetComponent<MeshRenderer>();
 			Debug.Log (selfMeshRenderer);
 			if (thisMeshRenderer!=null){
-				thisMeshRenderer.castShadows = selfMesherRendererCastShadows;
+				thisMeshRenderer.shadowCastingMode = selfMesherRendererCastShadows;
 				thisMeshRenderer.receiveShadows = selfMesherRendererReceiveShadows;
 				thisMeshRenderer.sharedMaterials = selfMesherRendererSharedMaterials;
 				thisMeshRenderer.useLightProbes = selfMesherRendererUseLightProbes;
@@ -431,7 +431,7 @@ public class SimpleHelvetica : MonoBehaviour {
 		foreach (Transform child in transform){
 			MeshRenderer thisMeshRenderer = child.gameObject.GetComponent<MeshRenderer>();
 			if (thisMeshRenderer!=null){
-				thisMeshRenderer.castShadows = selfMesherRendererCastShadows;
+				thisMeshRenderer.shadowCastingMode = selfMesherRendererCastShadows;
 				thisMeshRenderer.receiveShadows = selfMesherRendererReceiveShadows;
 				thisMeshRenderer.sharedMaterials = selfMesherRendererSharedMaterials;
 				thisMeshRenderer.useLightProbes = selfMesherRendererUseLightProbes;

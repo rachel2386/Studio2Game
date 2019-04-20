@@ -9,6 +9,7 @@ public class ShyMouseEvent : MonoBehaviour
     public string enterEvent;
     public string exitEvent;
     public string clickedEvent;
+    public string releasedEvent;
 
     Camera cam;
     // Start is called before the first frame update
@@ -24,6 +25,10 @@ public class ShyMouseEvent : MonoBehaviour
 
     bool isMouseOn()
     {
+
+        if (!inUse)
+            return false;
+
         bool ret = false;
         // Debug.Log(Input.mousePosition);
         RaycastHit[] hit;
@@ -62,6 +67,11 @@ public class ShyMouseEvent : MonoBehaviour
             DoClicked();
         }
 
+        if(LevelManager.Instance.PlayerActions.Fire.WasReleased)
+        {
+            DoRelease();
+        }
+
         lastMouseOn = currentIsOn;
     }
 
@@ -69,26 +79,31 @@ public class ShyMouseEvent : MonoBehaviour
 
     void DoExit()
     {
-        if (!inUse)
-            return;
+        //if (!inUse)
+        //    return;
 
         target.MySendEventToAll(exitEvent);
     }
 
     void DoEnter()
     {
-        if (!inUse)
-            return;
+        //if (!inUse)
+        //    return;
 
         target.MySendEventToAll(enterEvent);
     }
 
     void DoClicked()
     {
-        if (!inUse)
-            return;
+        //if (!inUse)
+        //    return;
 
         target.MySendEventToAll(clickedEvent);
+    }
+
+    void DoRelease()
+    {
+        target.MySendEventToAll(releasedEvent);
     }
 
     public void TestHaha()
