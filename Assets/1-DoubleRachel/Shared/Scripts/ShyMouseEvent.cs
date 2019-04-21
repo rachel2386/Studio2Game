@@ -5,11 +5,17 @@ using UnityEngine;
 public class ShyMouseEvent : MonoBehaviour
 {
     public bool inUse = true;
+    public GameObject checkRayObject = null;
     public GameObject target;
     public string enterEvent;
     public string exitEvent;
+
+    public string hoverEvent;
+    public string notHoverEvent;
+
     public string clickedEvent;
     public string releasedEvent;
+    public string anyClickEvent;
 
     Camera cam;
     // Start is called before the first frame update
@@ -35,10 +41,12 @@ public class ShyMouseEvent : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         hit = Physics.RaycastAll(ray, 100);
 
+        GameObject check = checkRayObject == null ? gameObject : checkRayObject;
+
         foreach (var h in hit)
         {
             var go = h.collider.gameObject;
-            if (gameObject == go)
+            if (go == check)
             {
                 ret = true;
                 break;
@@ -52,15 +60,23 @@ public class ShyMouseEvent : MonoBehaviour
     {
         bool currentIsOn = isMouseOn();
 
-        if(lastMouseOn && !currentIsOn)
+        if(!currentIsOn)
         {
-            DoExit();
+            DoNotHover();
+            if(lastMouseOn)
+                DoExit();
         }
-        else if(!lastMouseOn && currentIsOn)
+        else if(currentIsOn)
         {
-            DoEnter();
+            DoHover();
+            if(!lastMouseOn)
+                DoEnter();
         }
 
+        if(LevelManager.Instance.PlayerActions.Fire.WasPressed)
+        {
+            DoAnyClick();
+        }
 
         if(currentIsOn && LevelManager.Instance.PlayerActions.Fire.WasPressed)
         {
@@ -109,5 +125,20 @@ public class ShyMouseEvent : MonoBehaviour
     public void TestHaha()
     {
         Debug.Log("Haha");
+    }
+
+    void DoAnyClick()
+    {
+        target.MySendEventToAll(anyClickEvent);
+    }
+
+    void DoHover()
+    {
+        target.MySendEventToAll(hoverEvent);
+    }
+
+    void DoNotHover()
+    {
+        target.MySendEventToAll(notHoverEvent);
     }
 }

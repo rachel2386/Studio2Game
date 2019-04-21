@@ -13,6 +13,7 @@ namespace HutongGames.PlayMaker.Actions
         public bool syncRotation = false;
         public bool syncLocalScale = false;
         public bool everyFrame;
+        public bool useLocal = false;
 
 
         CharacterController cc;
@@ -20,8 +21,9 @@ namespace HutongGames.PlayMaker.Actions
 		// Code that runs on entering the state.
 		public override void OnEnter()
         {
-            cc = source.GameObject.Value.GetComponent<CharacterController>();
-            sfc = source.GameObject.Value.GetComponent<ShyFPSController>();
+            var go = Fsm.GetOwnerDefaultTarget(source);
+            cc = go.GetComponent<CharacterController>();
+            sfc = go.GetComponent<ShyFPSController>();
 
             DoSync();
             if(!everyFrame)
@@ -36,24 +38,35 @@ namespace HutongGames.PlayMaker.Actions
 
         void DoSync()
         {
+            var go = Fsm.GetOwnerDefaultTarget(source);
+
             if (cc)
                 cc.enabled = false;
 
 
             if (syncPosition)
-                source.GameObject.Value.transform.position = target.Value.transform.position;
+            {
+                if(useLocal)
+                    go.transform.localPosition = target.Value.transform.localPosition;
+                else
+                    go.transform.position = target.Value.transform.position;
+            }
+                
 
             if (syncRotation)
             {
-                
-                
-                source.GameObject.Value.transform.rotation = target.Value.transform.rotation;
+
+                if (useLocal)
+                    go.transform.localRotation = target.Value.transform.localRotation;
+                else
+                    go.transform.rotation = target.Value.transform.rotation;
+
                 if (sfc)
                     sfc.GetMouseLook().ForceSetRotationFromCurrentGameObject();
             }
 
             if(syncLocalScale)
-                source.GameObject.Value.transform.localScale = target.Value.transform.localScale;
+                go.transform.localScale = target.Value.transform.localScale;
 
             if (cc)
                 cc.enabled = true;
