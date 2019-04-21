@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class SwitchScenes : MonoBehaviour
 {
+    public static int gameState = 1;
     public bool doorOpened;
     private Transform switchSceneNPC;
     // Start is called before the first frame update
@@ -25,16 +26,17 @@ public class SwitchScenes : MonoBehaviour
 
     void Start()
     {
+        
         switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
         
         float secondsOnClock = Mathf.FloorToInt((int)3600 - totalTimeInSeconds);
         MinutesOnClock = Mathf.RoundToInt(secondsOnClock/60);
         print(MinutesOnClock);
         
-        timerText = GetComponent<Text>();
+        timerText = GameObject.Find("Timer").GetComponent<Text>();
         timerText.color = new Color(0.2f,0.3f,0.35f);
 
-        myAS = GetComponent<AudioSource>();
+        myAS = GameObject.Find("Timer").GetComponent<AudioSource>();
 //        for (int i = 0; i < 5; i++)
 //        {
 //            clockTicks[i] = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/1-DoubleRachel/School/Audio/SFX/clocktick1.mp3" , typeof(AudioClip));//+ (i + 1) + ".mp3");
