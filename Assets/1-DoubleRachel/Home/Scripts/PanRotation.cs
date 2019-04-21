@@ -16,6 +16,7 @@ public class PanRotation : Pan
     public GameObject pickableTofuRoot;
     public GameObject bellGizmo;
     public GameObject switchModel;
+    public GameObject switchModelRoot;
 
     public PlayMakerFSM mainFSM;
 
@@ -592,8 +593,10 @@ public class PanRotation : Pan
         bellGizmo.SetActive(level == 1);
         switchModel.GetComponent<AudioSource>().enabled = level == 1;
 
+        if (level >= 2)
+            switchModelRoot.SetActive(false);
 
-        if (level == 1)
+        if (level == 1 || level == 2)
         {
             SetAllTofuValidState(ShyInteractableObject.ValidationMode.INVALID, "?");
         }

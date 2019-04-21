@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HomeSceneManager : MonoBehaviour
 {
-    public static int IntoIndex = 1;
+    public static int IntoIndex = 2;
 
     ShyFPSController fpsController;
     ShyCamera shyCam;
@@ -17,6 +17,7 @@ public class HomeSceneManager : MonoBehaviour
     PanRotation panRotation;
 
     public GameObject screwDriver;
+    public GameObject remote;
     
 
     public int GetIntoIndex()
@@ -35,33 +36,36 @@ public class HomeSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        screwDriver.SetActive(IntoIndex == 1);
+        remote.SetActive(IntoIndex == 2);
+
+        InitPosition(fpsController, playerBornPosis[IntoIndex].position);
+        InitRotation(fpsController, playerBornPosis[IntoIndex]);
+        
+
+        shyCam.useGrain = false;
         if (IntoIndex == 0)
         {
             fpsController.lockMove = true;
-            shyCam.useGrain = false;
 
             objectOnUI.SetActive(false);
             lookDownUI.SetActive(true);
-
-            InitPosition(fpsController, playerBornPosis[0].position);
-            fpsController.transform.rotation = playerBornPosis[0].rotation;
-
-            screwDriver.SetActive(false);
         }
         else if (IntoIndex == 1)
         {
-            fpsController.lockMove = false;
-            shyCam.useGrain = false;
+            fpsController.lockMove = false;            
 
             objectOnUI.SetActive(true);
+            objectOnUI.MySendEventToAll("SHOW");
+            // objectOnUI.transform.GetChild(0).gameObject.SetActive(true);
+            lookDownUI.SetActive(false);         
+        }
+        else if(IntoIndex == 2)
+        {
+            fpsController.lockMove = false;
+            objectOnUI.SetActive(true);
             lookDownUI.SetActive(false);
-
-            InitPosition(fpsController, playerBornPosis[1].position);
-            fpsController.transform.rotation = playerBornPosis[1].rotation;
-
-            screwDriver.SetActive(true);
-
-            
         }
 
     }
@@ -71,6 +75,14 @@ public class HomeSceneManager : MonoBehaviour
         controller.GetComponent<CharacterController>().enabled = false;
         fpsController.transform.position = posi;
         controller.GetComponent<CharacterController>().enabled = true;
+    }
+
+    void InitRotation(ShyFPSController controller, Transform startPoint)
+    {
+        var se = startPoint.eulerAngles;
+        controller.transform.eulerAngles = new Vector3(0, se.y, 0);
+        controller.GetComponentInChildren<ShyCamera>().transform.localEulerAngles = new Vector3(se.x, 0, 0);
+        controller.GetMouseLook().ForceSetRotationFromCurrentGameObject();
     }
 
     // Update is called once per frame
