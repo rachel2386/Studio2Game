@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: 
-  SourceProjectPathUnformatted: 
-  SourceBankPathUnformatted: 
+  sourceProjectPath: Studio2/Studio2.fspro
+  SourceProjectPathUnformatted: Studio2/Studio2.fspro
+  SourceBankPathUnformatted: Studio2/Build
   AutomaticEventLoading: 1
   AutomaticSampleLoading: 0
   ImportType: 0
@@ -45,7 +45,9 @@ MonoBehaviour:
     Value: 1
   - Platform: 2
     Value: 0
-  BankDirectorySettings: []
+  BankDirectorySettings:
+  - Platform: 2
+    Value: Desktop
   VirtualChannelSettings:
   - Platform: 1
     Value: 1024
@@ -57,6 +59,7 @@ MonoBehaviour:
   - Platform: 2
     Value: 32
   Plugins: []
-  MasterBanks: []
+  MasterBanks:
+  - Master Bank
   Banks: []
   LiveUpdatePort: 9264
