@@ -19166,7 +19166,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: ShowTV_1
+        toState: WaitForVideoLoadTime
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -20786,7 +20786,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 592
-        y: 208
+        y: 288
         width: 102
         height: 32
       isBreakpoint: 0
@@ -20815,7 +20815,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 0101010101
-        actionIsOpen: 0000000000
+        actionIsOpen: 0000000001
         actionStartIndex: 00000000050000001f0000002400000029000000
         actionHashCodes: 7227c600aa7aa604b2cf10007227c60048c01101
         unityObjectParams: []
@@ -20940,7 +20940,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 3
+          value: 2
         fsmIntParams:
         - useVariable: 0
           name: 
@@ -21104,7 +21104,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 592
-        y: 272
+        y: 352
         width: 176
         height: 32
       isBreakpoint: 0
@@ -21598,7 +21598,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 592
-        y: 336
+        y: 416
         width: 100
         height: 32
       isBreakpoint: 0
@@ -21642,7 +21642,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 2
+          value: 8
         fsmIntParams: []
         fsmBoolParams: []
         fsmVector2Params: []
@@ -23842,6 +23842,78 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
+    - name: WaitForVideoLoadTime
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 592
+        y: 224
+        width: 185.33333
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: ShowTV_1
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.Wait
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 48c01101
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0.6
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - 
+        byteData: 00
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 0f0000001700000001000000
+        paramName:
+        - time
+        - finishEvent
+        - realTime
+        paramDataPos: 000000000000000000000000
+        paramByteDataSize: 000000000000000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -25707,7 +25779,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 0101
-        actionIsOpen: 0101
+        actionIsOpen: 0100
         actionStartIndex: 0000000004000000
         actionHashCodes: 09fbab04c4b05004
         unityObjectParams: []
@@ -32245,6 +32317,11 @@ PrefabInstance:
       propertyPath: fsm.states.Array.data[1].actionData.actionIsOpen.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2594121088255405503, guid: d0b6949c736dd0f4aa8e3b0f4c94ca4f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b58e7f3033c967543a5f91712eb252da, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0b6949c736dd0f4aa8e3b0f4c94ca4f, type: 3}
 --- !u!1001 &5650456874106551349
