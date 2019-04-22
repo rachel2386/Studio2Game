@@ -136,8 +136,18 @@ public class SwitchScenes : MonoBehaviour
     public IEnumerator SceneSwitch(int seconds)
     {
             yield return new WaitForSeconds(seconds);
-            HomeSceneManager.IntoIndex = 1;
-            SceneManager.LoadScene("HomeScene"); 
+
+            if (gameState == 0)
+            {
+                HomeSceneManager.IntoIndex = 1;
+                            SceneManager.LoadScene("HomeScene"); 
+            }
+            else if (gameState == 1)
+            {
+                SceneManager.LoadScene("Gym");
+            }
+
+            
             yield return null;
 
     }
