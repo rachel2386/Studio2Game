@@ -90,10 +90,12 @@ public class ShyInteractionSystem : MonoBehaviour
             if (!po || !po.canThrow)
                 return;
 
+            po.throwEvent.Invoke();
+
             var body = curHeldObject.GetComponent<Rigidbody>();
 
             curHeldObject.transform.SetParent(null);
-            curHeldObject.transform.eulerAngles = po.OriRotation;
+            // curHeldObject.transform.eulerAngles = po.OriRotation;
             curHeldObject.transform.localScale = po.OriLocalScale;
 
             if (body)

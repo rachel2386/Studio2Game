@@ -142,4 +142,9 @@ public class ShyUI : MonoBehaviour
     {
         
     }
+
+    public void ShowCenerDot(bool show)
+    {
+        centerDot.SetActive(show);
+    }
 }
