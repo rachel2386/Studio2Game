@@ -24,7 +24,7 @@ namespace HutongGames
         private const int maxCurvePoints = 200;
         private static readonly Vector3[] pointBuffer = new Vector3[maxCurvePoints];
 
-        /* WIP edit time scrub bar and play button
+        /* WIP edit totalTimeInSeconds scrub bar and play button
          Maybe move to own class so can re-use (e.g. ActionHelpers)
         private static readonly GUIContent scrubLabel = new GUIContent("Preview", "Preview tween in the Scene View.");
 
@@ -65,11 +65,11 @@ namespace HutongGames
 	    /// </summary>
 	    /// <param name="ease">The  Ease function to preview</param>
 	    /// <param name="playPreview">Did the user hit Play in the scrubbing slider</param>
-	    /// <param name="currentTime">Used to draw the current time on the preview</param>
-	    /// <param name="currentTimeColor">Color used to draw current time</param>
+	    /// <param name="currentTime">Used to draw the current totalTimeInSeconds on the preview</param>
+	    /// <param name="currentTimeColor">Color used to draw current totalTimeInSeconds</param>
 	    public static void DrawPreviewCurve(EasingFunction.Ease ease, ref bool playPreview, ref float currentTime, Color currentTimeColor)
 	    {
-            /* WIP edit time preview
+            /* WIP edit totalTimeInSeconds preview
 	        if (!EditorApplication.isPlaying)
 	        {
                 GUILayout.BeginHorizontal();
@@ -152,7 +152,7 @@ namespace HutongGames
 
 	        Handles.DrawAAPolyLine(2, pointIndex+1, pointBuffer);
 
-            // draw current time
+            // draw current totalTimeInSeconds
                     
 	        if (Application.isPlaying && currentTime > 0)
 	        {

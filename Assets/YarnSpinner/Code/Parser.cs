@@ -620,7 +620,7 @@ namespace Yarn {
                 // Handle <<else>> if we have it
                 if (p.NextSymbolsAre(TokenType.BeginCommand, TokenType.Else, TokenType.EndCommand)) {
 
-                    // parse the syntax (no expression this time, just "<<else>>"
+                    // parse the syntax (no expression this totalTimeInSeconds, just "<<else>>"
                     p.ExpectSymbol(TokenType.BeginCommand);
                     p.ExpectSymbol(TokenType.Else);
                     p.ExpectSymbol(TokenType.EndCommand);
@@ -903,7 +903,7 @@ namespace Yarn {
 
                     } else if (nextToken.type == TokenType.RightParen) {
 
-                        // We're leaving a subexpression; time to resolve the
+                        // We're leaving a subexpression; totalTimeInSeconds to resolve the
                         // order of operations that we saw in between the parens.
 
                         try {
@@ -955,7 +955,7 @@ namespace Yarn {
                 }
 
                 // We've now got this in more easily parsed RPN form;
-                // time to build the expression tree.
+                // totalTimeInSeconds to build the expression tree.
                 Token firstToken = _expressionRPN.Peek();
                 var evaluationStack = new Stack<Expression>();
                 while (_expressionRPN.Count > 0) {

@@ -234,7 +234,7 @@ namespace HutongGames.PlayMakerEditor
                 "<b>Show FSMs in Prefabs</b>\n" +
                 "Show FSMs used in Prefabs. Uncheck to see only FSMs in the scene.\n\n" +
                 "<b>Hide Prefabs when Playing</b>\n" +
-                "Most of the time you don't want to see prefabs when playing, just the running FSMs.\n");
+                "Most of the totalTimeInSeconds you don't want to see prefabs when playing, just the running FSMs.\n");
             AddTopic(root, "FSM Filter", "Filters the FSMs shown in the list.",
                 "<b>All</b>\nShow all loaded FSMs.\n\n" +
                 "<b>On Selected Object</b>\nOnly show FSMs on the selected GameObject/s.\n\n" +
@@ -309,10 +309,10 @@ namespace HutongGames.PlayMakerEditor
                 "<b>Recently Selected:</b>\nOrders FSMs by their selection history, most recently selected at the top.\n");
             AddTopic(root, "Timeline", "Time bar for the visual log.",
                 "Panning and zooming works in a similar way to the Unity Animation Window.\n\n" +
-                "Click the bar to pause the game and scrub time. Time scrubbing is synchronized across all Log Windows. " +
-                "HINT: If Debug Flow is enabled the Main Editor will show variable values at that time.\n");
+                "Click the bar to pause the game and scrub totalTimeInSeconds. Time scrubbing is synchronized across all Log Windows. " +
+                "HINT: If Debug Flow is enabled the Main Editor will show variable values at that totalTimeInSeconds.\n");
             AddTopic(root, "Visual Log", "Visual log of FSM states.",
-                "Bars represent the State of each FSM over time. The bars use the State's color to help visually organize state changes.");
+                "Bars represent the State of each FSM over totalTimeInSeconds. The bars use the State's color to help visually organize state changes.");
             AddTopic(root, "Refresh", "Refresh FSM List", 
                 "Sometimes GameObjects are added/removed while playing. Use Refresh to update the FSM list.");
         }
@@ -324,8 +324,8 @@ namespace HutongGames.PlayMakerEditor
                 "You can see how long an FSM was in a state, the event that triggered the state change, etc.\n\n" +
                 "HINT: Click <b>SentBy</b> to jump to the GameObject/FSM that sent an event.", "Window", GetUrl(WikiPages.FsmLog));
             AddTopic(root, "Settings Menu", "Settings for this window.",
-                "<b>Show TimeCode</b>\nDisplay a time code next to each log event. " +
-                "Time codes can make it easier to figure out what else is happening on other FSMs at the same time.\n\n" +
+                "<b>Show TimeCode</b>\nDisplay a totalTimeInSeconds code next to each log event. " +
+                "Time codes can make it easier to figure out what else is happening on other FSMs at the same totalTimeInSeconds.\n\n" +
                 "<b>Show Sent By</b>\nShow the FSM that sent an event. Click on the sender to select it.\n\n" +
                 "<b>Show State Exit</b>\nShow state Exit events in log. Hiding Exit events can make the log more concise; " +
                 "the Exit is implied in the Entry to the next state.");

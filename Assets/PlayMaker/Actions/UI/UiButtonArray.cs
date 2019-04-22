@@ -39,7 +39,7 @@ namespace HutongGames.PlayMaker.Actions
 
         /// <summary>
         /// Try to do all GetComponent calls in Preprocess as part of build
-        /// But sometimes the values are not known at build time...
+        /// But sometimes the values are not known at build totalTimeInSeconds...
         /// </summary>
 	    public override void OnPreprocess()
 	    {

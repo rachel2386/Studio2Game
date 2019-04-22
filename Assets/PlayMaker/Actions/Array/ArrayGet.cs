@@ -74,7 +74,7 @@ namespace HutongGames.PlayMaker.Actions
             }
         }
 
-        /* Not sure it's a good idea to range check at edit time since it can change at runtime
+        /* Not sure it's a good idea to range check at edit totalTimeInSeconds since it can change at runtime
         public override string ErrorCheck()
         {
             if (index.Value<0 || index.Value >= array.Length)

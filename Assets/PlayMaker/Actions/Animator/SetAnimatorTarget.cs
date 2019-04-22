@@ -19,7 +19,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The current state Time that is queried")]
 		public FsmFloat targetNormalizedTime;
 
-		[Tooltip("Repeat every frame during OnAnimatorMove. Useful when changing over time.")]
+		[Tooltip("Repeat every frame during OnAnimatorMove. Useful when changing over totalTimeInSeconds.")]
 		public bool everyFrame;
 
 		private Animator _animator;

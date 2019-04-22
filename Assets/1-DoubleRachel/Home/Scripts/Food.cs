@@ -55,7 +55,7 @@ public class Food : MonoBehaviour
            transform.position.z - pan.panCenter.transform.position.z);
         dir.Normalize();
 
-        // jump time
+        // jump totalTimeInSeconds
         var t = 0.5f;
         var speedY = 0.98f * t / 2.0f;
 

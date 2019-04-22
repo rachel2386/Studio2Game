@@ -16,7 +16,7 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmVector2 target;
 		
 		[HasFloatSlider(0, 20)]
-		[Tooltip("The maximum movement speed. HINT: You can make this a variable to change it over time.")]
+		[Tooltip("The maximum movement speed. HINT: You can make this a variable to change it over totalTimeInSeconds.")]
 		public FsmFloat maxSpeed;
 		
 		[HasFloatSlider(0, 5)]

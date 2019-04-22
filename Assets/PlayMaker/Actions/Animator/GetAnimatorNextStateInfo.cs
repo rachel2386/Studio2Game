@@ -55,11 +55,11 @@ namespace HutongGames.PlayMaker.Actions
         public FsmFloat length;
 
         [UIHint(UIHint.Variable)]
-        [Tooltip("The integer part is the number of time a state has been looped. The fractional part is the % (0-1) of progress in the current loop")]
+        [Tooltip("The integer part is the number of totalTimeInSeconds a state has been looped. The fractional part is the % (0-1) of progress in the current loop")]
         public FsmFloat normalizedTime;
 
         [UIHint(UIHint.Variable)]
-        [Tooltip("The integer part is the number of time a state has been looped. This is extracted from the normalizedTime")]
+        [Tooltip("The integer part is the number of totalTimeInSeconds a state has been looped. This is extracted from the normalizedTime")]
         public FsmInt loopCount;
 
         [UIHint(UIHint.Variable)]

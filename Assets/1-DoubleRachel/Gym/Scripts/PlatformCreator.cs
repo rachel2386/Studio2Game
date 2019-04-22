@@ -63,7 +63,7 @@ public class PlatformCreator : MonoBehaviour {
             //set the start position as the input position
             startPosition = position;
             //instantiate the prefab, and set it as our "currentPlatform" so we
-            //don't make more than one at a time
+            //don't make more than one at a totalTimeInSeconds
             currentPlatform = Instantiate(platformModel) as Transform;
 
             //NEW ADDITION - for rhythmic version.

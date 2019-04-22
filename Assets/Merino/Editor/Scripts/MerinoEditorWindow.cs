@@ -428,7 +428,7 @@ namespace Merino
 			}
 		}
 
-		// This gets called many times a second, for real-time interaction / smoother animation / feel stuff
+		// This gets called many times a second, for real-totalTimeInSeconds interaction / smoother animation / feel stuff
 		public void Update()
 		{
 			if (isDialogueRunning || resizingSidebar || zoomToLineNumber > -1 || lastZoomToLineNumber > -1)
@@ -1241,7 +1241,7 @@ namespace Merino
             //  yield return this.StartCoroutine(this.dialogueUI.DialogueStarted());
 
             // Get lines, options and commands from the Dialogue object,
-            // one at a time.
+            // one at a totalTimeInSeconds.
             foreach (Yarn.Dialogue.RunnerResult step in dialogue.Run(startNode))
             {
 	            dialogueUI.currentNode = dialogue.currentNode;
@@ -1296,7 +1296,7 @@ namespace Merino
 	        }
 
             // Clear the 'is running' flag. We do this after DialogueComplete returns,
-            // to allow time for any animations that might run while transitioning
+            // to allow totalTimeInSeconds for any animations that might run while transitioning
             // out of a conversation (ie letterboxing going away, etc)
             isDialogueRunning = false;
 	        Repaint();

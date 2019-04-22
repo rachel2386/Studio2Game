@@ -14,7 +14,7 @@ namespace UnityEngine.PostProcessing
             [Range(4, 32), Tooltip("The amount of sample points, which affects quality and performances.")]
             public int sampleCount;
 
-            [Range(0f, 1f), Tooltip("The strength of multiple frame blending. The opacity of preceding frames are determined from this coefficient and time differences.")]
+            [Range(0f, 1f), Tooltip("The strength of multiple frame blending. The opacity of preceding frames are determined from this coefficient and totalTimeInSeconds differences.")]
             public float frameBlending;
 
             public static Settings defaultSettings

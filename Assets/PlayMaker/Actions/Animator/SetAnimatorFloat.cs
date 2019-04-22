@@ -21,7 +21,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The float value to assign to the animator parameter")]
 		public FsmFloat Value;
 		
-		[Tooltip("Optional: The time allowed to parameter to reach the value. Requires everyFrame Checked on")]
+		[Tooltip("Optional: The totalTimeInSeconds allowed to parameter to reach the value. Requires everyFrame Checked on")]
 		public FsmFloat dampTime;
 
 		private Animator _animator;

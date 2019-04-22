@@ -13,10 +13,10 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The Target. An Animator component is required")]
 		public FsmOwnerDefault gameObject;
 		
-		[Tooltip("The playBack time")]
+		[Tooltip("The playBack totalTimeInSeconds")]
 		public FsmFloat playbackTime;
 		
-		[Tooltip("Repeat every frame. Useful for changing over time.")]
+		[Tooltip("Repeat every frame. Useful for changing over totalTimeInSeconds.")]
 		public bool everyFrame;
 		
 		private Animator _animator;

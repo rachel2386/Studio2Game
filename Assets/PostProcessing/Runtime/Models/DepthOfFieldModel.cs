@@ -28,7 +28,7 @@ namespace UnityEngine.PostProcessing
             [Tooltip("Calculate the focal length automatically from the field-of-view value set on the camera. Using this setting isn't recommended.")]
             public bool useCameraFov;
 
-            [Tooltip("Convolution kernel size of the bokeh filter, which determines the maximum radius of bokeh. It also affects the performance (the larger the kernel is, the longer the GPU time is required).")]
+            [Tooltip("Convolution kernel size of the bokeh filter, which determines the maximum radius of bokeh. It also affects the performance (the larger the kernel is, the longer the GPU totalTimeInSeconds is required).")]
             public KernelSize kernelSize;
 
             public static Settings defaultSettings

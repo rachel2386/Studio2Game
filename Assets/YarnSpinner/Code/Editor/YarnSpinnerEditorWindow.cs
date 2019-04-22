@@ -124,7 +124,7 @@ namespace Yarn.Unity {
             // Start checking all files.
 
             // First, record when we started - we need
-            // to know if it's time to show a progress
+            // to know if it's totalTimeInSeconds to show a progress
             // dialogue
             var startTime = EditorApplication.timeSinceStartup;
 
@@ -165,7 +165,7 @@ namespace Yarn.Unity {
             // Start compiling all scripts.
 
             // First, record when we started - we need
-            // to know if it's time to show a progress
+            // to know if it's totalTimeInSeconds to show a progress
             // dialogue
             var startTime = EditorApplication.timeSinceStartup;
 

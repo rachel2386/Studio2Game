@@ -16,7 +16,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The text value of the UI Text component.")]
 		public FsmString text;
 
-		[Tooltip("Runs every frame. Useful to animate values over time.")]
+		[Tooltip("Runs every frame. Useful to animate values over totalTimeInSeconds.")]
 		public bool everyFrame;
 		
 		private UnityEngine.UI.Text uiText;

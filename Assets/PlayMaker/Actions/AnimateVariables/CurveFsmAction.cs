@@ -8,13 +8,13 @@ namespace HutongGames.PlayMaker.Actions
 	[Tooltip("Animate base action - DON'T USE IT!")]
 	public abstract class CurveFsmAction : FsmStateAction
 	{
-		[Tooltip("Define animation time, scaling the curve to fit.")]
+		[Tooltip("Define animation totalTimeInSeconds, scaling the curve to fit.")]
 		public FsmFloat time;
 		[Tooltip("If you define speed, your animation will speed up or slow down.")]
 		public FsmFloat speed;
 		[Tooltip("Delayed animation start.")]
 		public FsmFloat delay;
-		[Tooltip("Animation curve start from any time. If IgnoreCurveOffset is true the animation starts right after the state become entered.")]
+		[Tooltip("Animation curve start from any totalTimeInSeconds. If IgnoreCurveOffset is true the animation starts right after the state become entered.")]
 		public FsmBool ignoreCurveOffset;
 		[Tooltip("Optionally send an Event when the animation finishes.")]
 		public FsmEvent finishEvent;
@@ -120,7 +120,7 @@ namespace HutongGames.PlayMaker.Actions
 
 		public override void OnUpdate()
 		{
-			// update time
+			// update totalTimeInSeconds
 			if(!isRunning && start){	
 				if(delayTime >= 0) {
 					if(realTime){

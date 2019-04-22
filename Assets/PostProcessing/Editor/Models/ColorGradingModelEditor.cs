@@ -645,7 +645,7 @@ namespace UnityEditor.PostProcessing
 - [Ctrl] to break a tangent handle
 - [Shift] to align tangent handles
 - [Double click] to create a key on the curve(s) at mouse position
-- [Alt] + [Double click] to create a key on the curve(s) at a given time",
+- [Alt] + [Double click] to create a key on the curve(s) at a given totalTimeInSeconds",
                 MessageType.Info);
             */
 
