@@ -7,7 +7,7 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Sin Time", "Time", "Unity sin time" )]
+	[NodeAttributes( "Sin Time", "Time", "Unity sin totalTimeInSeconds" )]
 	public sealed class SinTimeNode : ConstVecShaderVariable
 	{
 		//double m_time;

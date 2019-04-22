@@ -39,7 +39,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("0.0 means the character is completely unrestrained in motion, 1.0 means he's completely clamped (look at becomes impossible), and 0.5 means he'll be able to move on half of the possible range (180 degrees).")]
 		public FsmFloat clampWeight;
 		
-		[Tooltip("Repeat every frame during OnAnimatorIK(). Useful for changing over time.")]
+		[Tooltip("Repeat every frame during OnAnimatorIK(). Useful for changing over totalTimeInSeconds.")]
 		public bool everyFrame;
 
 		private Animator _animator;

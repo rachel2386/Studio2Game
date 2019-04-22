@@ -118,7 +118,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
 
         if (textSpeed > 0.0f)
         {
-            // Display the line one character at a time
+            // Display the line one character at a totalTimeInSeconds
             var stringBuilder = new StringBuilder();
 
             foreach (char c in line.text)

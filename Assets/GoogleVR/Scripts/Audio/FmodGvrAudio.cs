@@ -77,7 +77,7 @@ public static class FmodGvrAudio {
   /// Minimum allowed reverb brightness modifier value.
   public const float minReverbBrightness = -1.0f;
 
-  /// Maximum allowed reverb time modifier value.
+  /// Maximum allowed reverb totalTimeInSeconds modifier value.
   public const float maxReverbTime = 3.0f;
 
   /// Maximum allowed reflectivity multiplier of a room surface material.
@@ -116,7 +116,7 @@ public static class FmodGvrAudio {
     // User defined reverb tail gain multiplier. This parameter has no effect when set to 0.0f.
     public float reverbGain;
 
-    // Parameter which allows the reverberation time across all frequency bands to be increased or
+    // Parameter which allows the reverberation totalTimeInSeconds across all frequency bands to be increased or
     // decreased. This parameter has no effect when set to 1.0f.
     public float reverbTime;
 

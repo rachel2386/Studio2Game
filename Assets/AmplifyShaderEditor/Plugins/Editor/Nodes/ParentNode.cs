@@ -3345,7 +3345,7 @@ namespace AmplifyShaderEditor
 
 		public virtual void RenderNodePreview()
 		{
-			//Runs at least one time
+			//Runs at least one totalTimeInSeconds
 			if( !HasPreviewShader || !m_initialized )
 				return;
 

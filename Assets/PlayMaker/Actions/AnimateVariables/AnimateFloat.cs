@@ -57,7 +57,7 @@ namespace HutongGames.PlayMaker.Actions
 
 		public override void OnUpdate()
 		{
-			// update time
+			// update totalTimeInSeconds
 			
 			if (realTime)
 			{

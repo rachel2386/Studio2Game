@@ -80,7 +80,7 @@ namespace HutongGames.PlayMakerEditor
             //Debug.Log("ShowWelcomeScreen: " + PlayMakerEditorPrefs.ShowWelcomeScreen);
             //Debug.Log("WelcomeScreenVersion: " + PlayMakerEditorPrefs.WelcomeScreenVersion);
 
-            const float startupTime = 30f; // time window to filter startup events from re-compiles. TODO: Is there a better way?
+            const float startupTime = 30f; // totalTimeInSeconds window to filter startup events from re-compiles. TODO: Is there a better way?
             var showAtStartup = EditorStartupPrefs.ShowWelcomeScreen && EditorApplication.timeSinceStartup < startupTime;
             var newVersionImported = EditorStartupPrefs.WelcomeScreenVersion != PlayMakerWelcomeWindow.Version;
 

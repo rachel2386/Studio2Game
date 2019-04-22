@@ -81,13 +81,13 @@ namespace DG.Tweening
             int len = colors.Length;
             for (int i = 0; i < len; ++i) {
                 GradientColorKey c = colors[i];
-                if (i == 0 && c.time <= 0) {
+                if (i == 0 && c.totalTimeInSeconds <= 0) {
                     target.color = c.color;
                     continue;
                 }
                 float colorDuration = i == len - 1
                     ? duration - s.Duration(false) // Verifies that total duration is correct
-                    : duration * (i == 0 ? c.time : c.time - colors[i - 1].time);
+                    : duration * (i == 0 ? c.totalTimeInSeconds : c.totalTimeInSeconds - colors[i - 1].totalTimeInSeconds);
                 s.Append(target.DOColor(c.color, colorDuration).SetEase(Ease.Linear));
             }
             return s;
@@ -193,13 +193,13 @@ namespace DG.Tweening
             int len = colors.Length;
             for (int i = 0; i < len; ++i) {
                 GradientColorKey c = colors[i];
-                if (i == 0 && c.time <= 0) {
+                if (i == 0 && c.totalTimeInSeconds <= 0) {
                     target.color = c.color;
                     continue;
                 }
                 float colorDuration = i == len - 1
                     ? duration - s.Duration(false) // Verifies that total duration is correct
-                    : duration * (i == 0 ? c.time : c.time - colors[i - 1].time);
+                    : duration * (i == 0 ? c.totalTimeInSeconds : c.totalTimeInSeconds - colors[i - 1].totalTimeInSeconds);
                 s.Append(target.DOColor(c.color, colorDuration).SetEase(Ease.Linear));
             }
             return s;

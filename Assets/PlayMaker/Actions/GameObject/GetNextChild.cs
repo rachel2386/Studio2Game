@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.GameObject)]
-	[Tooltip("Each time this action is called it gets the next child of a GameObject. This lets you quickly loop through all the children of an object to perform actions on them. NOTE: To find a specific child use Find Child.")]
+	[Tooltip("Each totalTimeInSeconds this action is called it gets the next child of a GameObject. This lets you quickly loop through all the children of an object to perform actions on them. NOTE: To find a specific child use Find Child.")]
 	public class GetNextChild : FsmStateAction
 	{
 		[RequiredField]
@@ -86,7 +86,7 @@ namespace HutongGames.PlayMaker.Actions
 
 
 			// no more children?
-			// check a second time to avoid process lock and possible infinite loop if the action is called again.
+			// check a second totalTimeInSeconds to avoid process lock and possible infinite loop if the action is called again.
 			// Practically, this enabled calling again this state and it will start again iterating from the first child.
 
 			if (nextChildIndex >= go.transform.childCount)

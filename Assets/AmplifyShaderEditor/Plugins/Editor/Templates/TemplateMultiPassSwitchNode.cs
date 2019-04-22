@@ -22,7 +22,7 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Template Multi-Pass Switch", "Logical Operators", "Relays, in compile time, the correct input port according to current analyzed sub-shader/pass." )]
+	[NodeAttributes( "Template Multi-Pass Switch", "Logical Operators", "Relays, in compile totalTimeInSeconds, the correct input port according to current analyzed sub-shader/pass." )]
 	public sealed class TemplateMultiPassSwitchNode : TemplateNodeParent
 	{
 		private const string InputLabelStr = "SubShader {0} Pass {1}";

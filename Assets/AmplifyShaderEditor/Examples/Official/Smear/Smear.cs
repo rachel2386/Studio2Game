@@ -24,7 +24,7 @@ public class Smear : MonoBehaviour
 		// Instantiate the material so every object has a unique smear effect
 		InstancedMaterial = Renderer.material;
 
-		// Use this instead if you want to affect all objects at the same time or if you want to run in the editor
+		// Use this instead if you want to affect all objects at the same totalTimeInSeconds or if you want to run in the editor
 		//InstancedMaterial = Renderer.sharedMaterial;
 	}
 

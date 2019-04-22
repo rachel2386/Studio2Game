@@ -102,7 +102,7 @@ public class YarnSpinnerTests {
 
         dialogueRunner.StartDialogue("Sally");
 
-        // Talking to Sally a second time should result in a different dialogue
+        // Talking to Sally a second totalTimeInSeconds should result in a different dialogue
 
 
 

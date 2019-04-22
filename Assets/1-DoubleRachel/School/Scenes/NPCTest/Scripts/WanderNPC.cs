@@ -56,15 +56,15 @@ public class WanderNPC : MonoBehaviour
 
     IEnumerator Wander()
     {
-        //the amount of rotating time
+        //the amount of rotating totalTimeInSeconds
         int rotTime = Random.Range(1, 3);
-        //the time in between each time it rotates
+        //the totalTimeInSeconds in between each totalTimeInSeconds it rotates
         int rotateWait = Random.Range(1, 4);
         //kind of like a bool
         int rotateLorR = Random.Range(1, 2);
-        //the time in between walking and waiting
+        //the totalTimeInSeconds in between walking and waiting
         int walkWait = Random.Range(1, 4);
-        //the amount of walking time
+        //the amount of walking totalTimeInSeconds
         int walkTime = Random.Range(1, 5);
 
         isWandering = true;

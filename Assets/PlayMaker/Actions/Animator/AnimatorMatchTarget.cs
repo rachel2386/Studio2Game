@@ -31,10 +31,10 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The MatchTargetWeightMask Rotation weight")]
 		public FsmFloat rotationWeight;
 		
-		[Tooltip("Start time within the animation clip (0 - beginning of clip, 1 - end of clip)")]
+		[Tooltip("Start totalTimeInSeconds within the animation clip (0 - beginning of clip, 1 - end of clip)")]
 		public FsmFloat startNormalizedTime;
 		
-		[Tooltip("End time within the animation clip (0 - beginning of clip, 1 - end of clip), values greater than 1 can be set to trigger a match after a certain number of loops. Ex: 2.3 means at 30% of 2nd loop")]
+		[Tooltip("End totalTimeInSeconds within the animation clip (0 - beginning of clip, 1 - end of clip), values greater than 1 can be set to trigger a match after a certain number of loops. Ex: 2.3 means at 30% of 2nd loop")]
 		public FsmFloat targetNormalizedTime;
 		
 		[Tooltip("Should always be true")]

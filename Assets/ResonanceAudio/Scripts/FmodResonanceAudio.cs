@@ -77,7 +77,7 @@ public static class FmodResonanceAudio {
   /// Minimum allowed reverb brightness modifier value.
   public const float minReverbBrightness = -1.0f;
 
-  /// Maximum allowed reverb time modifier value.
+  /// Maximum allowed reverb totalTimeInSeconds modifier value.
   public const float maxReverbTime = 3.0f;
 
   /// Maximum allowed reflectivity multiplier of a room surface material.
@@ -116,7 +116,7 @@ public static class FmodResonanceAudio {
     // User defined reverb tail gain multiplier. This parameter has no effect when set to 0.0f.
     public float reverbGain;
 
-    // Adjusts the reverberation time across all frequency bands. RT60 values are multiplied by this
+    // Adjusts the reverberation totalTimeInSeconds across all frequency bands. RT60 values are multiplied by this
     // factor. Has no effect when set to 1.0f.
     public float reverbTime;
 

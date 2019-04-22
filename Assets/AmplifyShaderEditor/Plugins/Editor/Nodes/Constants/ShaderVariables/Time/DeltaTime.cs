@@ -5,7 +5,7 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Delta Time", "Time", "Delta time" )]
+	[NodeAttributes( "Delta Time", "Time", "Delta totalTimeInSeconds" )]
 	public sealed class DeltaTime : ConstVecShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

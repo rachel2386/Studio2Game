@@ -5,7 +5,7 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Cos Time", "Time", "Cosine of time" )]
+	[NodeAttributes( "Cos Time", "Time", "Cosine of totalTimeInSeconds" )]
 	public sealed class CosTime : ConstVecShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

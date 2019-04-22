@@ -215,7 +215,7 @@ namespace Yarn.Unity
             yield return StartCoroutine(this.dialogueUI.DialogueStarted());
 
             // Get lines, options and commands from the Dialogue object,
-            // one at a time.
+            // one at a totalTimeInSeconds.
             foreach (Yarn.Dialogue.RunnerResult step in dialogue.Run(startNode)) {
 
                 if (step is Yarn.Dialogue.LineResult) {
@@ -259,7 +259,7 @@ namespace Yarn.Unity
             yield return StartCoroutine (this.dialogueUI.DialogueComplete ());
 
             // Clear the 'is running' flag. We do this after DialogueComplete returns,
-            // to allow time for any animations that might run while transitioning
+            // to allow totalTimeInSeconds for any animations that might run while transitioning
             // out of a conversation (ie letterboxing going away, etc)
             isDialogueRunning = false;
         }
