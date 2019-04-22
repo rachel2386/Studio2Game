@@ -27,7 +27,7 @@ namespace Merino
             optionStrings = new string[0];
             // display dialog
             if (textSpeed > 0.0f) {
-                // Display the line one character at a time
+                // Display the line one character at a totalTimeInSeconds
                 var stringBuilder = new StringBuilder ();
                 inputContinue = false;
                 foreach (char c in line.text) {

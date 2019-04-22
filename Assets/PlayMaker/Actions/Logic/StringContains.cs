@@ -22,7 +22,7 @@ namespace HutongGames.PlayMaker.Actions
 		[UIHint(UIHint.Variable)]
 		[Tooltip("Store the true/false result in a bool variable.")]
 		public FsmBool storeResult;
-		[Tooltip("Repeat every frame. Useful if any of the strings are changing over time.")]
+		[Tooltip("Repeat every frame. Useful if any of the strings are changing over totalTimeInSeconds.")]
 		public bool everyFrame;
 
 		public override void Reset()

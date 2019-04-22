@@ -248,7 +248,7 @@
             A representation of a Note.
             </summary>
         </member>
-        <member name="F:SonicBloom.MIDI.Objects.Note.startTime">
+        <member name="F:SonicBloom.MIDI.Objects.Note.time">
             <summary>
             The time in ticks.
             </summary>
@@ -261,7 +261,7 @@
             <returns>A human-readable <c>string</c> representation of
             <paramref name="key" />.</returns>
             <param name="key">The <c>int</c> value of the key to convert
-            to <c>string</c>.</param>
+            to <paramref name="string" />.</param>
         </member>
         <member name="T:SonicBloom.MIDI.Objects.Channel">
             <summary>

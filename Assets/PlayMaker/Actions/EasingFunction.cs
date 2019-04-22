@@ -417,10 +417,10 @@ namespace HutongGames
         }
 
         //
-        // These are derived functions that the motor can use to get the speed at a specific time.
+        // These are derived functions that the motor can use to get the speed at a specific totalTimeInSeconds.
         //
-        // The easing functions all work with a normalized time (0 to 1) and the returned value here
-        // reflects that. Values returned here should be divided by the actual time.
+        // The easing functions all work with a normalized totalTimeInSeconds (0 to 1) and the returned value here
+        // reflects that. Values returned here should be divided by the actual totalTimeInSeconds.
         //
         // TODO: These functions have not had the testing they deserve. If there is odd behavior around
         //       dash speeds then this would be the first place I'd look.
@@ -977,7 +977,7 @@ namespace HutongGames
 
         /// <summary>
         /// Gets the derivative function of the appropriate easing function. If you use an easing function for position then this
-        /// function can get you the speed at a given time (normalized).
+        /// function can get you the speed at a given totalTimeInSeconds (normalized).
         /// </summary>
         /// <param name="easingFunction"></param>
         /// <returns>The derivative function</returns>

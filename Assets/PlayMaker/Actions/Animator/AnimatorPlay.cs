@@ -19,7 +19,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The layer where the state is.")]
 		public FsmInt layer;
 
-		[Tooltip("The normalized time at which the state will play")]
+		[Tooltip("The normalized totalTimeInSeconds at which the state will play")]
 		public FsmFloat normalizedTime;
 
 		[Tooltip("Repeat every frame. Useful when using normalizedTime to manually control the animation.")]

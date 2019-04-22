@@ -20,7 +20,7 @@ namespace HutongGames.PlayMaker.Actions
         public FsmFloat toFloat;
 
         [RequiredField]
-        [Tooltip("Interpolate over this amount of time in seconds.")]
+        [Tooltip("Interpolate over this amount of totalTimeInSeconds in seconds.")]
 		public FsmFloat time;
 
 		[RequiredField]
@@ -65,7 +65,7 @@ namespace HutongGames.PlayMaker.Actions
 		
 		public override void OnUpdate()
 		{
-			// update time
+			// update totalTimeInSeconds
 			
 			if (realTime)
 			{

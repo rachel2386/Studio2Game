@@ -125,7 +125,7 @@ namespace Yarn {
 		internal VariableStorage continuity;
 		/// We'll ask this object for the state of variables
         public bool experimentalMode = false;
-        // currently this is just the ANTLR compiler but it could change over time
+        // currently this is just the ANTLR compiler but it could change over totalTimeInSeconds
         // used to determine if the dialogue should use the experimental features
 
         /// Represents something for the end user ("client") of the Dialogue class to do.
@@ -201,7 +201,7 @@ namespace Yarn {
         public Dictionary<String, int> visitedNodeCount = new Dictionary<string, int>();
 
         /// A function exposed to Yarn that returns the number of times a node has been run.
-        /** If no parameters are supplied, returns the number of time the current node
+        /** If no parameters are supplied, returns the number of totalTimeInSeconds the current node
          * has been run.
          */
         object YarnFunctionNodeVisitCount (Value[] parameters)
@@ -373,7 +373,7 @@ namespace Yarn {
         private VirtualMachine vm;
 
         // Executes a node.
-        /** Use this in a for-each construct; each time you iterate over it,
+        /** Use this in a for-each construct; each totalTimeInSeconds you iterate over it,
          * you'll get a line, command, or set of options.
          */
         public IEnumerable<Yarn.Dialogue.RunnerResult> Run(string startNode = DEFAULT_START) {

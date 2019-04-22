@@ -20,7 +20,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The right foot bottom height.")]
 		public FsmFloat rightFootHeight;
 
-		[Tooltip("Repeat every frame during LateUpdate. Useful when value is subject to change over time.")]
+		[Tooltip("Repeat every frame during LateUpdate. Useful when value is subject to change over totalTimeInSeconds.")]
 		public bool everyFrame;
 
 		private Animator _animator;

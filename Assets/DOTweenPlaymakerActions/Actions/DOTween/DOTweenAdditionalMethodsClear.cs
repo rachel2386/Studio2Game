@@ -15,7 +15,7 @@ namespace HutongGames.PlayMaker.Actions
     [HelpUrl("http://dotween.demigiant.com/documentation.php")]
     public class DOTweenAdditionalMethodsClear : FsmStateAction
     {
-        [Tooltip("If TRUE also destroys DOTween's gameObject and resets its initialization, default settings and everything else (so that next time you use it it will need to be re-initialized).")]
+        [Tooltip("If TRUE also destroys DOTween's gameObject and resets its initialization, default settings and everything else (so that next totalTimeInSeconds you use it it will need to be re-initialized).")]
         public FsmBool destroy;
 
         [ActionSection("Debug Options")] public FsmBool debugThis;

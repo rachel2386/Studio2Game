@@ -19,13 +19,13 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The name of the state that will be played.")]
 		public FsmString stateName;
 
-		[Tooltip("The duration of the transition. Value is in source state normalized time.")]
+		[Tooltip("The duration of the transition. Value is in source state normalized totalTimeInSeconds.")]
 		public FsmFloat transitionDuration;
 
 		[Tooltip("Layer index containing the destination state. Leave to none to ignore")]
 		public FsmInt layer;
 		
-		[Tooltip("Start time of the current destination state. Value is in source state normalized time, should be between 0 and 1.")]
+		[Tooltip("Start totalTimeInSeconds of the current destination state. Value is in source state normalized totalTimeInSeconds, should be between 0 and 1.")]
 		public FsmFloat normalizedTime;
 
 		private Animator _animator;

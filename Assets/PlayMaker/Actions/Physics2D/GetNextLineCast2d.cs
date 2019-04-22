@@ -138,7 +138,7 @@ namespace HutongGames.PlayMaker.Actions
 			storeNextHitDistance.Value = hits[nextColliderIndex].fraction;
 			
 			// no more colliders?
-			// check a second time to avoid process lock and possible infinite loop if the action is called again.
+			// check a second totalTimeInSeconds to avoid process lock and possible infinite loop if the action is called again.
 			// Practically, this enabled calling again this state and it will start again iterating from the first child.
 			
 			if (nextColliderIndex >= colliderCount)

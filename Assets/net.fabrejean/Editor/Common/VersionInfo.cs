@@ -1,6 +1,6 @@
 ﻿// Totally inspired by the great work of Patrick Hogan with InControl
 // https://github.com/pbhogan/InControl
-// Only that I don't rely on the number of time you play the project, but on the number of compilation, which I think reflects more true internal changes of the code
+// Only that I don't rely on the number of totalTimeInSeconds you play the project, but on the number of compilation, which I think reflects more true internal changes of the code
 
 
 using System;
