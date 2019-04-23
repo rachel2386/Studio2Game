@@ -28,24 +28,27 @@ public class SwitchScenes : MonoBehaviour
     void Start()
     {
         playMakerState = gameState;
-        if (gameState == 0) 
-        switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
-
         Timer = GameObject.Find("Timer");
         float secondsOnClock = Mathf.FloorToInt((int)3600 - totalTimeInSeconds);
-
-        MinutesOnClock = gameState == 0 ? Mathf.RoundToInt(secondsOnClock / 60) : 0;
-        
         timerText = Timer.GetComponent<Text>();
         timerText.color = Color.black;
-
         myAS = Timer.GetComponent<AudioSource>();
-//        for (int i = 0; i < 5; i++)
-//        {
-//            clockTicks[i] = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/1-DoubleRachel/School/Audio/SFX/clocktick1.mp3" , typeof(AudioClip));//+ (i + 1) + ".mp3");
-//            print(clockTicks[i].name);
-//        }
         
+       
+        if (gameState == 0)
+        {
+            GameObject.Find("Scene1").SetActive(true);
+            GameObject.Find("Scene2").SetActive(false); 
+            switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
+            MinutesOnClock = Mathf.RoundToInt(secondsOnClock / 60);
+        }
+        else if (gameState == 1)
+        {
+            GameObject.Find("Scene1").SetActive(false);
+            GameObject.Find("Scene2").SetActive(true);
+            MinutesOnClock = 0;
+        }
+ 
         
     }
 
@@ -140,16 +143,15 @@ public class SwitchScenes : MonoBehaviour
             if (gameState == 0)
             {
                 HomeSceneManager.IntoIndex = 1;
-                            SceneManager.LoadScene("HomeScene"); 
+                gameState = 1;
+                SceneManager.LoadScene("HomeScene"); 
             }
             else if (gameState == 1)
             {
                 SceneManager.LoadScene("Gym");
             }
-
             
             yield return null;
-
     }
 
     
