@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class SwitchScenes : MonoBehaviour
 {
-    public static int gameState = 1;
+    public static int gameState = 0;
     public bool doorOpened;
     private Transform switchSceneNPC;
     // Start is called before the first frame update
