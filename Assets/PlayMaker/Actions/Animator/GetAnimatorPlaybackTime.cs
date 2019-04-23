@@ -17,10 +17,10 @@ namespace HutongGames.PlayMaker.Actions
 
 		[RequiredField]
 		[UIHint(UIHint.Variable)]
-		[Tooltip("The playBack time of the animator.")]
+		[Tooltip("The playBack totalTimeInSeconds of the animator.")]
 		public FsmFloat playBackTime;
 		
-		[Tooltip("Repeat every frame. Useful when value is subject to change over time.")]
+		[Tooltip("Repeat every frame. Useful when value is subject to change over totalTimeInSeconds.")]
 		public bool everyFrame;
 		
 		private Animator _animator;

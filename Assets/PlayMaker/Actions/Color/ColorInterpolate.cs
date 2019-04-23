@@ -13,7 +13,7 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmColor[] colors;
 		
 		[RequiredField]
-		[Tooltip("Interpolation time.")]
+		[Tooltip("Interpolation totalTimeInSeconds.")]
 		public FsmFloat time;
 		
 		[RequiredField]
@@ -60,7 +60,7 @@ namespace HutongGames.PlayMaker.Actions
 		
 		public override void OnUpdate()
 		{
-			// update time
+			// update totalTimeInSeconds
 			
 			if (realTime)
 			{

@@ -7,22 +7,22 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
     [ActionCategory(ActionCategory.Time)]
-    [Tooltip("Delays a State from finishing by a random time. NOTE: Other actions continue, but FINISHED can't happen before Time.")]
+    [Tooltip("Delays a State from finishing by a random totalTimeInSeconds. NOTE: Other actions continue, but FINISHED can't happen before Time.")]
     public class RandomWait : FsmStateAction
     {
         
 	    [RequiredField]
-        [Tooltip("Minimum amount of time to wait.")]
+        [Tooltip("Minimum amount of totalTimeInSeconds to wait.")]
 		public FsmFloat min;
 
 		[RequiredField]
-        [Tooltip("Maximum amount of time to wait.")]
+        [Tooltip("Maximum amount of totalTimeInSeconds to wait.")]
 		public FsmFloat max;
 
         [Tooltip("Event to send when timer is finished.")]
         public FsmEvent finishEvent;
 
-        [Tooltip("Ignore time scale.")]
+        [Tooltip("Ignore totalTimeInSeconds scale.")]
         public bool realTime;
 		
 
@@ -55,7 +55,7 @@ namespace HutongGames.PlayMaker.Actions
 
         public override void OnUpdate()
         {
-            // update time
+            // update totalTimeInSeconds
 
             if (realTime)
             {

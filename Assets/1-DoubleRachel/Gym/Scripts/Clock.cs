@@ -594,9 +594,9 @@ namespace Beat
         }
 
         /// <summary>
-        /// Returns time of next specified value Usage: AudioSource.PlayScheduled(AtNext(Beat.TickValue.Quarter))
+        /// Returns totalTimeInSeconds of next specified value Usage: AudioSource.PlayScheduled(AtNext(Beat.TickValue.Quarter))
         /// </summary>
-        /// <param name="beatTickValue">TickValue for which to get time of next</param>
+        /// <param name="beatTickValue">TickValue for which to get totalTimeInSeconds of next</param>
         /// <returns>Time of next specified value</returns>
         public double AtNext(TickValue beatTickValue)
         {

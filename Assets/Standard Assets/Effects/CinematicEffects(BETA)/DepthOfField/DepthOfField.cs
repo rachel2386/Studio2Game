@@ -210,7 +210,7 @@ namespace UnityStandardAssets.CinematicEffects
             {
                 if (m_ComputeBufferDrawArgs == null)
                 {
-                    m_ComputeBufferDrawArgs = new ComputeBuffer(1, 16, ComputeBufferType.DrawIndirect);
+                    m_ComputeBufferDrawArgs = new ComputeBuffer(1, 16, ComputeBufferType.IndirectArguments);
                     var args = new int[4];
                     args[0] = 0;
                     args[1] = 1;

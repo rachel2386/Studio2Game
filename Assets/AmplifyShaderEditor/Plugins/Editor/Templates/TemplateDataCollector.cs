@@ -657,7 +657,7 @@ namespace AmplifyShaderEditor
 
 						if( m_interpolatorData.AvailableInterpolators[ i ].Usage == 1 )
 						{
-							// First time using this interpolator, so we need to register it
+							// First totalTimeInSeconds using this interpolator, so we need to register it
 							string interpolator = string.Format( TemplateHelperFunctions.TexFullSemantic,
 																	data.VarName, data.Semantics );
 							m_currentDataCollector.AddToInterpolators( interpolator );

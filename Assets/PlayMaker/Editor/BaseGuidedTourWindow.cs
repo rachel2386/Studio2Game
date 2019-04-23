@@ -42,7 +42,7 @@ namespace HutongGames.PlayMakerEditor
 
         public override void Initialize()
         {
-            // First time?
+            // First totalTimeInSeconds?
 
             if (position.height < 300)
             {

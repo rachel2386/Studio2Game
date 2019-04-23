@@ -192,7 +192,7 @@ namespace UnityStandardAssets.CinematicEffects
             if (concreteTarget.filmicCurve.enabled)
             {
                 var camera = concreteTarget.GetComponent<Camera>();
-                if (camera != null && !camera.hdr)
+                if (camera != null && !camera.allowHDR)
                     EditorGUILayout.HelpBox("The camera is not HDR enabled. This will likely break the Tonemapper.", MessageType.Warning);
                 else if (!concreteTarget.validRenderTextureFormat)
                     EditorGUILayout.HelpBox("The input to Tonemapper is not in HDR. Make sure that all effects prior to this are executed in HDR.", MessageType.Warning);

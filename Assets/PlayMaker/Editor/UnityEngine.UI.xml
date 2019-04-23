@@ -435,7 +435,7 @@
     </member>
     <member name="M:UnityEngine.EventSystems.EventTrigger.OnDrag(UnityEngine.EventSystems.PointerEventData)">
       <summary>
-        <para>Called by the EventSystem every time the pointer is moved during dragging.</para>
+        <para>Called by the EventSystem every totalTimeInSeconds the pointer is moved during dragging.</para>
       </summary>
       <param name="eventData">Current event data.</param>
     </member>
@@ -798,7 +798,7 @@
     </member>
     <member name="M:UnityEngine.EventSystems.IDragHandler.OnDrag(UnityEngine.EventSystems.PointerEventData)">
       <summary>
-        <para>When draging is occuring this will be called every time the cursor is moved.</para>
+        <para>When draging is occuring this will be called every totalTimeInSeconds the cursor is moved.</para>
       </summary>
       <param name="eventData">Current event data.</param>
     </member>
@@ -1049,7 +1049,7 @@
     </member>
     <member name="P:UnityEngine.EventSystems.PointerEventData.clickTime">
       <summary>
-        <para>The last time a click event was sent.</para>
+        <para>The last totalTimeInSeconds a click event was sent.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.EventSystems.PointerEventData.delta">
@@ -1943,10 +1943,10 @@ If the current screen resolution is larger then the reference resolution, the Ca
         <para>Settings used to specify a physical unit.</para>
       </summary>
     </member>
-    <member name="F:UnityEngine.UI.CanvasScaler.Unit.Centimeters">
+    <member name="F:UnityEngine.UI.CanvasScaler.Unit.CentotalTimeInSecondsters">
       <summary>
-        <para>Use centimeters.
-A centimeter is 1/100 of a meter.</para>
+        <para>Use centotalTimeInSecondsters.
+A centotalTimeInSecondster is 1/100 of a meter.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.UI.CanvasScaler.Unit.Inches">
@@ -1957,7 +1957,7 @@ A centimeter is 1/100 of a meter.</para>
     <member name="F:UnityEngine.UI.CanvasScaler.Unit.Millimeters">
       <summary>
         <para>Use millimeters.
-A millimeter is 110 of a centimeter, and 11000 of a meter.</para>
+A millimeter is 110 of a centotalTimeInSecondster, and 11000 of a meter.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.UI.CanvasScaler.Unit.Picas">
@@ -3679,7 +3679,7 @@ Used if the native representation has been destroyed.</para>
     </member>
     <member name="P:UnityEngine.UI.InputField.caretBlinkRate">
       <summary>
-        <para>The blinking rate of the input caret, defined as the number of times the blink cycle occurs per second.</para>
+        <para>The blinking rate of the input caret, defined as the number of totalTimeInSecondss the blink cycle occurs per second.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.UI.InputField.caretColor">
@@ -4026,7 +4026,7 @@ Characters 0-9, . (dot), and - (dash / minus sign) are allowed. The dash is only
     </member>
     <member name="T:UnityEngine.UI.InputField.OnChangeEvent">
       <summary>
-        <para>The callback sent anytime the Inputfield is updated.</para>
+        <para>The callback sent anytotalTimeInSeconds the Inputfield is updated.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.UI.InputField.OnDeselect(UnityEngine.EventSystems.BaseEventData)">

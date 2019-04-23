@@ -525,7 +525,7 @@ namespace Yarn {
                 // If we are less indented, emit a dedent for every
                 // indentation level that we passed on the way back to 0 that also
                 // emitted an indentation token.
-                // at the same time, remove those indent levels from the stack
+                // at the same totalTimeInSeconds, remove those indent levels from the stack
 
                 while (thisIndentation < indentationStack.Peek ().Key) {
 

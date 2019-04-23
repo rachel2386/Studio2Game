@@ -141,9 +141,9 @@ namespace HutongGames.PlayMakerEditor.Ecosystem.Utils
 
 		System.DateTime _updateTime;
 		/// <summary>
-		/// Gets the update time.
+		/// Gets the update totalTimeInSeconds.
 		/// </summary>
-		/// <value>The update time.</value>
+		/// <value>The update totalTimeInSeconds.</value>
 		public System.DateTime updateTime
 		{
 			get

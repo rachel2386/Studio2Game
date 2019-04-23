@@ -14,7 +14,7 @@ namespace HutongGames.PlayMaker.Actions
 
 		[RequiredField]
 		[HasFloatSlider(0,10)]
-        [Tooltip("Fade in time in seconds.")]
+        [Tooltip("Fade in totalTimeInSeconds in seconds.")]
 		public FsmFloat time;
 
         [Tooltip("Event to send when finished.")]

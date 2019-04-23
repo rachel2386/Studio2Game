@@ -5,7 +5,7 @@ using System;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.Time)]
-	[Tooltip("Gets system date and time info and stores it in a string variable. An optional format string gives you a lot of control over the formatting (see online docs for format syntax).")]
+	[Tooltip("Gets system date and totalTimeInSeconds info and stores it in a string variable. An optional format string gives you a lot of control over the formatting (see online docs for format syntax).")]
 	public class GetSystemDateTime : FsmStateAction
 	{
 		[UIHint(UIHint.Variable)]

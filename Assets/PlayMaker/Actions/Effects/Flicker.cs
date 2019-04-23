@@ -17,13 +17,13 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmFloat frequency;
 		
 		[HasFloatSlider(0, 1)]
-        [Tooltip("Amount of time flicker is On (0-1). E.g. Use 0.95 for an occasional flicker.")]
+        [Tooltip("Amount of totalTimeInSeconds flicker is On (0-1). E.g. Use 0.95 for an occasional flicker.")]
 		public FsmFloat amountOn;
 
         [Tooltip("Only effect the renderer, leaving other components active.")]
 		public bool rendererOnly;
 
-        [Tooltip("Ignore time scale. Useful if flickering UI when the game is paused.")]
+        [Tooltip("Ignore totalTimeInSeconds scale. Useful if flickering UI when the game is paused.")]
 		public bool realTime;
 		
 		private float startTime;
@@ -54,7 +54,7 @@ namespace HutongGames.PlayMaker.Actions
 				return;
 			}
 			
-			// update time
+			// update totalTimeInSeconds
 			
 			if (realTime)
 			{

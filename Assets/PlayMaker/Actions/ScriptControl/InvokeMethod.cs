@@ -30,7 +30,7 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmString methodName;
 		
 		[HasFloatSlider(0, 10)]
-        [Tooltip("Optional time delay in seconds.")]
+        [Tooltip("Optional totalTimeInSeconds delay in seconds.")]
 		public FsmFloat delay;
 
         [Tooltip("Call the method repeatedly.")]

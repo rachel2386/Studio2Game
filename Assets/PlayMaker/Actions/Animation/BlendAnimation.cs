@@ -83,7 +83,7 @@ namespace HutongGames.PlayMaker.Actions
 			var timeValue = time.Value;
 			animation.Blend(animName.Value, targetWeight.Value, timeValue);
 			
-			// TODO: doesn't work well with scaled time
+			// TODO: doesn't work well with scaled totalTimeInSeconds
 			if (finishEvent != null)
 			{
 				delayedFinishEvent = Fsm.DelayedEvent(finishEvent, anim.length);

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Function Switch", "Functions", "Function Switch allows switching options at compile time for shader function", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
+	[NodeAttributes( "Function Switch", "Functions", "Function Switch allows switching options at compile totalTimeInSeconds for shader function", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
 	public sealed class FunctionSwitch : ParentNode
 	{
 		private const string InputPortNameStr = "In ";

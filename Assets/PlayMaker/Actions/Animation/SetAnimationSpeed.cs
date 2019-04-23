@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.Animation)]
-	[Tooltip("Sets the Speed of an Animation. Check Every Frame to update the animation time continuously, e.g., if you're manipulating a variable that controls animation speed.")]
+	[Tooltip("Sets the Speed of an Animation. Check Every Frame to update the animation totalTimeInSeconds continuously, e.g., if you're manipulating a variable that controls animation speed.")]
 	public class SetAnimationSpeed : BaseAnimationAction
 	{
 		[RequiredField]

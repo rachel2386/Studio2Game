@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.Array)]
-	[Tooltip("Each time this action is called it gets the next item from a Array. \n" +
+	[Tooltip("Each totalTimeInSeconds this action is called it gets the next item from a Array. \n" +
 	         "This lets you quickly loop through all the items of an array to perform actions on them.")]
 	public class ArrayGetNext : FsmStateAction
 	{
@@ -95,7 +95,7 @@ namespace HutongGames.PlayMaker.Actions
 			result.SetValue(array.Get(nextItemIndex));
 			
 			// no more items?
-			// check a second time to avoid process lock and possible infinite loop if the action is called again.
+			// check a second totalTimeInSeconds to avoid process lock and possible infinite loop if the action is called again.
 			// Practically, this enabled calling again this state and it will start again iterating from the first child.
 			
             if (nextItemIndex >= array.Length)

@@ -38,7 +38,7 @@ namespace AmplifyShaderEditor
 		//public override void DrawProperties()
 		//{
 		//	base.DrawProperties();
-		//	EditorGUILayout.HelpBox("Rotates UVs but can also be used to rotate other Vector2 values\n\nAnchor is the rotation point in UV space from which you rotate the UVs\nTime is the amount of rotation applied [0,1], if left unconnected it will use time as the default value", MessageType.None);
+		//	EditorGUILayout.HelpBox("Rotates UVs but can also be used to rotate other Vector2 values\n\nAnchor is the rotation point in UV space from which you rotate the UVs\nTime is the amount of rotation applied [0,1], if left unconnected it will use totalTimeInSeconds as the default value", MessageType.None);
 		//}
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )

@@ -1892,7 +1892,7 @@ namespace AmplifyShaderEditor
 							}
 						}
 					}
-					//Reset focus from any textfield which may be selected at this time
+					//Reset focus from any textfield which may be selected at this totalTimeInSeconds
 					GUIUtility.keyboardControl = 0;
 				}
 			}

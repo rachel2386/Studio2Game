@@ -213,7 +213,7 @@ public class ShyCamera : MonoBehaviour
             SetPpeActivate(PpeSetting.GRAIN_INTENSITY, false);
     }
 
-    void SetPpeActivate(PpeSetting st, bool enable)
+    public void SetPpeActivate(PpeSetting st, bool enable)
     {
         ShyMiscTool.SetPpeActivate(runtimeProfile, st, enable);
     }

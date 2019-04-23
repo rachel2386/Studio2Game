@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ public class ShyPickableObject : ShyInteractableObject
     // but we don't want to pick up it
     public bool canPickUp = true;
     public bool pickParent = false;
+
+    [PropertyOrder(10)]
+    public ShyEvent throwEvent = new ShyEvent("On Throw");
 
     Vector3 oriRotation;
     public Vector3 OriRotation
@@ -32,6 +36,14 @@ public class ShyPickableObject : ShyInteractableObject
         {
             return oriLocalScale;
         }
+    }
+
+
+    protected override void SetShyEventParent()
+    {
+
+        base.SetShyEventParent();
+        throwEvent.component = this;
     }
 
 
@@ -71,7 +83,7 @@ public class ShyPickableObject : ShyInteractableObject
 
         var dealTarget = transform;
         var oriParent = transform.parent;
-        var parentOriLocalScale = transform.parent.localScale;
+
         if(pickParent)
         {
             dealTarget = transform.parent;
@@ -82,7 +94,7 @@ public class ShyPickableObject : ShyInteractableObject
         dealTarget.localEulerAngles = po.pickupRotaion;
 
         if (pickParent)
-            dealTarget.localScale = parentOriLocalScale;
+            dealTarget.localScale = transform.parent.localScale;
         else
             transform.localScale = po.pickupScale;
 

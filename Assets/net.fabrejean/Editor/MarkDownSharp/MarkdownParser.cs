@@ -452,7 +452,7 @@ namespace Net.FabreJean.UnityEditor.MarkdownSharp
             text = DoBlockQuotes(text);
 
             // We already ran HashHTMLBlocks() before, in Markdown(), but that
-            // was to escape raw HTML in the original Markdown source. This time,
+            // was to escape raw HTML in the original Markdown source. This totalTimeInSeconds,
             // we're escaping the markup we've just created, so that we don't wrap
             // <p> tags around block-level tags.
             text = HashHTMLBlocks(text);
@@ -1301,7 +1301,7 @@ namespace Net.FabreJean.UnityEditor.MarkdownSharp
 		private string ProcessListItems(string list, string marker, string listType)
         {
             // The listLevel global keeps track of when we're inside a list.
-            // Each time we enter a list, we increment it; when we leave a list,
+            // Each totalTimeInSeconds we enter a list, we increment it; when we leave a list,
             // we decrement. If it's zero, we're not in a list anymore.
 
             // We do this because when we're not inside a list, we want to treat

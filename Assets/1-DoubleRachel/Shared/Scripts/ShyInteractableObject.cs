@@ -28,6 +28,7 @@ public class ShyInteractableObject : MonoBehaviour
         NEED_EMPTY,
         NEED_HELD,
         NONE,
+        INVALID
     }
 
     public enum Tooltip
@@ -35,6 +36,7 @@ public class ShyInteractableObject : MonoBehaviour
         NEED_EMPTY_HAND,
         WRONG_THING,
         HAND_IS_EMPTY,
+        IS_INVALID
     }
 
     [PropertyOrder(-10)]
@@ -46,10 +48,12 @@ public class ShyInteractableObject : MonoBehaviour
     public string emptyHandTooltip;
     [PropertyOrder(-9)]
     public string wrongThingTooltip;
+    [PropertyOrder(-9)]
+    public string invalidTooltip;
 
-   
-   
-   
+
+
+
     [FoldoutGroup("Validation"), PropertyOrder(9), EnableIf("NeedValidateModeButton"), EnumToggleButtons]
     public ValidationMode validationMode = ValidationMode.NEED_EMPTY;
     [FoldoutGroup("Validation"), PropertyOrder(9), ShowIf("NeedValidateHeld")]
@@ -115,6 +119,10 @@ public class ShyInteractableObject : MonoBehaviour
             else if(!IsHeldObjectNeeded())
                 return GetTooltipString(Tooltip.WRONG_THING);
         }
+        else if(validationMode == ValidationMode.INVALID)
+        {
+            return GetTooltipString(Tooltip.IS_INVALID);
+        }
 
         return defaultTooltip;
     }
@@ -135,6 +143,10 @@ public class ShyInteractableObject : MonoBehaviour
         else if (tooltip == Tooltip.HAND_IS_EMPTY)
         {
             ret = emptyHandTooltip.Length == 0 ? "Need something" : emptyHandTooltip;
+        }
+        else if(tooltip == Tooltip.IS_INVALID)
+        {
+            ret = invalidTooltip.Length == 0 ? "?" : invalidTooltip;
         }
 
         return ret;
@@ -188,6 +200,10 @@ public class ShyInteractableObject : MonoBehaviour
         {
             ret = IsHeldObjectNeeded();
         }           
+        else if(validationMode == ValidationMode.INVALID)
+        {
+            return false;
+        }
 
         return ret;
     }
@@ -224,5 +240,7 @@ public class ShyInteractableObject : MonoBehaviour
 
         return ret;
     }
+    
+
     
 }

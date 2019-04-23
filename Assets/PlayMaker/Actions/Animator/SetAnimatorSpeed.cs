@@ -16,7 +16,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The playBack speed")]
 		public FsmFloat speed;
 		
-		[Tooltip("Repeat every frame. Useful for changing over time.")]
+		[Tooltip("Repeat every frame. Useful for changing over totalTimeInSeconds.")]
 		public bool everyFrame;
 		
 		private Animator _animator;
