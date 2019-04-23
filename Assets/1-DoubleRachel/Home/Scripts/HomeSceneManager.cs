@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class HomeSceneManager : MonoBehaviour
 {
-    public static int IntoIndex = 2;
+    public static int IntoIndex = 0;
 
     ShyFPSController fpsController;
     ShyCamera shyCam;
 
     public GameObject objectOnUI;
     public GameObject lookDownUI;
+    public GameObject arrowRoot;
 
     public Transform[] playerBornPosis;
 
@@ -39,6 +40,7 @@ public class HomeSceneManager : MonoBehaviour
 
         screwDriver.SetActive(IntoIndex == 1);
         remote.SetActive(IntoIndex == 2);
+        arrowRoot.SetActive(IntoIndex == 2);
 
         InitPosition(fpsController, playerBornPosis[IntoIndex].position);
         InitRotation(fpsController, playerBornPosis[IntoIndex]);
@@ -90,5 +92,10 @@ public class HomeSceneManager : MonoBehaviour
     {
         // fpsController.transform.position = playerBornPosis[1].position;
         // panRotation.PanRotationUpdateStateByLevel(IntoIndex);
+    }
+
+    public void SetSchoolSceneIndex(int value)
+    {
+        SwitchScenes.gameState = value;
     }
 }

@@ -228,8 +228,13 @@ public class ShyMouseLook
         if (!menuMode)
             return;
 
+
         if (!allowMicroMv)
+        {
+            ForceSetRotationFromCurrentGameObject();
             return;
+        }
+
 
         var mousePosi = Input.mousePosition;
         var cam = Camera.main;
@@ -238,8 +243,14 @@ public class ShyMouseLook
         var horAng = Mathf.Lerp(leftAng, rightAng, vp.x);
         var verAng = Mathf.Lerp(bottomAng, topAng, vp.y);
 
-        var charE = new Vector3(0, horAng, 0);
-        var camE = new Vector3(verAng, 0, 0);
+
+        var ori = new Vector3(Camera.main.transform.localEulerAngles.x, controller.transform.localEulerAngles.y, 0);
+        var desti = new Vector3(verAng, horAng, 0);
+
+        var lerped = Quaternion.Lerp(Quaternion.Euler(ori), Quaternion.Euler(desti) , Time.deltaTime * 5);
+
+        var charE = new Vector3(0, lerped.eulerAngles.y, 0);
+        var camE = new Vector3(lerped.eulerAngles.x, 0, 0);
 
         controller.transform.localEulerAngles = charE;
         Camera.main.transform.localEulerAngles = camE;

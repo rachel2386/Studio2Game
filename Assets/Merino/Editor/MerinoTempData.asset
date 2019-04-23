@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
   editedID: 2
-  timestamp: 31076.238643499997
+  timestamp: 80204.5426565
   m_TreeElements:
   - m_ID: 0
     m_Name: Root
@@ -32,6 +32,36 @@ MonoBehaviour:
     enabled: 1
     leafType: 1
   - m_ID: 2
+    m_Name: DoorNPC
+    m_Depth: 1
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: "Stranger: Oh god. Find you finally. I thought your were dead.\nStranger:
+      Do you know how many times I have knocked on the door?\n->...\n\t...\n->Sorry,
+      how many times?\n\tHow many times?\n\tStranger: Haha. You are so funny.\nStranger:
+      Anyway. I'm Palmy. May I know your name please?\n->I'm Rachel\n\tRachel\n\tStranger:
+      Nice to meet you, Rachel!\n->I'm Nobody\t\n\tI'm Nobody\n\tStranger: Nice to
+      meet you, Nobody bro~\n->(Why should I tell you?)\n\t...\n\tStranger: Haha.
+      You must be Rachel, right? I just saw it on the doorplate.\n\nStranger: Here's
+      the thing. You have been a loyal customer of us Spuctrem for 10 years, and recently
+      we came up with a new plan to reward those loyal customers like you. \nStranger:
+      You only need to pay 25$ to get a cutting-edge smart doorbell. You can turn
+      it on or off just by clicking on your mobile devices! A decent person like you
+      should not deserve to be bothered by doorbells while you need concentration!\n->...\n\t...\n->Sorry.
+      I don't need it\n\tSorry. I don't need it\nStrange: Not interested? Never mind,
+      we have also developed a new Smart Stove recently. You can check the frequency
+      of your cooking activities and even share it with your friends!!\n<<EnterChangeText
+      1 ...>>\n->...\n\t...\n->Get out\n\tSorry. I mean, I don't need it, sir.\nStrange:
+      Not interested? Never mind, we have also developed a new Smart Tofu recently.
+      You don't even need to cook it any more! Eating tofu has never been so easy.\n<<EnterChangeText
+      1 ...>>\n<<EnterChangeText 2 ...>>\n->...\n\t...\n->Get out\n\tSorry. I mean,
+      I really don't need it, sir.\n->Fxxx off\n\tSorry. I mean, I really don't need
+      it, sir.\n<<NEED_GOTO_END>>\nStrange: Not interested? Never mind, we have also...
+      we have also... we have also... we have also... we have also... we have also...
+      we have also... we have also... we have also... we have also... we have also..."
+    enabled: 1
+    leafType: 0
+  - m_ID: 3
     m_Name: HomeNpcStart
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -44,7 +74,7 @@ MonoBehaviour:
       features?"
     enabled: 1
     leafType: 0
-  - m_ID: 3
+  - m_ID: 4
     m_Name: Wechat
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -59,21 +89,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 02000000
     m_LastClickedID: 2
-    m_ExpandedIDs: 01000000
+    m_ExpandedIDs: 0000000001000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Wechat
+      m_OriginalName: Wechat
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 4
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 0}
     m_SearchString: 
