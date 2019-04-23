@@ -7605,7 +7605,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b7b0fda42cd2ab9428a5173a691e66b2, type: 2}
+  - {fileID: 2100000, guid: 650beaa6e51506a42a098e5c444bedac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12878,7 +12878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1117220356
 Transform:
   m_ObjectHideFlags: 0
@@ -26474,7 +26474,7 @@ PrefabInstance:
     - target: {fileID: 5527595984004041089, guid: 19a931114ead9a0439a459aeb8eb4b8a,
         type: 3}
       propertyPath: m_RunSpeed
-      value: 1.9
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5527595984004041089, guid: 19a931114ead9a0439a459aeb8eb4b8a,
         type: 3}
@@ -28575,15 +28575,19 @@ PrefabInstance:
     - target: {fileID: 442464355, guid: b007988f6d119194b826b4fae631523a, type: 3}
       propertyPath: fsm.states.Array.data[2].actionData.fsmGameObjectParams.Array.data[0].value
       value: 
-      objectReference: {fileID: 1209279146}
-    - target: {fileID: 442464355, guid: b007988f6d119194b826b4fae631523a, type: 3}
-      propertyPath: fsm.states.Array.data[2].actionData.fsmGameObjectParams.Array.data[1].value
-      value: 
       objectReference: {fileID: 1799773930}
     - target: {fileID: 1860085381, guid: b007988f6d119194b826b4fae631523a, type: 3}
       propertyPath: fsm.states.Array.data[2].actionData.fsmOwnerDefaultParams.Array.data[0].gameObject.value
       value: 
       objectReference: {fileID: 784222932}
+    - target: {fileID: 1860085381, guid: b007988f6d119194b826b4fae631523a, type: 3}
+      propertyPath: fsm.states.Array.data[1].actionData.actionIsOpen.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860085381, guid: b007988f6d119194b826b4fae631523a, type: 3}
+      propertyPath: fsm.states.Array.data[1].actionData.fsmObjectParams.Array.data[0].value
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fe2ab23e1cfc42898ec758ef48b3f8a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b007988f6d119194b826b4fae631523a, type: 3}
 --- !u!114 &2661634961685561346 stripped
