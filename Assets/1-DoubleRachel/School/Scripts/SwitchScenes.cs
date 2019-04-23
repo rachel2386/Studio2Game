@@ -25,6 +25,19 @@ public class SwitchScenes : MonoBehaviour
     private AudioSource myAS;
     private AudioClip[] clockTicks;
 
+
+    void Awake()
+    {
+        if (gameState == 0)
+        {
+            GameObject.Find("Scene2").SetActive(false);
+        }
+        else
+        {
+            GameObject.Find("Scene1").SetActive(false);  
+        }
+    }
+
     void Start()
     {
         playMakerState = gameState;
@@ -37,16 +50,12 @@ public class SwitchScenes : MonoBehaviour
        
         if (gameState == 0)
         {
-            GameObject.Find("Scene1").SetActive(true);
-            GameObject.Find("Scene2").SetActive(false); 
-            switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
+           switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
             MinutesOnClock = Mathf.RoundToInt(secondsOnClock / 60);
         }
         else if (gameState == 1)
         {
-            GameObject.Find("Scene1").SetActive(false);
-            GameObject.Find("Scene2").SetActive(true);
-            MinutesOnClock = 0;
+           MinutesOnClock = 0;
         }
  
         
