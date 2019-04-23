@@ -16,6 +16,10 @@ public class NPCSpawner : MonoBehaviour
     private float currentLerpTime = 0;
     private bool openGate = false;
 
+    public void SwitchScene()
+    {
+        HomeSceneManager.IntoIndex = 2;}
+
     void Start()
     {
         count = 0;
