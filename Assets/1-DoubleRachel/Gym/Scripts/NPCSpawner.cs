@@ -16,11 +16,15 @@ public class NPCSpawner : MonoBehaviour
     private float currentLerpTime = 0;
     private bool openGate = false;
 
+    public void SwitchScene()
+    {
+        HomeSceneManager.IntoIndex = 2;}
+
     void Start()
     {
         count = 0;
         startPos = gate.transform.position;
-        endPos = gate.transform.position + Vector3.forward * distance;
+        endPos = gate.transform.position + Vector3.forward * distance * 5;
     }
 
     void Spawn()

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class SwitchScenes : MonoBehaviour
 {
-    public static int gameState = 1;
+    public static int gameState = 0;
     public bool doorOpened;
     private Transform switchSceneNPC;
     // Start is called before the first frame update
@@ -25,27 +25,39 @@ public class SwitchScenes : MonoBehaviour
     private AudioSource myAS;
     private AudioClip[] clockTicks;
 
+
+    void Awake()
+    {
+        if (gameState == 0)
+        {
+            GameObject.Find("Scene2").SetActive(false);
+        }
+        else
+        {
+            GameObject.Find("Scene1").SetActive(false);  
+        }
+    }
+
     void Start()
     {
         playMakerState = gameState;
-        if (gameState == 0) 
-        switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
-
         Timer = GameObject.Find("Timer");
         float secondsOnClock = Mathf.FloorToInt((int)3600 - totalTimeInSeconds);
-
-        MinutesOnClock = gameState == 0 ? Mathf.RoundToInt(secondsOnClock / 60) : 0;
-        
         timerText = Timer.GetComponent<Text>();
         timerText.color = Color.black;
-
         myAS = Timer.GetComponent<AudioSource>();
-//        for (int i = 0; i < 5; i++)
-//        {
-//            clockTicks[i] = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/1-DoubleRachel/School/Audio/SFX/clocktick1.mp3" , typeof(AudioClip));//+ (i + 1) + ".mp3");
-//            print(clockTicks[i].name);
-//        }
         
+       
+        if (gameState == 0)
+        {
+           switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
+            MinutesOnClock = Mathf.RoundToInt(secondsOnClock / 60);
+        }
+        else if (gameState == 1)
+        {
+           MinutesOnClock = 0;
+        }
+ 
         
     }
 
@@ -136,10 +148,19 @@ public class SwitchScenes : MonoBehaviour
     public IEnumerator SceneSwitch(int seconds)
     {
             yield return new WaitForSeconds(seconds);
-            HomeSceneManager.IntoIndex = 1;
-            SceneManager.LoadScene("HomeScene"); 
-            yield return null;
 
+            if (gameState == 0)
+            {
+                HomeSceneManager.IntoIndex = 1;
+                gameState = 1;
+                SceneManager.LoadScene("HomeScene"); 
+            }
+            else if (gameState == 1)
+            {
+                SceneManager.LoadScene("Gym");
+            }
+            
+            yield return null;
     }
 
     
