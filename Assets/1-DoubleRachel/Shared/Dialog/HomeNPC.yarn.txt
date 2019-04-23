@@ -4,8 +4,47 @@ colorID: 0
 position: 0,0
 parent: 
 ---
-Stanger: Oh god. Find you finally. I thought your were dead.
-Stanger: Do you know how many times I have knocked on the door?
+Stranger: Oh god. Find you finally. I thought your were dead.
+Stranger: Do you know how many times I have knocked on the door?
+->...
+	...
+->Sorry, how many times?
+	How many times?
+	Stranger: Haha. You are so funny.
+Stranger: Anyway. I'm Palmy. May I know your name please?
+->I'm Rachel
+	Rachel
+	Stranger: Nice to meet you, Rachel!
+->I'm Nobody	
+	I'm Nobody
+	Stranger: Nice to meet you, Nobody bro~
+->(Why should I tell you?)
+	...
+	Stranger: Haha. You must be Rachel, right? I just saw it on the doorplate.
+
+Stranger: Here's the thing. You have been a loyal customer of us Spuctrem for 10 years, and recently we came up with a new plan to reward those loyal customers like you. 
+Stranger: You only need to pay 25$ to get a cutting-edge smart doorbell. You can turn it on or off just by clicking on your mobile devices! A decent person like you should not deserve to be bothered by doorbells while you need concentration!
+->...
+	...
+->Sorry. I don't need it
+	Sorry. I don't need it
+Strange: Not interested? Never mind, we have also developed a new Smart Stove recently. You can check the frequency of your cooking activities and even share it with your friends!!
+<<EnterChangeText 1 ...>>
+->...
+	...
+->Get out
+	Sorry. I mean, I don't need it, sir.
+Strange: Not interested? Never mind, we have also developed a new Smart Tofu recently. You don't even need to cook it any more! Eating tofu has never been so easy.
+<<EnterChangeText 1 ...>>
+<<EnterChangeText 2 ...>>
+->...
+	...
+->Get out
+	Sorry. I mean, I really don't need it, sir.
+->Fxxx off
+	Sorry. I mean, I really don't need it, sir.
+<<NEED_GOTO_END>>
+Strange: Not interested? Never mind, we have also... we have also... we have also... we have also... we have also... we have also... we have also... we have also... we have also... we have also... we have also...
 ===
 title: HomeNpcStart
 tags: 
