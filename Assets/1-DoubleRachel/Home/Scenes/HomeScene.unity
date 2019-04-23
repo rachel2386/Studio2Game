@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.7229886, g: 0.72413075, b: 0.7264151, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -35,10 +35,10 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 0}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -48,7 +48,7 @@ LightmapSettings:
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
-    m_IndirectOutputScale: 2
+    m_IndirectOutputScale: 3.58
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
@@ -65,11 +65,11 @@ LightmapSettings:
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
-    m_TextureCompression: 1
+    m_TextureCompression: 0
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 256
-    m_ReflectionCompression: 2
+    m_ReflectionCompression: 0
     m_MixedBakeMode: 2
     m_BakeBackend: 0
     m_PVRSampling: 1
@@ -88,8 +88,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000000, guid: ecd647e5239384f4db4bc9dccc5cb299,
-    type: 2}
+  m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -9962,6 +9961,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScenePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 432351225559425228, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 432351226674235489, guid: 43a1443653851dd4fa972fd357c47c73,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9996,6 +10000,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 432351225559425270, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 432351226674235813, guid: 43a1443653851dd4fa972fd357c47c73,
         type: 3}
@@ -10281,6 +10290,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 432351225446440764, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 432351225154530895, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_AutoUVMaxAngle
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 3230157731931319190, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572888206605652165, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572888206605652185, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572888206605652189, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572888206605652191, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572888206605652175, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572888206607846937, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572888206607846937, guid: 43a1443653851dd4fa972fd357c47c73,
+        type: 3}
+      propertyPath: m_AutoUVMaxAngle
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43a1443653851dd4fa972fd357c47c73, type: 3}
@@ -18217,6 +18276,7 @@ MonoBehaviour:
   - 8069ce63-74f0-4686-afd7-261d945da3a4
   - 9563226a-1d63-4246-a428-1ecc7aee5f95
   - da3f266d-5495-427c-a18a-21f685ef6df3
+  - 2752f2e5-5296-46ae-b3a7-5637664f73fd
   objects:
   - {fileID: 6165003}
   - {fileID: 941800662189891717}
@@ -18233,6 +18293,7 @@ MonoBehaviour:
   - {fileID: 806530962}
   - {fileID: 605922815}
   - {fileID: 1576932128}
+  - {fileID: 358762501}
 --- !u!114 &6131175552093361808
 MonoBehaviour:
   m_ObjectHideFlags: 0
