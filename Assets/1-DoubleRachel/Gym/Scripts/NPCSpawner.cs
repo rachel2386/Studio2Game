@@ -20,7 +20,7 @@ public class NPCSpawner : MonoBehaviour
     {
         count = 0;
         startPos = gate.transform.position;
-        endPos = gate.transform.position + Vector3.forward * distance;
+        endPos = gate.transform.position + Vector3.forward * distance * 5;
     }
 
     void Spawn()
