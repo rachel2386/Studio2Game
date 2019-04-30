@@ -233,6 +233,14 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         if (args == null || args.Length == 0)
             return;
 
+
+        if(args.Length == 3 && args[0] == "EnterChangeText")
+        {
+            int index = int.Parse(args[1]);
+            var changeText = args[2];
+            dialogUI.options[index].GetComponent<ShyDialogOption>().enterChangeText = changeText;
+        }
+
         // 1.Send FSM event to the DialogManager FSM
         var eventName = args[0];
         dialogFSM.MySendEventToAll(eventName);

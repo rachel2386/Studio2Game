@@ -443,7 +443,7 @@ public class PanRotation : Pan
         }); 
     }
 
-    void GotoEnd()
+    public void GotoEnd()
     {
         inEnd = true;
 

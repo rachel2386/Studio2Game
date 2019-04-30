@@ -211,8 +211,9 @@ public class NPCBehavior : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-        NPCSpeed();
+        
         transform.position = myAgent.nextPosition;
+        NPCSpeed();
        
     }
 
