@@ -8,7 +8,11 @@ public class SeePlayer : MonoBehaviour
     private Transform player;
 
     public bool PlayerSeen { get; set; }
-
+    
+    //test
+    //public Transform testObject;
+    //public float dotProduct;
+   // public float newY;
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
@@ -18,7 +22,11 @@ public class SeePlayer : MonoBehaviour
     void Update()
     {
         LookForPlayer();
-    }
+        
+        //testForDot
+//        dotProduct = Vector3.Dot(transform.forward.normalized, (testObject.position-transform.position).normalized);
+//        print(dotProduct);
+   }
 
     void LookForPlayer()
     {
@@ -33,6 +41,8 @@ public class SeePlayer : MonoBehaviour
         Gizmos.color = Color.green;
         if (player != null)
         Gizmos.DrawRay(transform.position, Vector3.Normalize(player.position - transform.position));
+        //Gizmos.DrawRay(transform.position, testObject.position-transform.position);
+        Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, transform.forward);
     }
 }

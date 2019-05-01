@@ -6,13 +6,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.Utility;
+using Yarn;
 
 
 //To-do:
 //turning animation
 
+
+
 public class NPCBehavior : MonoBehaviour
 {
+    public bool DetectsPlayer = true;
     #region Navmesh Agent Properties
 
     private NavMeshAgent myAgent;
@@ -41,6 +45,8 @@ public class NPCBehavior : MonoBehaviour
 
     #endregion
 
+    
+    
     private bool goingForward = true;
     private bool _greetedPlayer = false;
     private bool _npcRotate = true;
@@ -84,13 +90,16 @@ public class NPCBehavior : MonoBehaviour
     
     void Update()
     {
+        
         if (NpcRotate)
         {
             AgentBehavior();
         }
         else
         {
-            FollowPlayer();   
+           if(DetectsPlayer)
+            FollowPlayer();
+           
         }
         
        AnimatorUpdate();
@@ -127,19 +136,27 @@ public class NPCBehavior : MonoBehaviour
         {
           
                 myAgent.SetDestination(myDestination.position);
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x,
-                    Mathf.MoveTowardsAngle(transform.eulerAngles.y, randomRot, turnSpeed),
-                    transform.eulerAngles.x);
+              
+                Vector3 newRot = new Vector3(transform.eulerAngles.x,
+                    Mathf.LerpAngle(transform.eulerAngles.y, randomRot, Time.deltaTime * turnSpeed),
+                    transform.eulerAngles.z);
+             
+                //Vector3 newDir = (transform.forward * Mathf.Cos(angleToTurn)).normalized;
+               // Debug.DrawRay(transform.position,newDir,Color.blue);
+                
+                //float dotPrdt = Vector3.Dot(transform.forward, newDir);
+               // print(dotPrdt);
+               
+                transform.eulerAngles = newRot;
 
-                float angleToTurn = randomRot - transform.eulerAngles.y;
                 //if (Mathf.Abs(angleToTurn) >= 5)
                 // {
                 //myAnim.SetFloat("Turn", angleToTurn/180);
                 // myAnim.PlayInFixedTime("Grounded", 0, degreesTurned / turnSpeed);
                 //}
                 // else
-                //     myAnim.SetFloat("Turn", 0);
-        
+                //     myAnim.SetFloat("TurnAmount", 0);
+
         }
 
        
@@ -204,9 +221,11 @@ public class NPCBehavior : MonoBehaviour
             myAnim.SetBool(HandWave, true);
         else
             myAnim.SetBool(HandWave,false);
-            
+
         
-            
+
+
+
     }
 
     private void OnAnimatorMove()
@@ -219,13 +238,23 @@ public class NPCBehavior : MonoBehaviour
 
     private float randomRot;
     private float degreesTurned;
-
+    
+    
     void generateRandomNum()
     {
         if (NpcRotate)
         {
+            
             degreesTurned = Random.Range(30, 89);
             randomRot = transform.eulerAngles.y + degreesTurned;
+            
+                //float angleToTurn = randomRot - transform.eulerAngles.y;
+              //  myAnim.PlayInFixedTime("Turn", 0, angleToTurn/turnSpeed);
+              //  myAnim.SetFloat("TurnAmount",angleToTurn/180);
+                myAnim.SetTrigger("TurnTrigger");
+            
+            
+         
         }
     }
 
