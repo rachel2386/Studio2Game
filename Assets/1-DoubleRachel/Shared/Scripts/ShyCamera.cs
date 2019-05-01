@@ -82,6 +82,7 @@ public class ShyCamera : MonoBehaviour
             foreach (var eye in eyes)
                 eyeList.Add(eye);
         }
+        
 
     }
 
