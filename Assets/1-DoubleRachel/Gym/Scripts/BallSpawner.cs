@@ -20,9 +20,9 @@ public class BallSpawner : MonoBehaviour
 
 	void Spawn()
 	{
-		Transform next = Instantiate(model, transform.position, transform.rotation) as Transform;
+		Vector3 position = new Vector3(Random.Range(-43f, 46f), Random.Range(-10f, 10f), 0);
+		Transform next = Instantiate(model, position, transform.rotation) as Transform;
 		next.parent = transform;
-		next.localPosition = Vector3.zero;
 		count += 1;
 	}
 
