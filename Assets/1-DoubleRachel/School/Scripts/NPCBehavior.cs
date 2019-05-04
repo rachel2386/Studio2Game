@@ -9,14 +9,15 @@ using UnityStandardAssets.Utility;
 using Yarn;
 
 
-//To-do:
-//turning animation
+//controls npc behavior 
+//3 types of npc : auto, trigger, and stationary
+//bool NPCRotate should be AutoBehavior  disabled when detects player. controlled through seePlayer script and ShyDistanceTriggerOnView script
 
 
 
 public class NPCBehavior : MonoBehaviour
 {
-    public bool DetectsPlayer = true;
+    
     #region Navmesh Agent Properties
 
     private NavMeshAgent myAgent;
@@ -62,11 +63,10 @@ public class NPCBehavior : MonoBehaviour
         get => _greetedPlayer;
         set => _greetedPlayer = value;
     }
-
     public bool PlayerTriggered { get; set; } = false;
-
-
     private float turnSpeed = 2f;
+
+    public GameObject exclamationMark;
 
 
     // Start is called before the first frame update
@@ -74,6 +74,7 @@ public class NPCBehavior : MonoBehaviour
     {
         myAgent = GetComponent<NavMeshAgent>();
         myAnim = GetComponent<Animator>();
+        exclamationMark.SetActive(false);
         AgentOffset = myAgent.transform.position;
         // print("agent position =" + transform.position);
         DestinationOffset = myDestination.position;
@@ -97,7 +98,6 @@ public class NPCBehavior : MonoBehaviour
         }
         else
         {
-           if(DetectsPlayer)
             FollowPlayer();
            
         }
@@ -110,6 +110,7 @@ public class NPCBehavior : MonoBehaviour
     {
         myAgent.updatePosition = false;
         myAgent.updateRotation = true;
+        exclamationMark.SetActive(false);
         
         if (Trigger)
         {
@@ -140,6 +141,8 @@ public class NPCBehavior : MonoBehaviour
                 Vector3 newRot = new Vector3(transform.eulerAngles.x,
                     Mathf.LerpAngle(transform.eulerAngles.y, randomRot, Time.deltaTime * turnSpeed),
                     transform.eulerAngles.z);
+                
+                transform.eulerAngles = newRot;
              
                 //Vector3 newDir = (transform.forward * Mathf.Cos(angleToTurn)).normalized;
                // Debug.DrawRay(transform.position,newDir,Color.blue);
@@ -147,7 +150,7 @@ public class NPCBehavior : MonoBehaviour
                 //float dotPrdt = Vector3.Dot(transform.forward, newDir);
                // print(dotPrdt);
                
-                transform.eulerAngles = newRot;
+                
 
                 //if (Mathf.Abs(angleToTurn) >= 5)
                 // {
@@ -197,6 +200,7 @@ public class NPCBehavior : MonoBehaviour
     private void FollowPlayer()
     {
        
+        print("playerDetected");
         transform.rotation = Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up);
         if (GreetedPlayer) return;
         if (myAgent.destination != playerTransform.position)
@@ -204,8 +208,11 @@ public class NPCBehavior : MonoBehaviour
             myAgent.ResetPath();
             myAgent.SetDestination(playerTransform.position);
         }
+        exclamationMark.SetActive(true);
+        
        if (Vector3.Distance(playerTransform.position,transform.position) <= 1.3f)
         {
+            exclamationMark.SetActive(false);
             GreetedPlayer = true;
         }
 
@@ -216,11 +223,16 @@ public class NPCBehavior : MonoBehaviour
     private void AnimatorUpdate()
     {
         myAnim.SetFloat(Forward, myAgent.desiredVelocity.magnitude);
-        
+       
         if(!NpcRotate && !GreetedPlayer)
             myAnim.SetBool(HandWave, true);
         else
             myAnim.SetBool(HandWave,false);
+        
+        if(!NpcRotate && GreetedPlayer)
+            myAnim.SetBool("Talking", true);
+        else
+            myAnim.SetBool("Talking", false);
 
         
 
@@ -239,21 +251,17 @@ public class NPCBehavior : MonoBehaviour
     private float randomRot;
     private float degreesTurned;
     
-    
     void generateRandomNum()
     {
         if (NpcRotate)
         {
-            
+            print("turning"); 
             degreesTurned = Random.Range(30, 89);
             randomRot = transform.eulerAngles.y + degreesTurned;
-            
+           myAnim.SetTrigger("TurnTrigger");
                 //float angleToTurn = randomRot - transform.eulerAngles.y;
               //  myAnim.PlayInFixedTime("Turn", 0, angleToTurn/turnSpeed);
               //  myAnim.SetFloat("TurnAmount",angleToTurn/180);
-                myAnim.SetTrigger("TurnTrigger");
-            
-            
          
         }
     }

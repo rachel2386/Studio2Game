@@ -65,14 +65,16 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
 
         // Enter
         if (Input.GetKeyUp(KeyCode.X))
-            leaveEvent.Invoke();
+            GetComponent<ShyDialogTrigger>().StopDialog();
 
-        if (seePlayer.PlayerSeen)
+        
             if (curDis <= distance)
             {
                 if (!eventTriggered)
                 {
+                    if (seePlayer.PlayerSeen)
                     NPCBehavior.NpcRotate = false;
+                    
                     if (NPCBehavior.GreetedPlayer)
                     {
                         print("Start Dialogue");
@@ -91,7 +93,6 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
             print("player left");
             leaveEvent.Invoke();
             NPCBehavior.NpcRotate = true;
-            //eventTriggered = false;
         }
         lastDistance = curDis;
     }
