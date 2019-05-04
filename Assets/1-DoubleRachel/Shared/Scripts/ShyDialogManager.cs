@@ -203,8 +203,12 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         // Hide all the buttons
         foreach (var button in optionButtons)
         {
+            // restore the enterChangeText
+            button.GetComponent<ShyDialogOption>().enterChangeText = "";
             button.gameObject.SetActive(false);
         }
+
+       
     }
 
     /// Called by buttons to make a selection.
