@@ -21,10 +21,13 @@ public class NPCBehavior : MonoBehaviour
     #region Navmesh Agent Properties
 
     private NavMeshAgent myAgent;
-    public Transform myDestination;
+    
+    public List<Transform> Destinations;
     private Vector3 steeringTargetLastFrame;
-    private Vector3 AgentOffset;
-    private Vector3 DestinationOffset;
+   
+    // patrol agent
+    private int DestinationIndex = 0;
+    
     private Transform playerTransform;
     private float AgentinitSpeed;
 
@@ -46,9 +49,10 @@ public class NPCBehavior : MonoBehaviour
 
     #endregion
 
+
     
     
-    private bool goingForward = true;
+    
     private bool _greetedPlayer = false;
     private bool _npcRotate = true;
     private float approachPlayerSpeed = 1f;
@@ -64,31 +68,27 @@ public class NPCBehavior : MonoBehaviour
         set => _greetedPlayer = value;
     }
     public bool PlayerTriggered { get; set; } = false;
-    private float turnSpeed = 2f;
+    private float turnSpeed = 3f;
 
     public GameObject exclamationMark;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         myAgent = GetComponent<NavMeshAgent>();
         myAnim = GetComponent<Animator>();
+        
         exclamationMark.SetActive(false);
-        AgentOffset = myAgent.transform.position;
-        // print("agent position =" + transform.position);
-        DestinationOffset = myDestination.position;
+        
         playerTransform = GameObject.Find("PlayerBase").transform;
+        
         AgentinitSpeed = myAgent.speed;
+        
         if (!Stationary) return;
         randomRot = transform.eulerAngles.y;
         InvokeRepeating(nameof(generateRandomNum), 6, 7);
     }
 
-    // Update is called once per frame
-
-    
-    
+   
     void Update()
     {
         
@@ -98,6 +98,7 @@ public class NPCBehavior : MonoBehaviour
         }
         else
         {
+            if (!GreetedPlayer)
             FollowPlayer();
            
         }
@@ -116,27 +117,40 @@ public class NPCBehavior : MonoBehaviour
         {
             if (PlayerTriggered)
             {
-                myAgent.SetDestination(myDestination.position);
+                myAgent.SetDestination(Destinations[0].position);
                 if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
                     myAgent.isStopped = true;
              }
+            else
+            {
+                myAgent.isStopped = true;
+            }
            
         }
 
         if (Automatic)
         {
-            myAgent.SetDestination(goingForward ? DestinationOffset : AgentOffset);
-            //walking back and forth two points
+            
+            //patrolling between points
+            
             if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
             {
-                goingForward = !goingForward;
+                StartCoroutine(wait(5));
+                if (DestinationIndex < Destinations.Count)
+                    DestinationIndex++;
+                else
+                    DestinationIndex = 0;
             }
+            
+            myAgent.SetDestination(Destinations[DestinationIndex].position);
+
+
         }
 
         if (Stationary)
         {
           
-                myAgent.SetDestination(myDestination.position);
+                myAgent.SetDestination(Destinations[0].position);
               
                 Vector3 newRot = new Vector3(transform.eulerAngles.x,
                     Mathf.LerpAngle(transform.eulerAngles.y, randomRot, Time.deltaTime * turnSpeed),
@@ -144,14 +158,14 @@ public class NPCBehavior : MonoBehaviour
                 
                 transform.eulerAngles = newRot;
              
-                //Vector3 newDir = (transform.forward * Mathf.Cos(angleToTurn)).normalized;
+               //Test Methods that didn't work out
+               
+               //Vector3 newDir = (transform.forward * Mathf.Cos(angleToTurn)).normalized;
                // Debug.DrawRay(transform.position,newDir,Color.blue);
                 
                 //float dotPrdt = Vector3.Dot(transform.forward, newDir);
                // print(dotPrdt);
                
-                
-
                 //if (Mathf.Abs(angleToTurn) >= 5)
                 // {
                 //myAnim.SetFloat("Turn", angleToTurn/180);
@@ -173,10 +187,15 @@ public class NPCBehavior : MonoBehaviour
 
         if (!myAgent.pathPending)
         {
-            if (NpcRotate)
+            if (NpcRotate )
             {
-                myAgent.isStopped = false;
-                myAgent.speed = AgentinitSpeed;
+                if (!waiting)
+                {
+                    myAgent.isStopped = false;
+                    myAgent.speed = AgentinitSpeed;
+                }
+                else
+                    myAgent.isStopped = true;
             }
             else
             {
@@ -201,8 +220,10 @@ public class NPCBehavior : MonoBehaviour
     {
        
         print("playerDetected");
-        transform.rotation = Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up);
-        if (GreetedPlayer) return;
+        transform.rotation = Quaternion.Slerp(transform.rotation, 
+                                              Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up),
+                                              Time.deltaTime *turnSpeed);
+        
         if (myAgent.destination != playerTransform.position)
         {
             myAgent.ResetPath();
@@ -266,5 +287,11 @@ public class NPCBehavior : MonoBehaviour
         }
     }
 
-  
+    private bool waiting = true;
+    IEnumerator wait(int seconds)
+    {
+        waiting = true;
+        yield return new WaitForSeconds(seconds);
+        waiting = false;
+    }
 }
