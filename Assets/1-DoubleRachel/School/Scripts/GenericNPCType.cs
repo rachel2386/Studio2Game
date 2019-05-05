@@ -9,6 +9,8 @@ public class GenericNPCType : MonoBehaviour
     public bool Laughing;
     public bool Talking;
     public bool Texting;
+    public bool Clapping;
+    public bool Cheering;
     private Animator myAnim;
     public GameObject phone;
     void Start()
@@ -16,32 +18,53 @@ public class GenericNPCType : MonoBehaviour
         myAnim = GetComponent<Animator>();
         phone.SetActive(false);
         
+        
         if (Laughing)
         {
             Talking = false;
             Texting = false;
-            myAnim.SetBool("Laughing", true);
+            Clapping = false;
+            Cheering = false;
         }
         else if (Texting)
         {
             Talking = false;
+            Clapping = false;
+            Cheering = false;
             Laughing = false;
-            myAnim.SetBool("Texting", true);
-            phone.SetActive(true);
         }
         else if (Talking)
         {
-            Laughing = false;
+            
             Texting = false;
-            myAnim.SetBool("Talking", true);
+            Clapping = false;
+            Cheering = false;
+            Laughing = false;
+            
         }
-        else
+        else if(Clapping)
         {
-            phone.SetActive(false);
-            myAnim.SetBool("Laughing", false);
-            myAnim.SetBool("Texting", false);
-            myAnim.SetBool("Talking", false);
+            Talking = false;
+            Texting = false;
+            Cheering = false;
+            Laughing = false;
         }
+        else if (Cheering)
+        {
+            Talking = false;
+            Texting = false;
+            Clapping = false;
+            Laughing = false;
+        }
+
+        phone.SetActive(Texting);
+
+        myAnim.SetBool("Laughing", Laughing);
+        myAnim.SetBool("Texting", Texting);
+        myAnim.SetBool("Talking", Talking);
+        myAnim.SetBool("Clapping", Clapping);
+        myAnim.SetBool("Cheering", Cheering);
+        
     }
 
     // Update is called once per frame

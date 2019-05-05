@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class SwitchScenes : MonoBehaviour
 {
-    public static int gameState = 0;
+    public static int gameState = 2;
     public bool doorOpened;
     private Transform switchSceneNPC;
     // Start is called before the first frame update
@@ -31,6 +31,7 @@ public class SwitchScenes : MonoBehaviour
         if (gameState == 0)
         {
            //scene 1 active
+           RenderSettings.ambientLight = new Color(0.57f, 0.65f, 0.73f);
             GameObject.Find("Scene1").SetActive(false);  
             GameObject.Find("Scene2").SetActive(false);
         }
@@ -43,6 +44,7 @@ public class SwitchScenes : MonoBehaviour
         else if (gameState == 2)
         {
            //scene 0 active
+           RenderSettings.ambientLight = new Color(1f, 0.56f, 0.36f);
             GameObject.Find("Scene0").SetActive(false);
             GameObject.Find("Scene1").SetActive(false);  
         }
