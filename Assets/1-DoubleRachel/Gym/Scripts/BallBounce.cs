@@ -17,8 +17,7 @@ public class BallBounce : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        int noteIndex = GetCollisionStrength(collision);
-		
+        int noteIndex = Random.Range(0, GetCollisionStrength(collision));
         _audioSource.PlayOneShot(tones[noteIndex]);
     }
     

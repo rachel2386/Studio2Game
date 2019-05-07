@@ -30,10 +30,22 @@ public class SwitchScenes : MonoBehaviour
     {
         if (gameState == 0)
         {
+           //scene 1 active
+           RenderSettings.ambientLight = new Color(0.57f, 0.65f, 0.73f);
+            GameObject.Find("Scene1").SetActive(false);  
             GameObject.Find("Scene2").SetActive(false);
         }
-        else
+        else if(gameState == 1) 
         {
+           //scene 2 active
+            GameObject.Find("Scene0").SetActive(false);  
+            GameObject.Find("Scene2").SetActive(false);  
+        }
+        else if (gameState == 2)
+        {
+           //scene 0 active
+           RenderSettings.ambientLight = new Color(1f, 0.56f, 0.36f);
+            GameObject.Find("Scene0").SetActive(false);
             GameObject.Find("Scene1").SetActive(false);  
         }
     }
@@ -48,12 +60,12 @@ public class SwitchScenes : MonoBehaviour
         myAS = Timer.GetComponent<AudioSource>();
         
        
-        if (gameState == 0)
+        if (gameState == 1)
         {
            switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
             MinutesOnClock = Mathf.RoundToInt(secondsOnClock / 60);
         }
-        else if (gameState == 1)
+        else if (gameState == 2)
         {
            MinutesOnClock = 0;
         }
@@ -69,7 +81,7 @@ public class SwitchScenes : MonoBehaviour
         
         // npc detects player after door opened
         // scene switches when player see npc
-        if (gameState != 0) return;
+        if (gameState != 1) return;
         if (!doorOpened) return;
         RaycastHit hit = new RaycastHit();
         Physics.SphereCast(switchSceneNPC.position, 1.6f, switchSceneNPC.forward, out hit);
@@ -95,7 +107,7 @@ public class SwitchScenes : MonoBehaviour
         int hour = 0;
 
 
-        if (gameState == 0)
+        if (gameState == 1)
         {
             if (timer <= totalTimeInSeconds)
             {
@@ -116,7 +128,7 @@ public class SwitchScenes : MonoBehaviour
 
             LastSecond = Mathf.RoundToInt(timer % 60);
         }
-        else if (gameState == 1)
+        else if (gameState == 2)
         {
             timer += Time.deltaTime;
             hour = 16;
@@ -149,13 +161,13 @@ public class SwitchScenes : MonoBehaviour
     {
             yield return new WaitForSeconds(seconds);
 
-            if (gameState == 0)
+            if (gameState == 1)
             {
                 HomeSceneManager.IntoIndex = 1;
-                gameState = 1;
+                gameState = 2;
                 SceneManager.LoadScene("HomeScene"); 
             }
-            else if (gameState == 1)
+            else if (gameState == 2)
             {
                 SceneManager.LoadScene("Gym");
             }

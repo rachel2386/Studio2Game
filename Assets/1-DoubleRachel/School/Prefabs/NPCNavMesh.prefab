@@ -515,9 +515,6 @@ GameObject:
   - component: {fileID: 437681494}
   - component: {fileID: 437681493}
   - component: {fileID: 437681497}
-  - component: {fileID: 8050423715638227374}
-  - component: {fileID: 4000359087914021499}
-  - component: {fileID: 5489447834008827503}
   - component: {fileID: 8278433705084722959}
   - component: {fileID: 8538277882482559268}
   - component: {fileID: 4363729354155544455}
@@ -604,7 +601,7 @@ CapsuleCollider:
   m_Radius: 0.3
   m_Height: 1.6
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.89, z: 0}
 --- !u!195 &437681493
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -623,8 +620,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.8
-  m_BaseOffset: 0
+  m_Height: 1.75
+  m_BaseOffset: -0.13
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &437681497
@@ -643,153 +640,7 @@ MonoBehaviour:
   Trigger: 0
   Automatic: 0
   Stationary: 1
---- !u!114 &8050423715638227374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437681491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d6313ef0576833418b461c4b6d13d48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canInteract: 1
-  defaultTooltip: 
-  emptyHandTooltip: 
-  wrongThingTooltip: 
-  validationMode: 0
-  keyWords: []
-  clickedEvent:
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4000359087914021499}
-          m_MethodName: StartDialog
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    fsm: {fileID: 0}
-    fsmEventSelect: 
-    fsmEventAdd: 
-    component: {fileID: 8050423715638227374}
---- !u!114 &4000359087914021499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437681491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac27ac111b3c03b428c5dfd4a6a32daa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  talkToNode: 
-  lockMove: 1
-  lockMouseLook: 0
-  canStillInteract: 0
-  scriptToLoad: {fileID: 4900000, guid: 1ddde974b83a2e649a1834958e86d79d, type: 3}
-  completeEvent:
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 437681497}
-          m_MethodName: set_NpcRotate
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    fsm: {fileID: 0}
-    fsmEventSelect: 
-    fsmEventAdd: 
-    component: {fileID: 4000359087914021499}
---- !u!114 &5489447834008827503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437681491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae23a0fd999cb67469662dc035cff47f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetIsPlayer: 1
-  target: {fileID: 0}
-  distance: 3
-  showArea: 1
-  debugColor: {r: 1, g: 0.92, b: 0.016, a: 0.3}
-  enterEvent:
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4000359087914021499}
-          m_MethodName: StartDialog
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 437681497}
-          m_MethodName: set_NpcRotate
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    fsm: {fileID: 0}
-    fsmEventSelect: 
-    fsmEventAdd: 
-    component: {fileID: 5489447834008827503}
-  leaveEvent:
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4000359087914021499}
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEventWithGameObject, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    fsm: {fileID: 0}
-    fsmEventSelect: 
-    fsmEventAdd: 
-    component: {fileID: 5489447834008827503}
+  exclamationMark: {fileID: 0}
 --- !u!114 &8278433705084722959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -802,6 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4dd59483a9cf4fa793986ce870971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConsiderPlayerEyeContact: 1
 --- !u!114 &8538277882482559268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,15 +679,15 @@ MonoBehaviour:
         serializedVersion: 2
         x: 50
         y: 100
-        width: 138
+        width: 127.6
         height: 32
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: TRIGGER ENTER
-          isSystemEvent: 1
+          name: playerEntered
+          isSystemEvent: 0
           isGlobal: 0
         toState: NPCTriggered
         linkStyle: 0
@@ -893,7 +745,7 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - TRIGGER ENTER
+        - playerEntered
         byteData: 00000000
         arrayParamSizes: 
         arrayParamTypes: []
@@ -1104,6 +956,9 @@ MonoBehaviour:
       isSystemEvent: 1
       isGlobal: 0
     - name: RaycastHit
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: playerEntered
       isSystemEvent: 0
       isGlobal: 0
     globalTransitions: []
@@ -6500,7 +6355,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+  - {fileID: 2100002, guid: 367f2a84cd5408f43a962b865e46201a, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6681,7 +6536,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+  - {fileID: 2100000, guid: 94569267c90972d418caf59d9367047f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7021,38 +6876,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400022, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.003617709
-      objectReference: {fileID: 0}
-    - target: {fileID: 400022, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.047238663
-      objectReference: {fileID: 0}
-    - target: {fileID: 400064, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.105722554
-      objectReference: {fileID: 0}
-    - target: {fileID: 400064, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.025646748
-      objectReference: {fileID: 0}
-    - target: {fileID: 400126, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5562153
-      objectReference: {fileID: 0}
-    - target: {fileID: 400126, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.4311665
-      objectReference: {fileID: 0}
-    - target: {fileID: 400126, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.57509273
-      objectReference: {fileID: 0}
-    - target: {fileID: 400126, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.41711926
-      objectReference: {fileID: 0}
     - target: {fileID: 400140, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7101,6 +6924,38 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b005dc12131494b4996f1314a9bf38c0, type: 2}
+    - target: {fileID: 400064, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.105722554
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.025646748
+      objectReference: {fileID: 0}
+    - target: {fileID: 400126, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5562153
+      objectReference: {fileID: 0}
+    - target: {fileID: 400126, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.4311665
+      objectReference: {fileID: 0}
+    - target: {fileID: 400126, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.57509273
+      objectReference: {fileID: 0}
+    - target: {fileID: 400126, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.41711926
+      objectReference: {fileID: 0}
+    - target: {fileID: 400022, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.003617709
+      objectReference: {fileID: 0}
+    - target: {fileID: 400022, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.047238663
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f393d5e998e5454a8dce7a88c468ccc, type: 3}
 --- !u!4 &5718725015703597872 stripped

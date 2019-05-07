@@ -15,6 +15,9 @@ public class NPCSpawner : MonoBehaviour
     private float lerpTime = 3;
     private float currentLerpTime = 0;
     private bool openGate = false;
+    
+    public AudioClip[] tones;
+    private AudioSource _audioSource;
 
     public void SwitchScene()
     {
@@ -25,13 +28,17 @@ public class NPCSpawner : MonoBehaviour
         count = 0;
         startPos = gate.transform.position;
         endPos = gate.transform.position + Vector3.forward * distance * 5;
+        _audioSource = GetComponent<AudioSource>();
+        
     }
 
     void Spawn()
     {
-        Transform next = Instantiate(model, transform.position, transform.rotation) as Transform;
+        Vector3 position = new Vector3(0, 0, 0);
+        Transform next = Instantiate(model, position, transform.rotation) as Transform;
         next.parent = transform;
-        next.localPosition = Vector3.zero;
+        int index = Random.Range(0, tones.Length);
+        _audioSource.PlayOneShot(tones[index]);
         count += 1;
     }
 
@@ -58,15 +65,15 @@ public class NPCSpawner : MonoBehaviour
                 float Perc = currentLerpTime / lerpTime;
                 gate.transform.position = Vector3.Lerp(startPos, endPos, Perc);
                 
-                if (Vector3.Distance(gate.transform.position, endPos) < 0.3)
-                {
-                    //A並B
-                    if (flag)
-                    {
-                        flag = false;
-                        gate.GetComponent<AudioSource>().Play();
-                    }
-                }
+//                if (Vector3.Distance(gate.transform.position, endPos) < 0.3)
+//                {
+//                    //A並B
+//                    if (flag)
+//                    {
+//                        flag = false;
+//                        gate.GetComponent<AudioSource>().Play();
+//                    }
+//                }
             }
             }
     }    

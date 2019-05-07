@@ -18,6 +18,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
     ShyInteractionSystem sis;
 
     PlayMakerFSM dialogFSM;
+    AudioSource dialogAudioSource;
 
     private bool inDialog = false;
     bool inOption = false;
@@ -70,6 +71,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         fpsController = FindObjectOfType<ShyFPSController>();
         sis = FindObjectOfType<ShyInteractionSystem>();
         dialogFSM = GetComponent<PlayMakerFSM>();
+        dialogAudioSource = GetComponent<AudioSource>();
         if (dialogUI)
         {
             dialogueContainer = dialogUI.container;
@@ -201,8 +203,12 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         // Hide all the buttons
         foreach (var button in optionButtons)
         {
+            // restore the enterChangeText
+            button.GetComponent<ShyDialogOption>().enterChangeText = "";
             button.gameObject.SetActive(false);
         }
+
+       
     }
 
     /// Called by buttons to make a selection.
@@ -236,9 +242,11 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
 
         if(args.Length == 3 && args[0] == "EnterChangeText")
         {
-            int index = int.Parse(args[1]);
-            var changeText = args[2];
-            dialogUI.options[index].GetComponent<ShyDialogOption>().enterChangeText = changeText;
+            HandleCommandEnterChangeText(args);
+        }
+        else if(args[0] =="PlaySound")
+        {
+            HandleCommandPlaySound(args);
         }
 
         // 1.Send FSM event to the DialogManager FSM
@@ -248,6 +256,24 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         // 2.Also FSM event to the current trigger FSM if it exsist
         if (curDialogTrigger)
             curDialogTrigger.MySendEventToAll(eventName);
+    }
+
+    public void HandleCommandPlaySound(string[] args)
+    {
+        if (args.Length < 2)
+            return;
+        // PlaySound soundName [audioSource]
+        var name = args[1];
+        var pathPrefix = "Audio/";
+        AudioClip ac = Resources.Load<AudioClip>(pathPrefix + name);
+        dialogAudioSource.PlayOneShot(ac);
+    }
+
+    public void HandleCommandEnterChangeText(string[] args)
+    {
+        int index = int.Parse(args[1]);
+        var changeText = args[2];
+        dialogUI.options[index].GetComponent<ShyDialogOption>().enterChangeText = changeText;
     }
 
     /// Called when the dialogue system has started running.

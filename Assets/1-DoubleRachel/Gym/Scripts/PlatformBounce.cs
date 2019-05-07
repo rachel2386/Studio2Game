@@ -5,10 +5,8 @@ using UnityEngine;
 public class PlatformBounce : MonoBehaviour {
 
 	//organize sequentially from low to high
-	public AudioClip[] tones;
-	
+	public AudioClip[] tones;	
 	public float maxSpeed = 1.0f;
-
 	private AudioSource _audioSource;
 
 	void Start() {
@@ -17,9 +15,8 @@ public class PlatformBounce : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		int noteIndex = GetCollisionStrength(collision);
-		
-		_audioSource.PlayOneShot(tones[noteIndex]);
+		int noteIndex = GetCollisionStrength(collision);		
+//		_audioSource.PlayOneShot(tones[noteIndex]);
 
 	}
 	
