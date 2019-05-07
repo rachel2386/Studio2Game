@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HomeSceneManager : MonoBehaviour
 {
+    public HomeSceneSetting initSetting;
     public static int IntoIndex = 2;
 
     ShyFPSController fpsController;
@@ -37,6 +38,8 @@ public class HomeSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (initSetting)
+            IntoIndex = initSetting.InitHomeIndex;
 
         screwDriver.SetActive(IntoIndex == 1);
         remote.SetActive(IntoIndex == 2);
@@ -69,6 +72,12 @@ public class HomeSceneManager : MonoBehaviour
             objectOnUI.SetActive(true);
             lookDownUI.SetActive(false);
         }
+        else if(IntoIndex == 3)
+        {
+            fpsController.lockMove = true;
+            objectOnUI.SetActive(false);
+            lookDownUI.SetActive(false);
+        }
 
     }
 
@@ -77,6 +86,16 @@ public class HomeSceneManager : MonoBehaviour
         controller.GetComponent<CharacterController>().enabled = false;
         fpsController.transform.position = posi;
         controller.GetComponent<CharacterController>().enabled = true;
+
+        if(IntoIndex == 3)
+        {
+            var cam = controller.GetComponentInChildren<ShyCamera>();
+            var lp = cam.transform.localPosition;
+            lp.y = 0.28f;
+            cam.transform.localPosition = lp;
+        }
+
+        controller.GetMouseLook().ForceSetRotationFromCurrentGameObject(controller.transform);
     }
 
     void InitRotation(ShyFPSController controller, Transform startPoint)
@@ -84,7 +103,7 @@ public class HomeSceneManager : MonoBehaviour
         var se = startPoint.eulerAngles;
         controller.transform.eulerAngles = new Vector3(0, se.y, 0);
         controller.GetComponentInChildren<ShyCamera>().transform.localEulerAngles = new Vector3(se.x, 0, 0);
-        controller.GetMouseLook().ForceSetRotationFromCurrentGameObject();
+        controller.GetMouseLook().ForceSetRotationFromCurrentGameObject(controller.transform);
     }
 
     // Update is called once per frame
