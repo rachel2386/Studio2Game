@@ -255,7 +255,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
 
         // 2.Also FSM event to the current trigger FSM if it exsist
         if (curDialogTrigger)
-            curDialogTrigger.MySendEventToAll(eventName);
+            curDialogTrigger.HandleCommand(eventName);
     }
 
     public void HandleCommandPlaySound(string[] args)
@@ -319,6 +319,13 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         if (curDialogTrigger)
             curDialogTrigger.completeEvent.Invoke();
 
+        // Show the top and bottom black curtain
+        if (curDialogTrigger && curDialogTrigger.hideCurtainWhenComplete)
+        {
+            shyUI.HideCurtain();
+        }
+
+
         curDialogTrigger = null;
         Debug.Log("Complete!");
 
@@ -333,8 +340,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         }
 
 
-        // Show the top and bottom black curtain
-        shyUI.HideCurtain();
+
 
 
         yield break;
