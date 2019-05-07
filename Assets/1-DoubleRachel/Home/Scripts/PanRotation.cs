@@ -447,8 +447,8 @@ public class PanRotation : Pan
     {
         inEnd = true;
 
-        SetPpeParam(PpeSetting.GRAIN_INTENSITY, 0, 1);
-        SetPpeParam(PpeSetting.GRAIN_SIZE, 0.3f, 1);
+        SetPpeParam(PpeSetting.GRAIN_INTENSITY, 0, 3);
+        SetPpeParam(PpeSetting.GRAIN_SIZE, 0.3f, 3);
 
         mainFSM.MySendEventToAll("TO_END");        
     }
