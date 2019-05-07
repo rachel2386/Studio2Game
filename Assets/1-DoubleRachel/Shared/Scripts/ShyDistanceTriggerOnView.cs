@@ -92,7 +92,7 @@ public class ShyDistanceTriggerOnView : MonoBehaviour
         {
             print("player left");
             leaveEvent.Invoke();
-            NPCBehavior.NpcRotate = true;
+            //NPCBehavior.NpcRotate = true;
         }
         lastDistance = curDis;
     }

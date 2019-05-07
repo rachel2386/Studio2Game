@@ -35,12 +35,18 @@ public class SeePlayer : MonoBehaviour
     {
         Vector3 playerDir = Vector3.Normalize(player.position - transform.position);
         float angle = Vector3.Angle(playerDir, transform.forward);
-        
-        if(!ConsiderPlayerEyeContact)
-        PlayerSeen = angle <= angleOfView;
+
+        if (!ConsiderPlayerEyeContact)
+        {
+            if (angle <= angleOfView)
+                PlayerSeen = true;
+        }
+
         else
         {
-            PlayerSeen = angle <= angleOfView && PlayerEyeContact();
+            if (angle <= angleOfView && PlayerEyeContact())
+            PlayerSeen = true;
+            
         }
 
     }
