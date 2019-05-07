@@ -22,7 +22,7 @@ public class NPCBehavior : MonoBehaviour
 
     private NavMeshAgent myAgent;
     
-    public List<Transform> Destinations;
+    public List<Transform> Destinations = new List<Transform>();
     private Vector3 steeringTargetLastFrame;
    
     // patrol agent
@@ -49,11 +49,9 @@ public class NPCBehavior : MonoBehaviour
 
     #endregion
 
-
-    
-    
     
     private bool _greetedPlayer = false;
+    private bool playerTriggered;
     private bool _npcRotate = true;
     private float approachPlayerSpeed = 1f;
     public bool NpcRotate
@@ -67,7 +65,12 @@ public class NPCBehavior : MonoBehaviour
         get => _greetedPlayer;
         set => _greetedPlayer = value;
     }
-    public bool PlayerTriggered { get; set; } = false;
+
+    public bool PlayerTriggered
+    {
+        get => playerTriggered;
+        set => playerTriggered = value;
+    }
     private float turnSpeed = 3f;
 
     public GameObject exclamationMark;
@@ -94,7 +97,7 @@ public class NPCBehavior : MonoBehaviour
         
         if (NpcRotate)
         {
-            AgentBehavior();
+           AgentBehavior();
         }
         else
         {
@@ -115,12 +118,14 @@ public class NPCBehavior : MonoBehaviour
         
         if (Trigger)
         {
-            if (PlayerTriggered)
+            if (playerTriggered)
             {
+               if(myAgent.destination != Destinations[0].position)
                 myAgent.SetDestination(Destinations[0].position);
                 if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
                     myAgent.isStopped = true;
-             }
+               
+            }
             else
             {
                 myAgent.isStopped = true;
@@ -128,28 +133,29 @@ public class NPCBehavior : MonoBehaviour
            
         }
 
-        if (Automatic)
+        else if (Automatic)
         {
             
             //patrolling between points
             
             if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
             {
-                StartCoroutine(wait(5));
+                StartCoroutine(wait(Random.Range(2,4)));
                 if (DestinationIndex < Destinations.Count)
                     DestinationIndex++;
                 else
                     DestinationIndex = 0;
             }
             
+            if(myAgent.destination != Destinations[DestinationIndex].position)
             myAgent.SetDestination(Destinations[DestinationIndex].position);
 
 
         }
 
-        if (Stationary)
+      else if (Stationary)
         {
-          
+            if(myAgent.destination != Destinations[0].position)
                 myAgent.SetDestination(Destinations[0].position);
               
                 Vector3 newRot = new Vector3(transform.eulerAngles.x,
@@ -209,7 +215,12 @@ public class NPCBehavior : MonoBehaviour
             }
         }
         else
+        {
             myAgent.isStopped = true;
+            print("pathpending...");
+        }
+
+        
 
 
 
@@ -287,7 +298,7 @@ public class NPCBehavior : MonoBehaviour
         }
     }
 
-    private bool waiting = true;
+    private bool waiting = false;
     IEnumerator wait(int seconds)
     {
         waiting = true;
