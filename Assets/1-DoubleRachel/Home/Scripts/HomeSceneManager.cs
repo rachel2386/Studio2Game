@@ -20,6 +20,9 @@ public class HomeSceneManager : MonoBehaviour
 
     public GameObject screwDriver;
     public GameObject remote;
+
+
+    public PlayMakerFSM lastFSM;
     
 
     public int GetIntoIndex()
@@ -33,6 +36,7 @@ public class HomeSceneManager : MonoBehaviour
         shyCam = FindObjectOfType<ShyCamera>();
 
         panRotation = FindObjectOfType<PanRotation>();
+        
     }
 
     // Start is called before the first frame update
@@ -44,6 +48,8 @@ public class HomeSceneManager : MonoBehaviour
         screwDriver.SetActive(IntoIndex == 1);
         remote.SetActive(IntoIndex == 2);
         arrowRoot.SetActive(IntoIndex == 2);
+
+        lastFSM.enabled = (IntoIndex == 3);
 
         InitPosition(fpsController, playerBornPosis[IntoIndex].position);
         InitRotation(fpsController, playerBornPosis[IntoIndex]);
@@ -77,6 +83,7 @@ public class HomeSceneManager : MonoBehaviour
             fpsController.lockMove = true;
             objectOnUI.SetActive(false);
             lookDownUI.SetActive(false);
+            
         }
 
     }
