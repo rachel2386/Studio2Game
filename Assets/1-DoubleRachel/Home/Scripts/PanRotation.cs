@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
+using UnityEngine.Video;
 
 public class PanRotation : Pan
 {
@@ -19,6 +20,12 @@ public class PanRotation : Pan
     public GameObject switchModelRoot;
 
     public PlayMakerFSM mainFSM;
+
+    [Title("Food Video Players")]
+    public VideoPlayer garlicPlayer;
+    public VideoPlayer steakPlayer;
+    public VideoPlayer shrimpPlayer;
+    public VideoPlayer broccoliPlayer;
 
     [Title("Sound Effects")]
     public AudioSource doorBell;
@@ -71,6 +78,10 @@ public class PanRotation : Pan
     public AudioSource bgm;
     ShyDialogManager dialogManager;
 
+
+    List<VideoPlayer> firstPlayerList = new List<VideoPlayer>();
+    List<VideoPlayer> secondPlayerList = new List<VideoPlayer>();
+    List<VideoPlayer> handleList;
     // Start is called before the first frame update
     new void Start()
     {
@@ -92,6 +103,40 @@ public class PanRotation : Pan
         InitFoodStatus();
 
         InitStateByLevel();
+
+
+        // Material video players
+        broccoliPlayer.gameObject.SetActive(useFirstSet);
+        shrimpPlayer.gameObject.SetActive(useFirstSet);
+        steakPlayer.gameObject.SetActive(!useFirstSet);
+        garlicPlayer.gameObject.SetActive(!useFirstSet);
+
+        firstPlayerList.Add(broccoliPlayer);
+        firstPlayerList.Add(shrimpPlayer);
+
+        secondPlayerList.Add(steakPlayer);
+        secondPlayerList.Add(garlicPlayer);
+
+        handleList = useFirstSet ? firstPlayerList : secondPlayerList;
+
+        StartCoroutine(InitVideoPlayerPlay());
+    }
+
+    IEnumerator InitVideoPlayerPlay()
+    {
+        foreach (var player in handleList)
+        {
+            player.Play();
+        }
+        
+        yield return new WaitForSeconds(1.0f);
+
+        foreach (var player in handleList)
+        {
+            player.Pause();
+        }
+
+        yield return null;
     }
 
     public bool showAllPanFoodAtStart = true;
@@ -220,6 +265,8 @@ public class PanRotation : Pan
             //Add Progress
             shyUI.ShowProgress(true);
             AddProgress();
+
+            PlayMaterialVideo(true);
         }
         // Out
         else
@@ -250,6 +297,21 @@ public class PanRotation : Pan
 
             // Progress
             shyUI.ShowProgress(false);
+
+            PlayMaterialVideo(false);
+        }
+    }
+
+    public void PlayMaterialVideo(bool play)
+    {
+       
+        
+        foreach(var vp in handleList)
+        {
+            if (play)
+                vp.Play();
+            else
+                vp.Pause();
         }
     }
 
@@ -460,6 +522,12 @@ public class PanRotation : Pan
     // This is called when we have a tofu in hand and we click on the pan
     public void PanClicked()
     {
+        string heldName = "";
+        if (sis.curHeldObject)
+        {
+            heldName = sis.curHeldObject.name;
+        }
+     
         sis.ClearHand();
         int i = 0;
                
@@ -508,7 +576,16 @@ public class PanRotation : Pan
             for (; i < allFoodList.Count; i++)
             {
                 var go = allFoodList[i];
-                if (!go.activeSelf)
+
+                bool match = false;
+                if(heldName != "")
+                {
+                   
+                    var goName = go.name.Substring(0, 4).ToLower(); ;
+                    var heldSubName = heldName.Substring(0, 3).ToLower();
+                    match = goName.Contains(heldSubName);
+                }               
+                if (!go.activeSelf && match)
                 {
                     go.SetActive(true);
                     break;
@@ -561,7 +638,7 @@ public class PanRotation : Pan
     // This is called when a tofu on the cutting board is clicked
     int pickableTofuClickedCount = 0;
 
-    int beginOrganizeIndex = 6;
+    public int beginOrganizeIndex = 6;
     bool needAllIn = false;
     public void PickableTofuClicked(PickableTofu tofu)
     {
@@ -599,6 +676,11 @@ public class PanRotation : Pan
         if (level == 1 || level == 2)
         {
             SetAllTofuValidState(ShyInteractableObject.ValidationMode.INVALID, "?");
+        }
+
+        if (!useFirstSet)
+        {
+            beginOrganizeIndex = 100;
         }
     }
 
