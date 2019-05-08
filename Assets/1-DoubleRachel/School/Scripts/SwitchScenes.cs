@@ -16,7 +16,7 @@ public class SwitchScenes : MonoBehaviour
     private Transform switchSceneNPC;
     // Start is called before the first frame update
     public int playMakerState;
-    public int totalTimeInSeconds = 180;
+    private int totalTimeInSeconds;
     private GameObject Timer;
     private float MinutesOnClock;
     private float timer = 0;
@@ -54,23 +54,35 @@ public class SwitchScenes : MonoBehaviour
     void Start()
     {
         playMakerState = gameState;
+        
         Timer = GameObject.Find("Timer");
+        
+        if (gameState == 0)
+        {
+            totalTimeInSeconds = 10 * 60;
+        }
+        if (gameState == 1)
+        {
+            totalTimeInSeconds = 5 * 60;
+        }
+        if (gameState == 2)
+        {
+            totalTimeInSeconds = 3600;
+        }
+        
+
         float secondsOnClock = Mathf.FloorToInt((int)3600 - totalTimeInSeconds);
+        MinutesOnClock = Mathf.RoundToInt(secondsOnClock / 60);
         timerText = Timer.GetComponent<Text>();
         timerText.color = Color.black;
         myAS = Timer.GetComponent<AudioSource>();
-        
        
         if (gameState == 1)
         {
-           print("switchnpc found");
-            switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
-            MinutesOnClock = Mathf.RoundToInt(secondsOnClock / 60);
+          switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
+            
         }
-        else if (gameState == 2)
-        {
-           MinutesOnClock = 0;
-        }
+       
  
         
     }
@@ -78,11 +90,25 @@ public class SwitchScenes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        TimerCountDown();
-        
+       
         if(switchScene)
             StartCoroutine(SceneSwitch(3));
+
+        if (gameState == 0)
+        {
+            TimerCountDown(7); 
+            
+        }
+        else if(gameState == 1)
+        {
+            TimerCountDown(14); 
+        }
+        else
+        {
+            TimerCountDown(17);
+        }
+
+        
         // npc detects player after door opened
         // scene switches when player see npc
         if (gameState != 1) return;
@@ -108,39 +134,30 @@ public class SwitchScenes : MonoBehaviour
 
     }
 
-    void TimerCountDown()
+    private float lateTimer = 0;
+    void TimerCountDown(int hour)
     {
         int seconds =  Mathf.RoundToInt(timer % 60);
         int minutes =  (int)MinutesOnClock + Mathf.FloorToInt(timer / 60f);
-        int hour = 0;
+        
+            timer += Time.deltaTime;
 
-
-        if (gameState == 1)
-        {
-            if (timer <= totalTimeInSeconds)
+        if (timer <= totalTimeInSeconds)
             {
-                timer += Time.deltaTime;
-                hour = 8;
-
-                if (seconds - LastSecond >= 0.9f || LastSecond == 59 && seconds == 0)
-                    if (!myAS.isPlaying)
-                        myAS.Play();
+               
+                TickingSound(seconds, LastSecond); 
+                LastSecond = Mathf.RoundToInt(timer % 60);
             }
             else
             {
                 timer = timer;
+                lateTimer += Time.deltaTime;
                 timerText.color = Color.red;
-                timerText.text = "09:00:00";
-                StartCoroutine(SceneSwitch(2));
+                //StartCoroutine(SceneSwitch(2));
             }
-
-            LastSecond = Mathf.RoundToInt(timer % 60);
-        }
-        else if (gameState == 2)
-        {
-            timer += Time.deltaTime;
-            hour = 16;
-        }
+             
+          
+       
         
         string secTxt;
         if (seconds < 10)
@@ -163,6 +180,13 @@ public class SwitchScenes : MonoBehaviour
         timerText.text = hourText + ':' + minText + ':' +  secTxt;
 
 
+    }
+
+    void TickingSound(int second, int lastSecond)
+    {
+        if (second - lastSecond >= 0.9f || lastSecond == 59 && second == 0)
+            if (!myAS.isPlaying)
+                myAS.Play();
     }
 
     public IEnumerator SceneSwitch(int seconds)
