@@ -11,7 +11,8 @@ using UnityEngine.UI;
 public class SwitchScenes : MonoBehaviour
 {
     public static int gameState = 0;
-    public bool doorOpened;
+    [HideInInspector]public bool doorOpened;
+    [HideInInspector]public bool switchScene;
     private Transform switchSceneNPC;
     // Start is called before the first frame update
     public int playMakerState;
@@ -62,7 +63,8 @@ public class SwitchScenes : MonoBehaviour
        
         if (gameState == 1)
         {
-           switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
+           print("switchnpc found");
+            switchSceneNPC = GameObject.Find("SwitchSceneNPC").transform;
             MinutesOnClock = Mathf.RoundToInt(secondsOnClock / 60);
         }
         else if (gameState == 2)
@@ -79,10 +81,13 @@ public class SwitchScenes : MonoBehaviour
         
         TimerCountDown();
         
+        if(switchScene)
+            StartCoroutine(SceneSwitch(3));
         // npc detects player after door opened
         // scene switches when player see npc
         if (gameState != 1) return;
         if (!doorOpened) return;
+        print("door Opened");
         RaycastHit hit = new RaycastHit();
         Physics.SphereCast(switchSceneNPC.position, 1.6f, switchSceneNPC.forward, out hit);
         Debug.DrawRay(switchSceneNPC.position,switchSceneNPC.forward,Color.red);
@@ -90,10 +95,13 @@ public class SwitchScenes : MonoBehaviour
         {
             if (hit.transform.CompareTag("Player"))
             {
-                print("seePlayer");
-                StartCoroutine(SceneSwitch(3));
+                print("seePlayer!!");
+                switchScene = true;
+           
             }
         }
+        
+        
 
 
 
@@ -160,12 +168,21 @@ public class SwitchScenes : MonoBehaviour
     public IEnumerator SceneSwitch(int seconds)
     {
             yield return new WaitForSeconds(seconds);
-
-            if (gameState == 1)
+              
+            if (gameState == 0)
+            {
+                print("switchScene");
+                //HomeSceneManager.IntoIndex = 1;
+                gameState = 1;
+               // SceneManager.LoadScene("HomeScene"); 
+                SceneManager.LoadScene("School"); 
+            }
+            else if (gameState == 1)
             {
                 HomeSceneManager.IntoIndex = 1;
                 gameState = 2;
-                SceneManager.LoadScene("HomeScene"); 
+               // SceneManager.LoadScene("HomeScene"); 
+                SceneManager.LoadScene("School"); 
             }
             else if (gameState == 2)
             {
