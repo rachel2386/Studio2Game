@@ -98,6 +98,8 @@ public class PanRotation : Pan
         InitFoodStatus();
 
         InitStateByLevel();
+
+      
     }
 
     public bool showAllPanFoodAtStart = true;
@@ -466,6 +468,12 @@ public class PanRotation : Pan
     // This is called when we have a tofu in hand and we click on the pan
     public void PanClicked()
     {
+        string heldName = "";
+        if (sis.curHeldObject)
+        {
+            heldName = sis.curHeldObject.name;
+        }
+     
         sis.ClearHand();
         int i = 0;
                
@@ -514,7 +522,10 @@ public class PanRotation : Pan
             for (; i < allFoodList.Count; i++)
             {
                 var go = allFoodList[i];
-                if (!go.activeSelf)
+                var goName = go.name.Substring(0, 4).ToLower(); ;
+                var heldSubName = heldName.Substring(0, 3).ToLower();
+                bool match = goName.Contains(heldSubName);
+                if (!go.activeSelf && match)
                 {
                     go.SetActive(true);
                     break;
@@ -567,7 +578,7 @@ public class PanRotation : Pan
     // This is called when a tofu on the cutting board is clicked
     int pickableTofuClickedCount = 0;
 
-    int beginOrganizeIndex = 6;
+    public int beginOrganizeIndex = 6;
     bool needAllIn = false;
     public void PickableTofuClicked(PickableTofu tofu)
     {
@@ -605,6 +616,11 @@ public class PanRotation : Pan
         if (level == 1 || level == 2)
         {
             SetAllTofuValidState(ShyInteractableObject.ValidationMode.INVALID, "?");
+        }
+
+        if (useFirstSet)
+        {
+            beginOrganizeIndex = 100;
         }
     }
 

@@ -12,7 +12,11 @@ public class Food : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pan = GameObject.FindObjectOfType<Pan>();
+        int a = 1;
+        pan = FindObjectOfType<PanRotation>();
+        Debug.Log(pan);
+        a++;
+        a++;
     }
 
     // Update is called once per frame
@@ -24,6 +28,8 @@ public class Food : MonoBehaviour
   
     public Vector3 GetJumpDestination()
     {
+        pan = FindObjectOfType<PanRotation>();
+
         var radius = pan.Radius;
         var max = pan.Max;
 
