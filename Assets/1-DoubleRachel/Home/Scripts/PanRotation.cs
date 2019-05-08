@@ -20,6 +20,12 @@ public class PanRotation : Pan
 
     public PlayMakerFSM mainFSM;
 
+    [Title("Food Prefabs")]
+    public GameObject garlicPrefab;
+    public GameObject steakPrefab;
+    public GameObject shrimpPrefab;
+    public GameObject broccoliPrefab;
+
     [Title("Sound Effects")]
     public AudioSource doorBell;
     public AudioClip doubleBellRing;

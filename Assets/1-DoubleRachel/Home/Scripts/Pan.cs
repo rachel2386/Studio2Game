@@ -8,7 +8,7 @@ public class Pan : MonoBehaviour
     public GameObject panEdge;
     public GameObject farthest;
     public GameObject jumpAnchorY;
-    public GameObject foodRoot;
+    public GameObject foodRoot;    
 
     protected List<GameObject> foodList = new List<GameObject>();
     protected List<GameObject> allFoodList = new List<GameObject>();
