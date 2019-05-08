@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13981b66f67204744891820795ef4230, type: 3}
   m_Name: MerinoTempData
   m_EditorClassIdentifier: 
-  editedID: 10
-  timestamp: 30061.518056120167
+  editedID: 8
+  timestamp: 11663.636027654322
   m_TreeElements:
   - m_ID: 0
     m_Name: Root
@@ -92,6 +92,51 @@ MonoBehaviour:
     enabled: 1
     leafType: 1
   - m_ID: 6
+    m_Name: ChangeClassroom
+    m_Depth: 1
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'Hey...In case you don''t know...
+
+      [[What|Change2]]
+
+
+'
+    enabled: 1
+    leafType: 0
+  - m_ID: 7
+    m_Name: Change2
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'They changed Algebra 101 to classroom 3-2.
+
+      [[Where Is that?|Change3]]'
+    enabled: 1
+    leafType: 0
+  - m_ID: 8
+    m_Name: Change3
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'Hmmmmmmmmmm........It''s like..
+
+      upstairs.. and you turn..wait no..
+
+      sorry..I don''t really know..
+
+      ->...'
+    enabled: 1
+    leafType: 0
+  - m_ID: 9
+    m_Name: 2ndTo3rd
+    m_Depth: 1
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'I should better go to class soon. '
+    enabled: 1
+    leafType: 0
+  - m_ID: 10
     m_Name: 1
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -102,15 +147,15 @@ MonoBehaviour:
       I don't mess up..)"
     enabled: 1
     leafType: 0
-  - m_ID: 7
+  - m_ID: 11
     m_Name: Justin
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
     nodeTags: 
-    nodeBody: Oh Shit. Is that the guy from Middle school? Should I talk to him?
+    nodeBody: Oh Shit. Is that the guy from middle school? Should I talk to him?
     enabled: 1
     leafType: 0
-  - m_ID: 8
+  - m_ID: 12
     m_Name: 2
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -130,7 +175,7 @@ MonoBehaviour:
       Where is the classroom again?'
     enabled: 1
     leafType: 0
-  - m_ID: 9
+  - m_ID: 13
     m_Name: ExcuseMe
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -142,7 +187,7 @@ MonoBehaviour:
       Nevermind.'
     enabled: 1
     leafType: 0
-  - m_ID: 10
+  - m_ID: 14
     m_Name: IntroduceNPC
     m_Depth: 1
     nodePosition: {x: 0, y: 0}
@@ -152,14 +197,129 @@ MonoBehaviour:
       Should I talk to him? (Or should I just pretend I don''t see him and walk away?)'
     enabled: 1
     leafType: 0
+  - m_ID: 15
+    m_Name: NPCDIalogue.yarn
+    m_Depth: 0
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 
+    enabled: 1
+    leafType: 1
+  - m_ID: 16
+    m_Name: NPC
+    m_Depth: 1
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'Hey!
+
+      Talk to me!
+
+      Hey! I am talking to you!
+
+      [[What|SchoolWiki]]
+
+      [[No way.|RejectionCrap]]'
+    enabled: 1
+    leafType: 0
+  - m_ID: 17
+    m_Name: End
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: Goodbye. Sorry I take up so much of your time. I just can't help it
+      when I SEE YOU.
+    enabled: 1
+    leafType: 0
+  - m_ID: 18
+    m_Name: SchoolWiki
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: "\nDo you know:\nA school is an educational institution designed to
+      provide learning spaces and learning environments for the teaching of students
+      (or \"pupils\") under the direction of teachers. \n[[So?|SchoolWiki2]]\n[[I
+      Don't really care.|RejectionCrap]]\n"
+    enabled: 1
+    leafType: 0
+  - m_ID: 19
+    m_Name: SchoolWiki2
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'Most countries have systems of formal education, which is commonly
+      compulsory.[citation needed] In these systems, students progress through a series
+      of schools. The names for these schools vary by country (discussed in the Regional
+      section below) but generally include primary school for young children and secondary
+      school for teenagers who have completed primary education. An institution where
+      higher education is taught, is commonly called a university college or university,
+      but these higher education institutions are usually not compulsory.
+
+      [[Ok.I get it.|End]]
+
+      [[What else do you know?|ShoolWiki3]]
+
+'
+    enabled: 1
+    leafType: 0
+  - m_ID: 20
+    m_Name: SchoolWiki3
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: 'There are also non-government schools, called private schools. Private
+      schools [1] may be required when the government does not supply adequate, or
+      special education. Other private schools can also be religious, such as Christian
+      schools, madrasa, hawzas (Shi''a schools), yeshivas (Jewish schools), and others;
+      or schools that have a higher standard of education or seek to foster other
+      personal achievements. Schools for adults include institutions of corporate
+      training, military education and training and business sc
+
+      [[All right. Thank you for sharing.|End]]
+
+      [[You can FXXK OFF NOW |RejectionCrap]]'
+    enabled: 1
+    leafType: 0
+  - m_ID: 21
+    m_Name: RejectionCrap
+    m_Depth: 2
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: "It's ok. I love rejections. Let me tell you why:\n\nWhy I love Being
+      Rejected. And You Should Too.\nTo pull my socks up after a defeat isn\u2019t
+      the only thing I\u2019ve learned from my Literature teacher.\n\nShe also taught
+      me to love being rejected.\n\nThat wasn\u2019t her intention though. She was
+      just doubtful about my potential.\n\nDuring my High School senior year, in Argentina,
+      I had to take some English exams. The stakes were high.\n\nMonths later, when
+      the results came back from England, my teacher was surprised that I didn\u2019t
+      fail. My scores were among the top 15% of the class.\n\nThat\u2019s how powerful
+      rejection can be when I use it as fuel.\n[[Bye.|End]]\n\n\n"
+    enabled: 1
+    leafType: 0
+  - m_ID: 22
+    m_Name: Start_MoreExamples
+    m_Depth: 1
+    nodePosition: {x: 0, y: 0}
+    nodeTags: 
+    nodeBody: "This node is called Start_MoreExamples.\nThe second way to do choices
+      in Yarn is with 'shortcut options' like this:\n\n->This is option 1\n\tYou selected
+      option 1.\n->This is option 2\n\tYou selected option 2.\n\t<<set $didOption2
+      to true>>\n\nBased on choices, you can set variables, and then check those variables
+      later.\n<<if $didOption2 is true>>\nBy checking $didOption2, I remember you
+      chose option 2!\n<<else>>\nI can't detect a variable $didOption2, so that means
+      you chose option 1\n<<endif>>\n\nDo you want to go back to Start now?\n-> Yes,
+      send me back to Start.\n\t[[Start]]\n-> No thanks, I want to stop.\n\nOk here's
+      the end, good luck!"
+    enabled: 1
+    leafType: 0
   currentFiles:
   - {fileID: 4900000, guid: 266365006c7f62742a016137bc2cc18c, type: 3}
   - {fileID: 4900000, guid: fa7c259dca3fb1849ad7ba9dc0458bdc, type: 3}
+  - {fileID: 4900000, guid: 1ddde974b83a2e649a1834958e86d79d, type: 3}
   viewState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0a000000
-    m_LastClickedID: 10
-    m_ExpandedIDs: 00000000010000000500000006000000
+    scrollPos: {x: 0, y: 60}
+    m_SelectedIDs: 08000000
+    m_LastClickedID: 8
+    m_ExpandedIDs: 000000000100000005000000060000000d0000000f00000010000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
