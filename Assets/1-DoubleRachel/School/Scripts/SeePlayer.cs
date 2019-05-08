@@ -11,7 +11,7 @@ public class SeePlayer : MonoBehaviour
     public bool ConsiderPlayerEyeContact;
     public bool PlayerSeen { get; set; }
 
-    private float angleOfView = 60;
+    private float angleOfView = 90;
     //test
     //public Transform testObject;
     //public float dotProduct;
@@ -25,7 +25,9 @@ public class SeePlayer : MonoBehaviour
     void Update()
     {
         LookForPlayer();
-        
+      
+        if(PlayerSeen)
+            print("seenPlayer");
         //testForDot
 //        dotProduct = Vector3.Dot(transform.forward.normalized, (testObject.position-transform.position).normalized);
 //        print(dotProduct);
@@ -38,14 +40,12 @@ public class SeePlayer : MonoBehaviour
 
         if (!ConsiderPlayerEyeContact)
         {
-            if (angle <= angleOfView)
-                PlayerSeen = true;
+           PlayerSeen = angle <= angleOfView;
         }
 
         else
         {
-            if (angle <= angleOfView && PlayerEyeContact())
-            PlayerSeen = true;
+            PlayerSeen = angle <= angleOfView && PlayerEyeContact();
             
         }
 

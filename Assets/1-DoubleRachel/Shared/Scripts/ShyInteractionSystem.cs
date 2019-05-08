@@ -29,6 +29,8 @@ public class ShyInteractionSystem : MonoBehaviour
 
     public bool forceHideCenterText = false;
 
+    public float distance = 1000;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -109,7 +111,7 @@ public class ShyInteractionSystem : MonoBehaviour
     {
 
         var ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 1));
-        RaycastHit[] hits = Physics.RaycastAll(ray, 1000f);
+        RaycastHit[] hits = Physics.RaycastAll(ray, distance);
         if (hits.Length > 0)
         {
             HandleInteractionS(hits);

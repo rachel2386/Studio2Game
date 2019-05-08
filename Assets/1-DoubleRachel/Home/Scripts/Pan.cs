@@ -8,7 +8,9 @@ public class Pan : MonoBehaviour
     public GameObject panEdge;
     public GameObject farthest;
     public GameObject jumpAnchorY;
-    public GameObject foodRoot;
+    public GameObject[] foodRoot;
+    public GameObject[] pickRoot;
+    
 
     protected List<GameObject> foodList = new List<GameObject>();
     protected List<GameObject> allFoodList = new List<GameObject>();
@@ -33,18 +35,35 @@ public class Pan : MonoBehaviour
         max = ShyMiscTool.GetPlaneDistance(panCenter.transform.position, farthest.transform.position);
     }
 
+    protected bool useFirstSet = true;
+
     // Start is called before the first frame update
     protected void Start()
     {
-        var foodCompenents = foodRoot.GetComponentsInChildren<Food>();
+        useFirstSet = HomeSceneManager.IntoIndex <= 0;
+ 
+        // Pick food
+        foreach (var go in pickRoot)
+            go.SetActive(false);
+
+        int pickRootIndex = useFirstSet ? 0 : 1;
+        pickRoot[pickRootIndex].SetActive(true);
+
+
+        // food in pan
+        int foodRootIndex = useFirstSet ? 0 : 1;
+        var foodCompenents = foodRoot[foodRootIndex].GetComponentsInChildren<Food>();
         foreach (var com in foodCompenents)
         {
             foodList.Add(com.gameObject);
             allFoodList.Add(com.gameObject);
-        }
-           
+        }          
 
         oriFoodCount = foodList.Count;
+
+        foreach (var go in foodRoot)
+            go.SetActive(false);
+        foodRoot[foodRootIndex].SetActive(true);
     }
 
     // Update is called once per frame
