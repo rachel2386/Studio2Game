@@ -231,7 +231,7 @@ public class ShyMouseLook
 
         if (!allowMicroMv)
         {
-            ForceSetRotationFromCurrentGameObject();
+            ForceSetRotationFromCurrentGameObject(controller.transform);
             return;
         }
 
@@ -255,12 +255,14 @@ public class ShyMouseLook
         controller.transform.localEulerAngles = charE;
         Camera.main.transform.localEulerAngles = camE;
 
-        ForceSetRotationFromCurrentGameObject();
+        ForceSetRotationFromCurrentGameObject(controller.transform);
     }
 
-    public void ForceSetRotationFromCurrentGameObject()
-    {       
-        m_CharacterTargetRot = controller.transform.localRotation;
+    public void ForceSetRotationFromCurrentGameObject(Transform fpsController = null)
+    {
+        if (fpsController == null)
+            fpsController = controller.transform;
+        m_CharacterTargetRot = fpsController.localRotation;
         m_CameraTargetRot = Camera.main.transform.localRotation;
     }
 

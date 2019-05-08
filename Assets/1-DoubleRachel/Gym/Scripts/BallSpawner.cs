@@ -35,7 +35,7 @@ public class BallSpawner : MonoBehaviour
 			progress -= 1.0f;
 		}
 
-		if (count == 10)
+		if (count == 20)
 		{
 			gameObject.MySendEventToAll("PlayBell");
 		}

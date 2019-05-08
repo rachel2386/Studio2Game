@@ -12,6 +12,8 @@ public class ShyDialogTrigger : MonoBehaviour
     public bool lockMove = true;
     public bool lockMouseLook = true;
     public bool canStillInteract = false;
+    public bool hideCurtainWhenComplete = true;
+    public GameObject commandForward;
     
     [Header("Optional")]    
     public TextAsset scriptToLoad;
@@ -85,5 +87,12 @@ public class ShyDialogTrigger : MonoBehaviour
     public void StopDialogLecacyWithMatch(bool needMatch = true)
     {
         FindObjectOfType<ShyDialogManager>().StopDialogLegacy(this, needMatch);
+    }
+
+    public void HandleCommand(string cmd)
+    {
+        gameObject.MySendEventToAll(cmd);
+        if (commandForward)
+            commandForward.MySendEventToAll(cmd);
     }
 }
