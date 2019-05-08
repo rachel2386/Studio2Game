@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HomeSceneManager : MonoBehaviour
 {
@@ -21,9 +23,13 @@ public class HomeSceneManager : MonoBehaviour
     public GameObject screwDriver;
     public GameObject remote;
 
+    public PlayMakerFSM lastFSM;    
 
-    public PlayMakerFSM lastFSM;
-    
+    [Title("Score Page")]
+    public GameObject[] foodInPlates;
+    public Text scoreGrade;
+    public string[] scoreGradeStrs;
+       
 
     public int GetIntoIndex()
     {
@@ -86,6 +92,17 @@ public class HomeSceneManager : MonoBehaviour
             
         }
 
+        // check which food in plate to use in score page
+        bool useFirstSet = PanRotation.UseFirstSet();
+        int foodInPlatesIndex = useFirstSet ? 0 : 1;
+        foodInPlates[foodInPlatesIndex].SetActive(true);
+
+        // set score title
+        if(scoreGrade != null && scoreGradeStrs != null)
+        {
+            int randomIndex = Random.Range(0, scoreGradeStrs.Length);
+            scoreGrade.text = scoreGradeStrs[randomIndex];
+        }
     }
 
     void InitPosition(ShyFPSController controller, Vector3 posi)
