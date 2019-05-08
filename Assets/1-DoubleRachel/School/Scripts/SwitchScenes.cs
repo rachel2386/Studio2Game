@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class SwitchScenes : MonoBehaviour
 {
-    public static int gameState = 2;
+    public static int gameState = 0;
     [HideInInspector]public bool doorOpened;
     [HideInInspector]public bool switchScene;
     private Transform switchSceneNPC;
