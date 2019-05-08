@@ -20,6 +20,7 @@ public class NPCBehavior : MonoBehaviour
     
     #region Navmesh Agent Properties
 
+    private NavMeshSurface navMesh;
     private NavMeshAgent myAgent;
     
     public List<Transform> Destinations = new List<Transform>();
@@ -80,6 +81,7 @@ public class NPCBehavior : MonoBehaviour
         myAgent = GetComponent<NavMeshAgent>();
         myAnim = GetComponent<Animator>();
         
+        
         exclamationMark.SetActive(false);
         
         playerTransform = GameObject.Find("PlayerBase").transform;
@@ -101,6 +103,10 @@ public class NPCBehavior : MonoBehaviour
         }
         else
         {
+            transform.rotation = Quaternion.Slerp(transform.rotation, 
+                Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up),
+                Time.deltaTime *turnSpeed);
+            
             if (!GreetedPlayer)
             FollowPlayer();
            
@@ -142,7 +148,11 @@ public class NPCBehavior : MonoBehaviour
             {
                 StartCoroutine(wait(Random.Range(2,4)));
                 if (DestinationIndex < Destinations.Count)
+                {
                     DestinationIndex++;
+                    DestinationIndex = DestinationIndex % Destinations.Count;
+                }
+
                 else
                     DestinationIndex = 0;
             }
@@ -217,7 +227,7 @@ public class NPCBehavior : MonoBehaviour
         else
         {
             myAgent.isStopped = true;
-            print("pathpending...");
+            
         }
 
         
@@ -230,11 +240,7 @@ public class NPCBehavior : MonoBehaviour
     private void FollowPlayer()
     {
        
-        print("playerDetected");
-        transform.rotation = Quaternion.Slerp(transform.rotation, 
-                                              Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up),
-                                              Time.deltaTime *turnSpeed);
-        
+       
         if (myAgent.destination != playerTransform.position)
         {
             myAgent.ResetPath();
