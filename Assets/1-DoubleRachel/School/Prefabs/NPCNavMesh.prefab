@@ -519,6 +519,7 @@ GameObject:
   - component: {fileID: 8538277882482559268}
   - component: {fileID: 4363729354155544455}
   - component: {fileID: 6032077653298950262}
+  - component: {fileID: 114483744556030732}
   m_Layer: 0
   m_Name: NPCNavMesh
   m_TagString: Untagged
@@ -636,7 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c6868851fbb9c4e8908866fd058787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myDestination: {fileID: 0}
+  Destinations: []
   Trigger: 0
   Automatic: 0
   Stationary: 1
@@ -653,7 +654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4dd59483a9cf4fa793986ce870971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConsiderPlayerEyeContact: 1
 --- !u!114 &8538277882482559268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -990,7 +990,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -1005,7 +1005,7 @@ MonoBehaviour:
     handleCollisionEnter2D: 0
     handleCollisionExit2D: 0
     handleCollisionStay2D: 0
-    handleTriggerEnter: 0
+    handleTriggerEnter: 1
     handleTriggerExit: 0
     handleTriggerStay: 0
     handleCollisionEnter: 0
@@ -1024,7 +1024,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!82 &4363729354155544455
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1807,7 +1807,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -1841,7 +1841,21 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
+--- !u!114 &114483744556030732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437681491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 82786459, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFSMs:
+  - {fileID: 8538277882482559268}
 --- !u!1 &443844701
 GameObject:
   m_ObjectHideFlags: 0
@@ -6355,7 +6369,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100002, guid: 367f2a84cd5408f43a962b865e46201a, type: 3}
+  - {fileID: 2100000, guid: fe08d1c05575aae458fd112f5e6d3c5f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
