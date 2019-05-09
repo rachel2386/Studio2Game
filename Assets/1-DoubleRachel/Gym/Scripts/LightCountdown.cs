@@ -16,7 +16,8 @@ public class LightCountdown : MonoBehaviour
         door.enabled = false;
         lamp.SetActive(false);
         StartCoroutine(LightWait());
-        StartCoroutine(SwitchScene());
+        StartCoroutine(SwitchScene());       
+        StartCoroutine(Mouse());
     }
 
     IEnumerator LightWait()
@@ -25,6 +26,12 @@ public class LightCountdown : MonoBehaviour
         lightswitch.Play();
         lamp.SetActive(true);
         door.enabled = true;
+    }
+
+    IEnumerator Mouse()
+    {
+        yield return new WaitForSeconds(2.5f);
+        //Cursor.lockState = CursorLockMode.None;
     }
 
     IEnumerator SwitchScene()
