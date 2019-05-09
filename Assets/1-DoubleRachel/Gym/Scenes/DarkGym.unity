@@ -7368,8 +7368,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 30
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -7404,7 +7404,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -7733,51 +7733,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: m_FootstepSounds.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: m_WalkSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: m_RunSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: m_FootstepSounds.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 50f0ad4eb9e024ca5952f072cda32634, type: 3}
-    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: lockMouseLook
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1581911490716022558, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1581911490716022558, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1581911490716022558, guid: 47d12bb965d9f473eaa80a92789f41c7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4980364706073822037, guid: 47d12bb965d9f473eaa80a92789f41c7,
         type: 3}
       propertyPath: pickupRoot
@@ -7829,10 +7784,55 @@ PrefabInstance:
       propertyPath: maxGrainSize
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: m_FootstepSounds.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: m_WalkSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: m_RunSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: m_FootstepSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 50f0ad4eb9e024ca5952f072cda32634, type: 3}
+    - target: {fileID: 6362699173788486154, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: lockMouseLook
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2727283450294717368, guid: 47d12bb965d9f473eaa80a92789f41c7,
         type: 3}
       propertyPath: m_IsKinematic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1581911490716022558, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1581911490716022558, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1581911490716022558, guid: 47d12bb965d9f473eaa80a92789f41c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8526516779430059802, guid: 47d12bb965d9f473eaa80a92789f41c7,
         type: 3}
