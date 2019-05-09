@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HomeSceneManager : MonoBehaviour
 {
     public HomeSceneSetting initSetting;
-    public static int IntoIndex = 2;
+    public static int IntoIndex = -1;
 
     ShyFPSController fpsController;
     ShyCamera shyCam;
@@ -21,9 +23,16 @@ public class HomeSceneManager : MonoBehaviour
     public GameObject screwDriver;
     public GameObject remote;
 
+    public PlayMakerFSM lastFSM;    
 
-    public PlayMakerFSM lastFSM;
-    
+    [Title("Score Page")]
+    public GameObject[] foodInPlates;
+    public Text scoreGrade;
+    public string[] scoreGradeStrs;
+
+    [Title("Debug")]
+    public Text mouseMoveDebug;
+    public Text mouseLookDebug;
 
     public int GetIntoIndex()
     {
@@ -42,7 +51,7 @@ public class HomeSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (initSetting)
+        if (initSetting && IntoIndex == -1)
             IntoIndex = initSetting.InitHomeIndex;
 
         screwDriver.SetActive(IntoIndex == 1);
@@ -86,6 +95,17 @@ public class HomeSceneManager : MonoBehaviour
             
         }
 
+        // check which food in plate to use in score page
+        bool useFirstSet = PanRotation.UseFirstSet();
+        int foodInPlatesIndex = useFirstSet ? 0 : 1;
+        foodInPlates[foodInPlatesIndex].SetActive(true);
+
+        // set score title
+        if(scoreGrade != null && scoreGradeStrs != null)
+        {
+            int randomIndex = Random.Range(0, scoreGradeStrs.Length);
+            scoreGrade.text = scoreGradeStrs[randomIndex];
+        }
     }
 
     void InitPosition(ShyFPSController controller, Vector3 posi)
@@ -118,6 +138,15 @@ public class HomeSceneManager : MonoBehaviour
     {
         // fpsController.transform.position = playerBornPosis[1].position;
         // panRotation.PanRotationUpdateStateByLevel(IntoIndex);
+        DebugMouseMvInfoInUpdate();
+    }
+
+    void DebugMouseMvInfoInUpdate()
+    {
+        var  y = LevelManager.Instance.PlayerActions.Look.Y;
+        var x = LevelManager.Instance.PlayerActions.Look.X;
+        mouseMoveDebug.text = "Mouse y: " + y + "  x: " + x;
+        mouseLookDebug.text = fpsController.GetMouseLook().debugInfo;
     }
 
     public void SetSchoolSceneIndex(int value)
