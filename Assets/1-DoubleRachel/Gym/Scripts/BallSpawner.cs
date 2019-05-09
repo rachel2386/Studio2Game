@@ -20,7 +20,7 @@ public class BallSpawner : MonoBehaviour
 
 	void Spawn()
 	{
-		Vector3 position = new Vector3(Random.Range(-43f, 46f), Random.Range(-10f, 10f), 0);
+		Vector3 position = new Vector3(Random.Range(-20f, 20f), Random.Range(-10f, 10f), 0);
 		Transform next = Instantiate(model, position, transform.rotation) as Transform;
 		next.parent = transform;
 		count += 1;

@@ -8,7 +8,7 @@ public class SeePlayer : MonoBehaviour
     // Start is called before the first frame update
     private Transform player;
 
-    public bool ConsiderPlayerEyeContact;
+    private bool _considerPlayerEyeContact = false;
     public bool PlayerSeen { get; set; }
 
     private float angleOfView = 90;
@@ -26,8 +26,6 @@ public class SeePlayer : MonoBehaviour
     {
         LookForPlayer();
       
-        if(PlayerSeen)
-            print("seenPlayer");
         //testForDot
 //        dotProduct = Vector3.Dot(transform.forward.normalized, (testObject.position-transform.position).normalized);
 //        print(dotProduct);
@@ -38,7 +36,7 @@ public class SeePlayer : MonoBehaviour
         Vector3 playerDir = Vector3.Normalize(player.position - transform.position);
         float angle = Vector3.Angle(playerDir, transform.forward);
 
-        if (!ConsiderPlayerEyeContact)
+        if (!_considerPlayerEyeContact)
         {
            PlayerSeen = angle <= angleOfView;
         }
