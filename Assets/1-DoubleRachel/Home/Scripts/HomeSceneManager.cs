@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class HomeSceneManager : MonoBehaviour
 {
     public HomeSceneSetting initSetting;
-    public static int IntoIndex = 2;
+    public static int IntoIndex = -1;
 
     ShyFPSController fpsController;
     ShyCamera shyCam;
@@ -29,7 +29,10 @@ public class HomeSceneManager : MonoBehaviour
     public GameObject[] foodInPlates;
     public Text scoreGrade;
     public string[] scoreGradeStrs;
-       
+
+    [Title("Debug")]
+    public Text mouseMoveDebug;
+    public Text mouseLookDebug;
 
     public int GetIntoIndex()
     {
@@ -48,7 +51,7 @@ public class HomeSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (initSetting)
+        if (initSetting && IntoIndex == -1)
             IntoIndex = initSetting.InitHomeIndex;
 
         screwDriver.SetActive(IntoIndex == 1);
@@ -135,6 +138,15 @@ public class HomeSceneManager : MonoBehaviour
     {
         // fpsController.transform.position = playerBornPosis[1].position;
         // panRotation.PanRotationUpdateStateByLevel(IntoIndex);
+        DebugMouseMvInfoInUpdate();
+    }
+
+    void DebugMouseMvInfoInUpdate()
+    {
+        var  y = LevelManager.Instance.PlayerActions.Look.Y;
+        var x = LevelManager.Instance.PlayerActions.Look.X;
+        mouseMoveDebug.text = "Mouse y: " + y + "  x: " + x;
+        mouseLookDebug.text = fpsController.GetMouseLook().debugInfo;
     }
 
     public void SetSchoolSceneIndex(int value)

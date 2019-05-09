@@ -103,10 +103,11 @@ public class ShyMouseLook
         // MinimumX = eyeLimitationAngle;
     }
 
-    
+    public string debugInfo;
 
     public void LookRotation(Transform character, Transform camera)
     {
+        debugInfo = "";
         UpdateCursorLock();
 
         if (menuMode)
@@ -144,9 +145,16 @@ public class ShyMouseLook
         bool isInShyAway = false;
         if (UseDynamicCheck)
         {
-            var eyeLim = CheckEye(character, camera);
+            bool foundOne = false;
+            var eyeLim = CheckEye(character, camera, out foundOne);
             // eye lim lower than current camera means camera should pitch down
-            if (IsLowerThan(eyeLim, camera.localRotation))
+            var isLowerThan = IsLowerThan(eyeLim, camera.localRotation);
+
+            // Don't use the found one now because I've chagned the IsLowerThan to have a small tolerance
+            //if (!foundOne)
+            //    isLowerThan = false;
+            
+            if (isLowerThan)
             {
                 isInShyAway = true;
                 // if camera is about to pitch down
@@ -281,7 +289,7 @@ public class ShyMouseLook
         return ret;
     }
 
-    private Quaternion CheckEye(Transform character, Transform camera)
+    private Quaternion CheckEye(Transform character, Transform camera, out bool retFoundOne)
     {
         var eyes = GameObject.FindObjectsOfType<Eye>();
         
@@ -291,7 +299,7 @@ public class ShyMouseLook
         bool foundOne = false;
 
 
-
+        Eye theFoundEye = null;
         // for eyes in the view port
         foreach (var eye in eyes)
         {
@@ -352,15 +360,21 @@ public class ShyMouseLook
                     a++;
                 }
                 foundOne = true;
+                theFoundEye = eye;
+                // debugInfo = "1: " + eye.name;
             }
             else if (eyeInVp.x >= 0 && eyeInVp.x <= 1)
             {
                 lowestQuaternion = GetLowerQuaternion(thisCamLimRot, lowestQuaternion);
                 foundOne = true;
+                theFoundEye = eye;
+                // debugInfo = "2: " + eye.name;
             }
         }
 
-        
+
+
+        retFoundOne = foundOne;
 
         return lowestQuaternion;
     }
@@ -415,7 +429,10 @@ public class ShyMouseLook
         var x1 = q1.x / q1.w;
         var x2 = q2.x / q2.w;
 
-        return x1 > x2;
+        bool t1 = x1 > x2;
+        debugInfo = "x1: " + x1 + "   x2: "  + x2 + "  >?  " + t1;
+
+        return x1 > x2 + 0.01;
     }
 
     float AngleBetweenEyeAndCameraForward(Transform eye, Camera camera)
