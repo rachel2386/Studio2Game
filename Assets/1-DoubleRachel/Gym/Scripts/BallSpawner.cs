@@ -20,8 +20,9 @@ public class BallSpawner : MonoBehaviour
 
 	void Spawn()
 	{
-		Vector3 position = new Vector3(Random.Range(-20f, 20f), Random.Range(-10f, 10f), 0);
-		Transform next = Instantiate(model, position, transform.rotation) as Transform;
+		Vector3 position = new Vector3(Random.Range(15f, 130f), Random.Range(-10f, 20f), Random.Range(-17f, 140f));
+		Quaternion rotation = new Quaternion(Random.Range(-300f, 300f), Random.Range(-300f, 300f),Random.Range(-300f, 300f),Random.Range(-300f, 300f) );
+		Transform next = Instantiate(model, position, rotation) as Transform;
 		next.parent = transform;
 		count += 1;
 	}
@@ -35,7 +36,7 @@ public class BallSpawner : MonoBehaviour
 			progress -= 1.0f;
 		}
 
-		if (count == 20)
+		if (count == 15)
 		{
 			gameObject.MySendEventToAll("PlayBell");
 		}
