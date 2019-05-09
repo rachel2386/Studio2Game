@@ -11,12 +11,8 @@ public class Food : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        int a = 1;
+    {        
         pan = FindObjectOfType<PanRotation>();
-        Debug.Log(pan);
-        a++;
-        a++;
     }
 
     // Update is called once per frame

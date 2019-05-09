@@ -76,7 +76,7 @@ public class ShyDialogManager : Yarn.Unity.DialogueUIBehaviour
         {
             dialogueContainer = dialogUI.container;
             lineText = dialogUI.content.GetComponent<Text>();
-            continuePrompt = dialogUI.content;
+            continuePrompt = dialogUI.continuePromt;
 
             int index = 0;
             foreach (var option in dialogUI.options)
