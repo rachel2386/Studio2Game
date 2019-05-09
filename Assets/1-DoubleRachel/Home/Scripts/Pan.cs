@@ -37,11 +37,15 @@ public class Pan : MonoBehaviour
 
     protected bool useFirstSet = true;
 
+    public static bool UseFirstSet()
+    {
+        return HomeSceneManager.IntoIndex <= 0;
+    }
     // Start is called before the first frame update
     protected void Start()
     {
-        useFirstSet = HomeSceneManager.IntoIndex <= 0;
- 
+        useFirstSet = UseFirstSet();
+
         // Pick food
         foreach (var go in pickRoot)
             go.SetActive(false);

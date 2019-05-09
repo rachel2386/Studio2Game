@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 7961725033370967704}
   - component: {fileID: 305199113100541610}
   - component: {fileID: 4712395862807905461}
+  - component: {fileID: 114875247976384612}
   m_Layer: 5
   m_Name: Option 1
   m_TagString: Untagged
@@ -447,7 +448,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -476,12 +477,12 @@ MonoBehaviour:
     handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
-    handleUiEvents: 0
+    handleUiEvents: 128
     handleLegacyNetworking: 0
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!114 &4712395862807905461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,6 +496,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enterChangeText: 
+--- !u!114 &114875247976384612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7961725033370967706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad323e26f6475e1418442dbe3aa94632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFsms:
+  - {fileID: 305199113100541610}
 --- !u!1 &7961725033617893199
 GameObject:
   m_ObjectHideFlags: 0

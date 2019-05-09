@@ -597,6 +597,7 @@ public class PanRotation : Pan
             {
                 Debug.Log("All_PUT");
                 gameObject.MySendEventToAll("ALL_PUT");
+                allAlreadyIn = true;
             }
             
             if(i <= allFoodList.Count - 1)

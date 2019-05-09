@@ -1509,7 +1509,9 @@ MonoBehaviour:
   panEdge: {fileID: 2594121088776589225}
   farthest: {fileID: 2594121089137780205}
   jumpAnchorY: {fileID: 8250762986014500667}
-  foodRoot: {fileID: 2594121088173444956}
+  foodRoot:
+  - {fileID: 0}
+  pickRoot: []
   pan: {fileID: 2594121087889147740}
   panModel: {fileID: 2594121088257667967}
   liftedAnchor: {fileID: 670767771}
@@ -1519,10 +1521,10 @@ MonoBehaviour:
   switchModel: {fileID: 0}
   switchModelRoot: {fileID: 0}
   mainFSM: {fileID: 0}
-  garlicPrefab: {fileID: 0}
-  steakPrefab: {fileID: 0}
-  shrimpPrefab: {fileID: 0}
-  broccoliPrefab: {fileID: 0}
+  garlicPlayer: {fileID: 0}
+  steakPlayer: {fileID: 0}
+  shrimpPlayer: {fileID: 0}
+  broccoliPlayer: {fileID: 0}
   doorBell: {fileID: 0}
   doubleBellRing: {fileID: 8300000, guid: 6001d01162a2c3843903b17dc7caab29, type: 3}
   foodPickClip: {fileID: 0}
@@ -1551,6 +1553,7 @@ MonoBehaviour:
   rotateSpeedZ: 2
   rotateAmplitudeY: 20
   rotateAmplitudeZ: 15
+  beginOrganizeIndex: 6
 --- !u!65 &7367884264442833026
 BoxCollider:
   m_ObjectHideFlags: 0
