@@ -7,26 +7,30 @@ public class PlayerReposition : MonoBehaviour
     public Transform Position;
     public GameObject Player;
     public AudioSource StaticSound;
+
+   public static int trigTime = 0;
+    
 //    public ShyCamera Camera;
 //    public float Timer = 1f;
 //    private bool Countdown;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-//            Countdown = true;
-            StaticSound.Play();
-            Player.transform.position = Position.position;
-        }
-    }
+   
 
     // Start is called before the first frame update
     void Start()
     {
-//        Camera.runtimeProfile.grain.enabled = false;
     }
-
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+//          Countdown = true;
+            trigTime += 1;
+            StaticSound.Play();
+            Player.transform.position = Position.position;
+        }
+    }
     // Update is called once per frame
     void Update()
     {

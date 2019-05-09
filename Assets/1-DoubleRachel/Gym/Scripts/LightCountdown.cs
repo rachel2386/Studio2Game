@@ -10,14 +10,16 @@ public class LightCountdown : MonoBehaviour
     public AudioSource lightswitch;
     public Light door;
     public GameObject lamp;
+    
     // Start is called before the first frame update
     void Start()
     {
         door.enabled = false;
         lamp.SetActive(false);
-        StartCoroutine(LightWait());
-        StartCoroutine(SwitchScene());       
-        StartCoroutine(Mouse());
+        StartCoroutine(LightWait());             
+        StartCoroutine(SwitchScene()); 
+        
+        
     }
 
     IEnumerator LightWait()
@@ -28,11 +30,6 @@ public class LightCountdown : MonoBehaviour
         door.enabled = true;
     }
 
-    IEnumerator Mouse()
-    {
-        yield return new WaitForSeconds(2.5f);
-        //Cursor.lockState = CursorLockMode.None;
-    }
 
     IEnumerator SwitchScene()
     {
@@ -44,6 +41,10 @@ public class LightCountdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //int jump = PlayerReposition.trigTime;
+        //if (jump > 0)
+        //{
+        //    StartCoroutine(SwitchScene()); 
+        //}
     }
 }
