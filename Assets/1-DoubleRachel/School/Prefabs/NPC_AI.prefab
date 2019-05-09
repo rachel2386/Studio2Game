@@ -123,6 +123,8 @@ MonoBehaviour:
   lockMove: 1
   lockMouseLook: 0
   canStillInteract: 0
+  hideCurtainWhenComplete: 1
+  commandForward: {fileID: 0}
   scriptToLoad: {fileID: 0}
   completeEvent:
     unityEvent:
@@ -1947,7 +1949,7 @@ PrefabInstance:
       objectReference: {fileID: 1602538158571965353}
     - target: {fileID: 437681493, guid: 61745b35b351829479ce99afb87854d6, type: 3}
       propertyPath: m_BaseOffset
-      value: -0.12
+      value: -0.22
       objectReference: {fileID: 0}
     - target: {fileID: 3546812524422592338, guid: 61745b35b351829479ce99afb87854d6,
         type: 3}
@@ -2853,7 +2855,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 414b909a275e3154d9490779193275e2, type: 2}
+      objectReference: {fileID: 2100000, guid: fe08d1c05575aae458fd112f5e6d3c5f, type: 2}
     - target: {fileID: 7209968819799446491, guid: 61745b35b351829479ce99afb87854d6,
         type: 3}
       propertyPath: m_Bones.Array.data[0]

@@ -101,7 +101,7 @@ public class SwitchScenes : MonoBehaviour
         }
         else if(gameState == 1)
         {
-            TimerCountDown(14); 
+            TimerCountDown(13); 
         }
         else
         {
@@ -195,18 +195,17 @@ public class SwitchScenes : MonoBehaviour
               
             if (gameState == 0)
             {
-                print("switchScene");
-                //HomeSceneManager.IntoIndex = 1;
+                HomeSceneManager.IntoIndex = 0;
                 gameState = 1;
-               // SceneManager.LoadScene("HomeScene"); 
-                SceneManager.LoadScene("School"); 
+                SceneManager.LoadScene("HomeScene"); 
+                //SceneManager.LoadScene("School"); 
             }
             else if (gameState == 1)
             {
-                HomeSceneManager.IntoIndex = 1;
+                //HomeSceneManager.IntoIndex = 1;
                 gameState = 2;
                // SceneManager.LoadScene("HomeScene"); 
-                SceneManager.LoadScene("School"); 
+                SceneManager.LoadScene("DarkGym"); 
             }
             else if (gameState == 2)
             {
