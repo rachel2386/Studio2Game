@@ -153,4 +153,9 @@ public class HomeSceneManager : MonoBehaviour
     {
         SwitchScenes.gameState = value;
     }
+
+    public void SetHomeSceneIndex(int value)
+    {
+        IntoIndex = value;
+    }
 }
