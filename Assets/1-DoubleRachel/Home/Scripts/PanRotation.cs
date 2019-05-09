@@ -706,7 +706,7 @@ public class PanRotation : Pan
         if (level >= 2)
             switchModelRoot.SetActive(false);
 
-        if (level == 1 || level == 2)
+        if (level == 1 || level == 2 || level == 3)
         {
             SetAllTofuValidState(ShyInteractableObject.ValidationMode.INVALID, "?");
         }
