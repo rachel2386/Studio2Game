@@ -18,7 +18,7 @@ public class LightCountdown : MonoBehaviour
     IEnumerator LightWait()
     {
         yield return new WaitUntil(() => panic.isPlaying == false);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         lightswitch.Play();
         door.enabled = true;
     }
