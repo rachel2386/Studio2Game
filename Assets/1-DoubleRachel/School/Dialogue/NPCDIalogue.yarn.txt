@@ -1,62 +1,217 @@
-title: NPC
+title: NewOutfit
 tags: 
 colorID: 0
 position: 0,0
 parent: 
 ---
-Hey!
-Talk to me!
-Hey! I am talking to you!
-[[What|SchoolWiki]]
-[[No way.|RejectionCrap]]
-===
-title: End
-tags: 
-colorID: 0
-position: 0,0
-parent: NPC
----
-Goodbye. Sorry I take up so much of your time. I just can't help it when I SEE YOU.
+???: Hey R.!
+???: Check out my new jacket!
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+->It is really weird.
+->I wouldn't wear this to school if I were you.
+->Looks nice!
+You: You look great. 
+???: Thanks! You know, I bought it in Forever 22. They have this huge sale going on now. Do you like Forever 22?
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+<<EnterChangeText 2 ...>>
+->Nope.Don't really care.
+->Whaaa..Are you kidding me, that place SUCKS.
+->Really? I love the stuff there! Definitely stopping by soon.
+You:Yah.
+???: Oh great! So here’s the thing, they’re starting to sell really cool jackets for Spring. Just like the one I’m wearing right now. I mean, like, looks at the cool navy color! I haven’t seen one like this in YEARS. You know how hard it is to get nice-looking jackets that fits you perfectly?
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+<<EnterChangeText 2 ...>>
+->Can you leave already.
+->Kay.
+->I am so happy for you!
+You: Haha. Yah. That's great.
+???: Aww! I knew you’re my best friend! Best Friends Foreva~! Catch you later!
+-> Bye.
+
+
+
+
+
+
+ 
 ===
 title: SchoolWiki
 tags: 
 colorID: 0
 position: 0,0
-parent: NPC
+parent: 
 ---
-
-Do you know:
+???: Hey! Guess what! I got something amazing to tell you!
+->Hey.
+->(Pretend not to see him)
+???:Did you know:
 A school is an educational institution designed to provide learning spaces and learning environments for the teaching of students (or "pupils") under the direction of teachers. 
-[[So?|SchoolWiki2]]
-[[I Don't really care.|RejectionCrap]]
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+-> Sorry, Gotta go.
+-> Ugh...so????
+-> Oh, I didn't know that.
+You:Oh ok.
+???: Most countries have systems of formal education, which is commonly compulsory.[citation needed] In these systems, students progress through a series of schools. The names for these schools vary by country (discussed in the Regional section below) but generally include primary school for young children and secondary school for teenagers who have completed primary education. An institution where higher education is taught, is commonly called a university college or university, but these higher education institutions are usually not compulsory.
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+-> Please let me go.
+-> This is SO BORING.Let me go now.
+-> Interesting.
+You:Ah,right.
+???:There are also non-government schools, called private schools. Private schools [1] may be required when the government does not supply adequate, or special education. Other private schools can also be religious, such as Christian schools, madrasa, hawzas (Shi'a schools), yeshivas (Jewish schools), and others; or schools that have a higher standard of education or seek to foster other personal achievements......
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+-> I am sorry to say this, but you need to shut up now.
+-> This has nothing to do with me.
+You:Ok.Thanks for sharing.
+[[Bye]]
 
 ===
-title: SchoolWiki2
+title: Caring
 tags: 
 colorID: 0
 position: 0,0
-parent: NPC
+parent: 
 ---
-Most countries have systems of formal education, which is commonly compulsory.[citation needed] In these systems, students progress through a series of schools. The names for these schools vary by country (discussed in the Regional section below) but generally include primary school for young children and secondary school for teenagers who have completed primary education. An institution where higher education is taught, is commonly called a university college or university, but these higher education institutions are usually not compulsory.
-[[Ok.I get it.|End]]
-[[What else do you know?|ShoolWiki3]]
+???: Hey R. You look terrible. Are you okay? 
+You: Yah I am fine.
+???: Are you sure? 
+You: Yah everything is great.
+???: Great. 
+You know, I totally feel you man. Life SUCKS. But it's ok. We got each other man, we best pals.
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+->What's your name again?
+-> Thank you! I needed that!
+You: Sure.
+???: No but really.Are you okay? Is it because of the new math teacher? 
+You: no.
+???: Is it your mom?
+You: no!
+???: Com'on,You can tell me! I won't tell anyone.Promise :)
+You:
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+->This is really none of your business.
+->I am just really nervous on the first day of school. 
+You: It's all good. I am just a bit tired today.
+???: Okay. But let me know if you need anything. I am here for you.
+You: ...Thanks.Bye now.
+???: Take care!
+
 
 ===
-title: SchoolWiki3
+title: Suicide
 tags: 
 colorID: 0
 position: 0,0
-parent: NPC
+parent: 
 ---
-There are also non-government schools, called private schools. Private schools [1] may be required when the government does not supply adequate, or special education. Other private schools can also be religious, such as Christian schools, madrasa, hawzas (Shi'a schools), yeshivas (Jewish schools), and others; or schools that have a higher standard of education or seek to foster other personal achievements. Schools for adults include institutions of corporate training, military education and training and business sc
-[[All right. Thank you for sharing.|End]]
-[[You can FXXK OFF NOW |RejectionCrap]]
+???: Hey. Yeah. I know. I look really down right?
+<<EnterChangeText 0 ...>>
+->Are you OK?
+You:...
+???: It’s like the world ended. I mean. Probably. I don’t know. 
+<<EnterChangeText 0 ...>>
+->Don't worry.Everything will be okay.
+You: ...
+???: Well, I’m such a loser. Might as well kill myself or something.
+<<EnterChangeText 0 ...>>
+->Plese don’t do that..
+You: ...
+???: If you’re lucky, you might see me some other day. Who knows.
+You:...
+NPC: Thanks. I’m good for now. Have a good rest of the day.
+
+===
+title: WrongPerson
+tags: 
+colorID: 0
+position: 0,0
+parent: 
+---
+???:Hey!
+You:Hey.
+???:Hey!!!
+You:Hi!What's up!
+???:Hey!!!!!!
+You: I heard you!
+???: Huh? What?
+You: I said I heard you the first time.
+???: Oh sorry, I wasn't talking to you.
+===
+title: Complaint
+tags: 
+colorID: 0
+position: 0,0
+parent: 
+---
+
+???: (Pointing at a glass with halfly filled water)
+Hey.You there! What do you see?
+->A Half full glass
+	A half full glass.I am an optimist I guess.
+->A half empty glass
+	A half-empty glass.I know I am a pessimist I am sorry.
+
+???: No! A glass that is slightly chipped holding water that isn't cold enough, probably because it's tap water when I asked for bottled water and wait, there's a smudge on the rim, too, which means the glass wasn't cleaned properly and now I'll probably end up with some kind of virus. Why do these things always happen to me?!
+
+You:...
+???: I hate this world. Why is everyone so dumb?? Why am I always the victim?
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+->I am sorry. I am sure everything will be okay.
+->Maybe you are dumb.
+You:...
+
+
+
+===
+title: GameOfT
+tags: 
+colorID: 0
+position: 0,0
+parent: 
+---
+???: Hey R..
+You: Hey.(Ugh)
+???: Did you see the new Game of Throwns episode?
+<<EnterChangeText 0 ...>>
+<<EnterChangeText 1 ...>>
+->No I haven't! We should totally watch it together!
+->Yah of course! It is my favourite show since Season one dude!
+You: Oh yah. Jorah Mormont died. 
+???: …… Thanks for ruining it. I was gonna see it tonight. 
+You: (Oops).
+
+
+===
+title: Gossip
+tags: 
+colorID: 0
+position: 0,0
+parent: 
+---
+???:Omg! Have you heard about that guy from our History class? Someone posted a photo of him and his boyfriend making out by the park! It's all over Outstagram now!
+You:What happened to him?
+???:He got REKT man. You should've seen his face dude. It's brutal! He haven't come to school since then!
+You:I know something too.You know the guy from Chemistry fell into the pool yesterday. That's was pretty funny too. Haha.
+???: ....You.. You know that was me right...
+You:....
+???:...
+You:...Sorry..
+???: FXXK you.
+
 ===
 title: RejectionCrap
 tags: 
 colorID: 0
 position: 0,0
-parent: NPC
+parent: 
 ---
 It's ok. I love rejections. Let me tell you why:
 
@@ -77,32 +232,12 @@ That’s how powerful rejection can be when I use it as fuel.
 
 
 ===
-title: Start_MoreExamples
+title: Bye
 tags: 
 colorID: 0
 position: 0,0
 parent: 
 ---
-This node is called Start_MoreExamples.
-The second way to do choices in Yarn is with 'shortcut options' like this:
-
-->This is option 1
-	You selected option 1.
-->This is option 2
-	You selected option 2.
-	<<set $didOption2 to true>>
-
-Based on choices, you can set variables, and then check those variables later.
-<<if $didOption2 is true>>
-By checking $didOption2, I remember you chose option 2!
-<<else>>
-I can't detect a variable $didOption2, so that means you chose option 1
-<<endif>>
-
-Do you want to go back to Start now?
--> Yes, send me back to Start.
-	[[Start]]
--> No thanks, I want to stop.
-
-Ok here's the end, good luck!
+???: Goodbye. Sorry I take up so much of your time. Have a good day now!
+-> Bye.
 ===
