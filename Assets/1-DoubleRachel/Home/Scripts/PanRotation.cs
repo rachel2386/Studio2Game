@@ -33,6 +33,7 @@ public class PanRotation : Pan
     public AudioClip foodPickClip;
     public AudioClip foodPutClip;
     public AudioSource panAudioSource;
+    public AudioClip foodPutIntoPan;
 
     Camera cam;
     ShyCamera shyCam;
@@ -207,6 +208,7 @@ public class PanRotation : Pan
         canCook = b;
     }
 
+    public bool firstIntoCooking = true;
     void UpdatePan()
     {
         if (!canCook)
@@ -231,6 +233,12 @@ public class PanRotation : Pan
         // Into
         if (!inEnd && aimedPan && LevelManager.Instance.PlayerActions.Fire.IsPressed)
         {
+            if (firstIntoCooking)
+            {
+                firstIntoCooking = false;
+                panAudioSource.PlayOneShot(foodPutIntoPan);
+            }
+
             var ori = pan.transform.eulerAngles;
             yRotationTime += Time.deltaTime;
             zRotationTime += Time.deltaTime;
