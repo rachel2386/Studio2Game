@@ -120,7 +120,23 @@ public class PanRotation : Pan
 
         handleList = useFirstSet ? firstPlayerList : secondPlayerList;
 
+        handleList[0].loopPointReached += PanRotation_loopPointReached0;
+        handleList[1].loopPointReached += PanRotation_loopPointReached1;
+
         StartCoroutine(InitVideoPlayerPlay());
+    }
+
+
+    bool[] looped = new bool[2];
+    private void PanRotation_loopPointReached0(VideoPlayer source)
+    {
+        looped[0] = true;
+    }
+
+    bool looped1 = false;
+    private void PanRotation_loopPointReached1(VideoPlayer source)
+    {
+        looped[1] = true;
     }
 
     IEnumerator InitVideoPlayerPlay()
@@ -309,15 +325,23 @@ public class PanRotation : Pan
             PlayMaterialVideo(false);
         }
     }
-
+   
+    
     public void PlayMaterialVideo(bool play)
     {
-       
-        
-        foreach(var vp in handleList)
+        Debug.Log("Time: " + handleList[0].time);
+        Debug.Log("Length " + handleList[0].length);
+
+
+        for (int i = 0; i < handleList.Count; i++)
         {
-            if (play)
+            var vp = handleList[i];
+            bool alreadyLooped = looped[i];
+            if (play && !alreadyLooped)
+            {                
                 vp.Play();
+            }
+                
             else
                 vp.Pause();
         }
