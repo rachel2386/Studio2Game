@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 198061609646509510}
   - component: {fileID: 198061609646509512}
   - component: {fileID: 198061609646509513}
+  - component: {fileID: 114300772900024606}
+  - component: {fileID: 114859870887093024}
   m_Layer: 0
   m_Name: Door Collider
   m_TagString: Untagged
@@ -1749,7 +1751,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -1764,8 +1766,8 @@ MonoBehaviour:
     handleCollisionEnter2D: 0
     handleCollisionExit2D: 0
     handleCollisionStay2D: 0
-    handleTriggerEnter: 0
-    handleTriggerExit: 0
+    handleTriggerEnter: 1
+    handleTriggerExit: 1
     handleTriggerStay: 0
     handleCollisionEnter: 0
     handleCollisionExit: 0
@@ -1783,7 +1785,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!65 &198061609646509513
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1797,3 +1799,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.3277671, y: 3.2247221, z: 6.3520117}
   m_Center: {x: 0.49005017, y: 1.1123608, z: 0.84705406}
+--- !u!114 &114300772900024606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198061609646509511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 82786459, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFSMs:
+  - {fileID: 198061609646509512}
+--- !u!114 &114859870887093024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198061609646509511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1144467388, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFSMs:
+  - {fileID: 198061609646509512}

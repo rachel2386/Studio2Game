@@ -16,7 +16,7 @@ public class MainPage : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         if(!needGotoSelectScene)
-            SceneManager.LoadScene("School");
+            SceneManager.LoadScene("SchoolMenu");
         yield return null;
     }
 
