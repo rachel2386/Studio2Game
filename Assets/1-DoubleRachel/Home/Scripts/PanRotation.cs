@@ -8,8 +8,6 @@ using UnityEngine.Video;
 
 public class PanRotation : Pan
 {
-
-
     public GameObject pan;
     public GameObject panModel;
     public GameObject liftedAnchor;
@@ -38,10 +36,7 @@ public class PanRotation : Pan
     Camera cam;
     ShyCamera shyCam;
     ShyInteractionSystem sis;
-    ShyUI shyUI;
-
-
-
+    ShyUI shyUI;       
 
     Vector3 oriPanPosition;
     Quaternion oriPanRotation;
