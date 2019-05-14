@@ -10,14 +10,18 @@ public class LightCountdown : MonoBehaviour
     public AudioSource lightswitch;
     public Light door;
     public GameObject lamp;
+    private bool musicEnd;
     
     // Start is called before the first frame update
     void Start()
     {
+        musicEnd = false;
         door.enabled = false;
         lamp.SetActive(false);
-        StartCoroutine(LightWait());             
-        StartCoroutine(SwitchScene()); 
+        StartCoroutine(LightWait());    
+        print(Theme.clip.length);
+        StartCoroutine(waitAudio()); 
+//      StartCoroutine(SwitchScene()); 
         
         
     }
@@ -31,20 +35,28 @@ public class LightCountdown : MonoBehaviour
     }
 
 
-    IEnumerator SwitchScene()
-    {
-        yield return new WaitForSeconds(20);
-        HomeSceneManager.IntoIndex = 2;
-        SceneManager.LoadScene("HomeScene");
-    }
+//    IEnumerator SwitchScene()
+//    {
+//        yield return new WaitForSeconds(20);
+//        HomeSceneManager.IntoIndex = 2;
+//        SceneManager.LoadScene("HomeScene");
+    
+//    }
 
     // Update is called once per frame
     void Update()
     {
-        //int jump = PlayerReposition.trigTime;
-        //if (jump > 0)
-        //{
-        //    StartCoroutine(SwitchScene()); 
-        //}
+        int jump = PlayerReposition.trigTime;
+        if (jump > 0 && musicEnd)
+        {
+            HomeSceneManager.IntoIndex = 2;
+            SceneManager.LoadScene("HomeScene");
+        }
+    }
+
+    private IEnumerator waitAudio()
+    {
+        yield return new WaitForSeconds(Theme.clip.length);
+        musicEnd = true;
     }
 }
