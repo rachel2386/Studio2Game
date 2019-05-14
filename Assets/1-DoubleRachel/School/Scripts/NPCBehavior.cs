@@ -73,6 +73,8 @@ public class NPCBehavior : MonoBehaviour
         set => playerTriggered = value;
     }
     private float turnSpeed = 3f;
+    private Vector3 _agentRotation;
+    private Vector3 _rotationLastFrame;
 
     public GameObject exclamationMark;
 
@@ -96,10 +98,11 @@ public class NPCBehavior : MonoBehaviour
    
     void Update()
     {
-        
+        _agentRotation = transform.eulerAngles;
         if (NpcRotate)
         {
-           AgentBehavior();
+          
+            AgentBehavior();
         }
         else
         {
@@ -113,7 +116,7 @@ public class NPCBehavior : MonoBehaviour
         }
         
        AnimatorUpdate();
- 
+       _rotationLastFrame = _agentRotation;
     }
 
     void AgentBehavior()
@@ -124,13 +127,20 @@ public class NPCBehavior : MonoBehaviour
         
         if (Trigger)
         {
+//            transform.rotation = Quaternion.Slerp(transform.rotation, 
+//                Quaternion.LookRotation(myAgent.nextPosition - transform.position, Vector3.up),
+//                Time.deltaTime *turnSpeed);
+            
             if (playerTriggered)
             {
                if(myAgent.destination != Destinations[0].position)
                 myAgent.SetDestination(Destinations[0].position);
-                if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
-                    myAgent.isStopped = true;
-               
+               if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
+               {
+                   myAgent.isStopped = true;
+                   waiting = true;
+               }
+
             }
             else
             {
@@ -142,8 +152,11 @@ public class NPCBehavior : MonoBehaviour
         else if (Automatic)
         {
             
-            //patrolling between points
             
+//            transform.rotation = Quaternion.Slerp(transform.rotation, 
+//                Quaternion.LookRotation(myAgent.nextPosition - transform.position, Vector3.up),
+//                Time.deltaTime *turnSpeed);
+            //patrolling between points
             if (!myAgent.pathPending && myAgent.remainingDistance <= 0.5f)
             {
                 StartCoroutine(wait(Random.Range(2,4)));
@@ -203,7 +216,7 @@ public class NPCBehavior : MonoBehaviour
 
         if (!myAgent.pathPending)
         {
-            if (NpcRotate )
+            if (NpcRotate)
             {
                 if (!waiting)
                 {
@@ -261,6 +274,8 @@ public class NPCBehavior : MonoBehaviour
     private void AnimatorUpdate()
     {
         myAnim.SetFloat(Forward, myAgent.desiredVelocity.magnitude);
+//        myAnim.SetFloat("Turn",(Mathf.Clamp(Mathf.Atan2(myAgent.desiredVelocity.x,myAgent.desiredVelocity.z),-1f,1f)),
+//                                                0.1f,Time.deltaTime);
        
         if(!NpcRotate && !GreetedPlayer)
             myAnim.SetBool(HandWave, true);
