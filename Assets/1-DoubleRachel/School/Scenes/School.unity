@@ -77211,13 +77211,15 @@ MonoBehaviour:
       transitions: []
       actionData:
         actionNames:
+        - HutongGames.PlayMaker.Actions.CameraFadeOut
         - HutongGames.PlayMaker.Actions.SetProperty
         customNames:
         - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: 5ac85204
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000004000000
+        actionHashCodes: 543032005ac85204
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -77235,7 +77237,7 @@ MonoBehaviour:
             typeName: UnityEngine.Object
             value: {fileID: 784222934}
           TargetTypeName: SwitchScenes
-          PropertyName: doorOpened
+          PropertyName: switchScene
           BoolParameter:
             useVariable: 0
             name: 
@@ -77364,26 +77366,43 @@ MonoBehaviour:
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams: []
+        fsmFloatParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 3
         fsmIntParams: []
         fsmBoolParams: []
         fsmVector2Params: []
         fsmVector3Params: []
-        fsmColorParams: []
+        fsmColorParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {r: 0, g: 0, b: 0, a: 1}
         fsmRectParams: []
         fsmQuaternionParams: []
-        stringParams: []
-        byteData: 00
+        stringParams:
+        - 
+        byteData: 0000
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 2400000001000000
+        paramDataType: 190000000f00000017000000010000002400000001000000
         paramName:
+        - color
+        - time
+        - finishEvent
+        - realTime
         - targetProperty
         - everyFrame
-        paramDataPos: 0000000000000000
-        paramByteDataSize: 0000000001000000
+        paramDataPos: 000000000000000000000000000000000000000001000000
+        paramByteDataSize: 000000000000000000000000010000000000000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
