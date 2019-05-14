@@ -131,7 +131,7 @@ MonoBehaviour:
       - fsmEvent:
           name: CLICKED
           isSystemEvent: 0
-          isGlobal: 0
+          isGlobal: 1
         toState: Screw
         linkStyle: 0
         linkConstraint: 0
@@ -991,7 +991,7 @@ MonoBehaviour:
       isGlobal: 0
     - name: CLICKED
       isSystemEvent: 0
-      isGlobal: 0
+      isGlobal: 1
     globalTransitions: []
     variables:
       floatVariables: []
@@ -1078,6 +1078,7 @@ MonoBehaviour:
   defaultTooltip: Screw
   emptyHandTooltip: 
   wrongThingTooltip: 
+  invalidTooltip: 
   validationMode: 0
   keyWords: []
   clickedEvent:
