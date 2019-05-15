@@ -60,8 +60,14 @@ namespace HutongGames.PlayMaker.Actions
 						{
 							audio.volume = volume.Value;
 						}
-						
-						return;
+
+                        if (WaitForEndOfClip.Value == false)
+                        {
+                            Fsm.Event(finishedEvent);
+                            Finish();
+                        }
+
+                        return;
 					}
 					
 					if (!volume.IsNone)
