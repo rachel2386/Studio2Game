@@ -1,0 +1,71 @@
+CTAA V1.7 UPDATE CHANGES and FIXES
+
+- Significant Performance and Quality enhancement for All variants
+
+- NEW ANTI-SHIMMER MODE added to PC Version, completely eliminates micro-shimmer,  Suitable for Architectural   Visualization, CAD, Engineering, Auto, Design and Manufacture or for any project requiring the Highest Quality Visuals.
+
+- NEW Adaptive Sharpness mode in Steam VR version increasing perceptual sharpness with almost zero performance impact
+
+- Overall much better Visual quality improvement in Steam VR / OpenVR mode compatible with Oculus and the VIVE hmd's
+
+- NEW Adaptive Sharpness mode in Single Pass Stereo VR version increasing perceptual sharpness with almost zero performance impact
+
+- Improved compatibility with Unity 2019.1
+
+- NEW 'Engine' PC Demo Added showing the new Anti-Shimmer Mode together with MSAA. This combination provides Industry leading highest quality Anti-Aliasing for your projects at the highest performance
+
+
+
+V1.6
+
+Updated to suppport Latest SteamVR SDK (using V 2.2.0 as of this release) and more Camera Prefabs have been Created to show integration.
+
+CTAA for VR:  CTAA can be used in two methods, with Multipass XR settings enabled,  Dual Cameras are required for both Oculus SDK or Steam VRSDK (Due to Custom velocity vectors for VR).  In SinglePass XR mode, only a single camera is required and will work with both Oculus and SteamVR.  We have provided Prefabs for both these options.
+
+V1.6 now provides better quality in SPS (Single Pass Stereo) together with performance increase
+
+
+
+V1.5
+
+Added support for Single Pass Stereo in VR under the CTAA SPS folder. This is a Single drag-n-drop solution for all VR platforms.  Please note When using a Single Camera in VR, Single Pass Stereo support MUST be used. CTAA SPS can also be now quickly integrated with VRTK as a Single Camera will now work
+
+- To use Single Pass Stereo just Drag-and-Drop the CTAAVR_SPS script to your camera and that's it! Single Pass Stereo Rendering Method MUST be enabled for this to work. CTAA SPS can be used with both Oculus SDK and Open VR.
+
+- If you have any Dynamic Objects (such as animated or skinned ) in the scene please Drag-Drop the 'DynamicObjectCTAASPS' Script on to each object
+
+
+V1.3 Document Revision and Update
+
+This Version introduces two new parameters to better control Micro Shimmers and increase stability when the motion in the scene decreases  i.e. the camera is almost stationary or not moving at all.
+
+
+- Micro Shimmer Reduction, eliminates or reduces shimmer caused by polygons smaller then a pixel in screenspace. Due to the nature of Temporal Anti-Aliasing (not specific to CTAA) Micro shimmers can sometimes become more evident when the geometric polygons become smaller then a pixel in the distance or when there is a clear horizontal or vertical line.  Reducing this value (Default value is 3.0) will enable CTAA to do a more aggressive check for these conditions and sample accordingly to reduce shimmering. The Default value is a good general purpose value, reducing this too much may cause darkening artifacts when in motion. 
+
+PLEASE NOTE: You will easily see the effect of this value while tweaking if you pay attention to AA quality on edges where there is a large difference in Dynamic range between the edge and it's surrounding pixels, such as a bright car headlight against the sky or in totall darkness.
+
+- Static Stability Power, Dynamically adjusts Temporal Blending and other values depending on relative Velocity. Helps increase stability (reducing overall shimmering ) on static or approaching near static camera or object motion. value ranges from 0-1, default is 0.5 which is a 50% mix
+
+
+
+
+
+V1.2    Document Revision and Update
+
+### UNITY POST PROCESSING STACK V2 BETA INITIAL INTEGRATION 
+
+Below is the instructions to get CTAA working with the upcoming Unity Post Processing Stack V2, Please note this is not a complete or correct integration method at the moment and is not final. In the upcoming updates CTAA will be integrated correctly as a ' Custom Effect ' which can be pluged-in to the PPS V2 at the correct location.
+
+1 :: Setup the PPS V2, create a empty game object and apply the Post Process Volume script and apply a post process Profile, then choose/create a custom layer such as 'postfx' on this gameobject. You can just choose ' Is Global ' and this will apply FX to the entire scene 
+
+2 :: Select the Main Camera and apply the Post Process Layer Script. Select ' No Anti - aliasing ' from the dropdown menu and choose the corresponding layer you have created on the above step such as 'postfx'
+
+3 :: PPS V2 will now be active
+
+4 :: Place the CTAA Script on the Main Camera ' AFTER ' the Post Process Layer Script and CTAA will work as normal.
+
+Please note, as mentioned above, this is an initial integration method and is not final as CTAA will need to be placed on the correct location via a custom plugin method which will be available in the next coming updates.
+
+
+###  VR CAMERA HELPER
+
