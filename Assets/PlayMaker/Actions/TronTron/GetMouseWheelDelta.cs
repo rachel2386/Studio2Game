@@ -26,7 +26,16 @@ namespace HutongGames.PlayMaker.Actions
 
         void DoGetDelta()
         {
-            store.Value = Input.mouseScrollDelta.y;
+            float value = Input.mouseScrollDelta.y;
+
+            if (Input.GetMouseButton(0))
+            {
+                value = 0.5f;
+            }
+
+            store.Value = value;
+            // Debug.Log(store.Value);          
+
         }
 
 
