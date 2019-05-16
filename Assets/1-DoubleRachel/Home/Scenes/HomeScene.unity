@@ -4848,6 +4848,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3212423269879791767, guid: 3504e0c51f6992947b8e4df478f3eec0,
+        type: 3}
+      propertyPath: m_JumpSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3212423269879791767, guid: 3504e0c51f6992947b8e4df478f3eec0,
+        type: 3}
+      propertyPath: m_MouseLook.shyMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1575361868, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4859,6 +4869,10 @@ PrefabInstance:
     - target: {fileID: 1284270763, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575361872, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1073745207
       objectReference: {fileID: 0}
     - target: {fileID: 1575361870, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_Enabled
@@ -4882,20 +4896,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1891604855, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
       propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575361872, guid: 3504e0c51f6992947b8e4df478f3eec0, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 1073745207
-      objectReference: {fileID: 0}
-    - target: {fileID: 3212423269879791767, guid: 3504e0c51f6992947b8e4df478f3eec0,
-        type: 3}
-      propertyPath: m_JumpSpeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3212423269879791767, guid: 3504e0c51f6992947b8e4df478f3eec0,
-        type: 3}
-      propertyPath: m_MouseLook.shyMode
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5569,7 +5569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previewOnGUI: 1
   enableGUILayout: 1
-  drawStateLabels: 0
+  drawStateLabels: 1
   enableStateLabelsInBuilds: 0
   GUITextureStateLabels: 0
   GUITextStateLabels: 0
@@ -5980,7 +5980,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 475112577}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cbc0148a19f09e4cbe8f8f2e19ae5c6, type: 3}
   m_Name: 
@@ -10372,7 +10372,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: RACHEL Li
+          value: RACHEL LI
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -10470,7 +10470,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: RACHEL W
+          value: RACHEL WANG
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -10568,7 +10568,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: CHENWEI
+          value: CHENWEI JIN
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -34485,6 +34485,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1821493318, guid: 3edf87ba84292884ba8ac172f50b0dfe, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: faed81d3d92ea4eb9827dc4016a11ae5,
+        type: 3}
     - target: {fileID: 5627461457100242546, guid: 3edf87ba84292884ba8ac172f50b0dfe,
         type: 3}
       propertyPath: m_RenderMode
@@ -34648,11 +34653,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1821493318, guid: 3edf87ba84292884ba8ac172f50b0dfe, type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: faed81d3d92ea4eb9827dc4016a11ae5,
-        type: 3}
     - target: {fileID: 972186819801002638, guid: 3edf87ba84292884ba8ac172f50b0dfe,
         type: 3}
       propertyPath: m_FontData.m_Font

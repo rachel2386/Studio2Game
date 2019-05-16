@@ -196,15 +196,11 @@ public class SwitchScenes : MonoBehaviour
             if (gameState == 0)
             {
                 HomeSceneManager.IntoIndex = 0;
-                gameState = 1;
                 SceneManager.LoadScene("HomeScene"); 
-                //SceneManager.LoadScene("School"); 
+                
             }
             else if (gameState == 1)
             {
-                //HomeSceneManager.IntoIndex = 1;
-                gameState = 2;
-               // SceneManager.LoadScene("HomeScene"); 
                 SceneManager.LoadScene("DarkGym"); 
             }
             else if (gameState == 2)
